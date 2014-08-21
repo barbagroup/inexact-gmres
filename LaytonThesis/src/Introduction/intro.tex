@@ -1,0 +1,59 @@
+%!TEX root = ../thesis.tex
+
+\chapter{Introduction}
+\label{chapter:Introduction}
+\thispagestyle{myheadings}
+
+\section{Introduction}\label{sec:introduction}
+
+As engineering problems and simulations become ever larger, and we continually look for new and better ways to simulate them, maximizing both the size of problem we can compute, and the speed at which we can obtain an answer. Problems become more complex as they move from 2 dimensional approximations to 3 dimensional simulations, leading to the natural question of how to both reduce the amount of work that has to be done, and how efficiently we can do it.
+
+% BEM introduced
+Boundary element methods (\bem) were introduced in the 1960s (standard introductory texts however, came later \cite{BrebbiaDominguez1992}) for a subset of problems, reducing the computational domain from the entirety of the needed physical space (volume / area) to the boundary of the region of interest (surface / curve), discretized into panels. The reduction in dimensionality changes a problem from $3$ or $2$ dimensions, to one dimension lower.
+
+{\bem}'s major downside is that it requires the solution of a dense system of linear equations, $A\vect{x} = \vect{b}$, where $A \in \R^{N\times N}$ and $N$ is the number of discretized panels. Due to the density of $A$, in the best case with an iterative solver, work and memory requirements for this solution scale as the size of the matrix, or in asymptotic notation, $\bigO(cN^{2})$ time, where $c$ is a function of the condition number of $A$, while a traditional dense solve, such as Gauss elimination would require $\O{N^{3}}$ time. This scaling is in comparison to (for instance) finite element, volume or difference codes, which still require the solution of a linear system, but in their case $A$ is sparse, allowing solutions to be found in $\bigO(cN)$ time, where $N$ is now the number of degrees of freedom used, $c$ is again a function of the condition number of $A$, and in general this $N$ is significantly larger than the $N$ for {\bem} problems. The $\O{cN^{2}}$ scaling causes {\bem} to become unusable for larger and more complex problems.
+
+% FMM introduced
+Initially introduced to quickly calculate potential fields for particle methods, Treecodes were developed in the late 1980s \cite{BarnesHut1986}. The computational domain is hierarchically split into near and far-field components, then far-field interactions are approximated with multipole expansions. These multipole expansions are faster than evaluating individual particles, but they are only convergent for distant targets. The near-field is still computed directly, preserving accuracy. Importantly, this splitting and approximation reduces the time taken to evaluate the interactions between $N$ particles to $\O{N\log N}$. The fast multipole method ({\fmm}) was introduced soon after as a further improvement, modifying the far-field evaluation by translating multipoles into local expansions \cite{greengard1987} that are accurate close to the expansion center and evaluating them instead of directly using the multipoles. This translation further reduced the complexity to the optimal $\bigO(N)$. The {\fmm} was later named as one of the top 10 scientific algorithms of the 20th century \cite{DongarraSulli2000}.
+
+% FMM-BEM
+Several years later, the potential of using fast methods to accelerate {\bem} was realized for the Laplace\cite{Nabors94} and Stokes \cite{gomez1997} equations. By using a fast method within an iterative solution of the {\bem} linear system, the scaling was reduced from $\bigO(N^{2})$ to $\bigO(cN)$, making larger simulations feasible. While this modification adds complexity to the {\bem}, it allows users to perform much larger experiments, putting them on a more level playing field to more traditional computational methods, such as finite elements.
+
+% KRYLOV & INEXACT MATVEC
+Parallel to the development of {\bem} and {\fmm}, the linear algebra community was working on iterative solvers. The widely used {\gmres} algorithm \cite{SaadSchultz1986}, published in 1986, iteratively solves $Ax = b$ for a general $A \in \R^{N\times N}$, by generating a Krylov subspace through repeated matrix-vector multiplication, and finding the vector $x_{k}$ within this space that minimises $||Ax_{k}-b||$. The cost of this method scales as the cost of the product of computing the matrix-vector products and a function of the condition number of $A$, denoted as $c$, thus when used in a standard {\bem} the cost would be $\O{cN^{2}}$, while for the {\fmm}-{\bem}, the cost is $\bigO(cN)$.
+
+% RELAXATION (INEXACT MATVEC) AND PRECONDITIONERS
+Where the iterative solution of $Ax = b$ dominates solution time, methods have been proposed to reduce both the number of iterations needed, and the cost of each of those iterations. In general the convergence rate of a solver depends on the condition number of $A$. The most commonly used way to reduce the condition number is to use a preconditioner. These can be as simple as using the inverse of the diagonal of $A$, or as complex as performing a complete additional linear solve. 
+
+The theory behind inexact matrix-vector products in the context of Krylov solvers \cite{simonciniszyld2003,bourasfraysse2005} was initially developed to explain experimental results where error was introduced into the matvec within a solver, yet the correct results were obtained with no loss of convergence. While this concept is well developed within the linear algebra community, there is no work that we are aware of on applying the theory to {\fmmbem} problems by \emph{relaxing} the accuracy of the {\fmm}-accelerated matvecs.
+
+%To reduce the cost of an iteration, relaxation methods were introduced \cite{simonciniszyld2003,bourasfraysse2005}, relying on the ability to compute an \emph{inexact} matrix-vector product at lower cost than the exact product. While the theory is well-developed within the math community \cite{simonciniszyld2003,vandeneshofsleijpen2004}, there is no  work on applying that theory to {\fmmbem} problems. 
+
+\section{Objective}\label{sec:objective}
+
+This thesis aims to apply current inexact Krylov and relaxation method theory to the field of {\fmmbem} problems. To achieve this goal we first perform extensive verification tests on a comparatively simple test problem, before using this problem to thoroughly examine the performance characteristics of utilizing a relaxation method. These experiments allow us to provide guidelines to help identify more potential problems for the use of a relaxed solver. Next, we verify the relaxed solver on a more complicated example, then use a problem within the engineering field to illustrate the practical performance gains of relaxation methods.
+
+\section{Present Contribution}\label{sec:present_contribution}
+
+This study presents the following work
+
+\begin{enumerate}
+\item An extendible, easy-to-use modern code for {\fmm}, {\bem} and {\fmmbem} problems, complete with both exact and inexact solvers, simple preconditioners, relaxation schemes and the ability to solve multiple kinds of problems including the Laplace and Stokes equations. This includes the first fully open-source {\fmmbem} solver for the Stokes equation.
+
+\item Use and verification of inexact Krylov solver theory with {\fmmbem} problems for the first time. This study also provides guidelines for identifying problems that might benefit from relaxation schemes. %includes extensive performance testing, and provides a significant addition to the {\fmmbem} community.
+
+\item Extensive performance testing for both simple (Laplace) and more complex (Stokes) {\bem} problems, including the field of blood flow, showing speedups from the use of a relaxed solver.
+
+\end{enumerate}
+
+\section{Contents of the Thesis}\label{sec:contents_of_thesis}
+
+This thesis is organized as follows. In chapter \ref{chapter:background}, some background is introduced for the component methods of this research work: {\bem}, {\fmm}, Krylov iterative solvers and inexact matrix-vector products. Next, in chapter \ref{chapter:methods}, we discuss the implemented numerical methods that have been used in the current work, concentrating on numerical integrals along with a relaxation scheme and preconditioners. Chapter \ref{chapter:fmm_implementation} discusses some implementation-specific details for the {\fmm} used in this thesis. We then use the techniques from chapters \ref{chapter:methods} and \ref{chapter:fmm_implementation} to problems involving the Laplace equation in chapter \ref{chapter:laplace_bem}, presenting convergence tests, relaxation verification and performance results. Using a Laplace problem we experiment further with the parameter space of relaxation, obtaining some general rules by which one can determine whether a given problem will benefit from a relaxed solver. In chapter \ref{chapter:stokes} these rules are applied to a more significant problem, Stokes flow. Experiments demonstrate both convergence of the method for this new equation and speedups with the relaxed solver. The final results-based section, chapter \ref{chapter:rbc}, explores the field of blood flow using the solver from chapter \ref{chapter:stokes} to explore the performance of our relaxed solver for this more complex and relevant engineering problem. Finally in chapter \ref{chapter:conclusions}, we discuss the expected impact of our completed work, along with the next steps that could be taken.
+
+%%%%%%% OLD %%%
+%A major part of this work explores the use of these relaxation schemes for that context, namely controlling the accuracy of the {\fmm}-accelerated matrix-vector product to accelerate {\gmres} solutions.
+%
+%This research work presents the use of an {\fmm}-accelerated {\bem} as a platform to explore, implement and design a fast, efficient solver for engineering problems. We use the combination of inexact matrix-vector products, relaxation strategies and {\fmm}-specific preconditioners to minimise the time needed to solve research problems.
+%
+%This work will explore the space of inexact Krylov solvers with and without preconditioners for problems solved with {\fmmbem}. While there exists some isolated work involving inner-outer {\gmres} solvers \cite{Chailletetal2011}, there is nothing beyond a notice of intention to investigate relaxation schemes applied to inexact matrix-vector products with fast methods \cite{raykarduraiswami2005}. We take this gap in knowledge, and perform both an investigation of the the theory as it applies to {\fmmbem}, and systematic testing with a variety of sample problems from a number of different topics. This investigation will explore the combinations of methods and parameters needed in order to minimize the time-to-solution of our problems, and provide guidelines as to potential effect in other situations. Further, all these experiments will be performed using a newly-written, open-source {\fmmbem} code.
+

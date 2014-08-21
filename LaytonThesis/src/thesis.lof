@@ -1,0 +1,42 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2$\cdot $1}{\ignorespaces Adaptive quadtree in 2 dimensions\relax }}{12}
+\contentsline {figure}{\numberline {2$\cdot $2}{\ignorespaces Treecode\relax }}{13}
+\contentsline {figure}{\numberline {2$\cdot $3}{\ignorespaces FMM\relax }}{13}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3$\cdot $1}{\ignorespaces Integration domains\relax }}{25}
+\contentsline {figure}{\numberline {3$\cdot $2}{\ignorespaces Integral decomposition into triangles\relax }}{28}
+\contentsline {figure}{\numberline {3$\cdot $3}{\ignorespaces Individual triangular integral setup\relax }}{29}
+\contentsline {figure}{\numberline {3$\cdot $4}{\ignorespaces Local co-ordinate system for analytical integrals\relax }}{31}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4$\cdot $1}{\ignorespaces Scaling of the {\textsc {fmm}} with respect to problem size, $N$\relax }}{45}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5$\cdot $1}{\ignorespaces Triangular discretizations of a sphere\relax }}{55}
+\contentsline {figure}{\numberline {5$\cdot $2}{\ignorespaces Convergence of 1st-kind solve for Laplace equation on a sphere, solving with $p=10$, solver tolerance of $10^{-6}$.\relax }}{56}
+\contentsline {figure}{\numberline {5$\cdot $3}{\ignorespaces Converge of 2nd-kind solve for Laplace equation on a sphere, solving with $p=10$, solver tolerance of $10^{-6}$.\relax }}{57}
+\contentsline {figure}{\numberline {5$\cdot $4}{\ignorespaces Behaviour of the residual $||r_{k}||$ and necessary $p$ against {\textsc {gmres}} iteration number\relax }}{58}
+\contentsline {figure}{\numberline {5$\cdot $5}{\ignorespaces Speedup using relaxation strategy\relax }}{60}
+\contentsline {figure}{\numberline {5$\cdot $6}{\ignorespaces Time for 1st-kind Laplace equation solve on a sphere for 32768 panels with varying initial $p$ for relaxed and fixed-$p$ solvers. Iteration count capped at 10 for all cases.\relax }}{62}
+\contentsline {figure}{\numberline {5$\cdot $7}{\ignorespaces Speedup of 1st-kind Laplace solve on a sphere for 32768 panels with varying initial iteration count. $p=10$ for all cases.\relax }}{63}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6$\cdot $1}{\ignorespaces Domain used for derivation of Stokes boundary integral equation\relax }}{68}
+\contentsline {figure}{\numberline {6$\cdot $2}{\ignorespaces Traction force $t_x$ exerted in the $x$-direction on a sphere, 32768 panels, $p=16$, $p_{\text {min}}=5$ solved to $10^{-5}$ tolerance.\relax }}{73}
+\contentsline {figure}{\numberline {6$\cdot $3}{\ignorespaces Convergence of first-kind equation for Stokes flow around a sphere. Initial $p=16$, linear system solved to $10^{-5}$ tolerance.\relax }}{74}
+\contentsline {figure}{\numberline {6$\cdot $4}{\ignorespaces Residual history solving for surface traction on the surface of a sphere, $10^{-5}$ solver tolerance, $8192$ panels, $p=16$.\relax }}{75}
+\contentsline {figure}{\numberline {6$\cdot $5}{\ignorespaces Residual history solving for surface traction on the surface of a sphere, with time breakdown between {\textsc {p}\texttwooldstyle \textsc {p}\xspace } and {\textsc {m}\texttwooldstyle \textsc {l}\xspace }. $10^{-5}$ solver tolerance, $8192$ panels, $p=16$.\relax }}{77}
+\contentsline {figure}{\numberline {6$\cdot $6}{\ignorespaces Speedup for solving first-kind Stokes equation on the surface of a sphere, varying $N$. $10^{-5}$ solver tolerance, $p=16$. \relax }}{78}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7$\cdot $1}{\ignorespaces Triangular discretizations of an ethrocyte, parameterized from a sphere.\relax }}{82}
+\contentsline {figure}{\numberline {7$\cdot $2}{\ignorespaces Traction force $t_x$ exerted in the $x$-direction on an Ethrocyte with 8192 panels, $p=16$, $p_{\text {min}}=5$ solved to $10^{-5}$ tolerance\relax }}{83}
+\contentsline {figure}{\numberline {7$\cdot $3}{\ignorespaces Observed convergence for Ethrocyte with respect to extrapolated value\relax }}{85}
+\contentsline {figure}{\numberline {7$\cdot $4}{\ignorespaces Example surfaces for 4 Ethrocytes in fluid\relax }}{86}
+\contentsline {figure}{\numberline {7$\cdot $5}{\ignorespaces Iterations for Ethrocyte system to converge. $p = 16$, desired residual $10^{-5}$\relax }}{88}
+\contentsline {figure}{\numberline {7$\cdot $6}{\ignorespaces Iterations for system from multiple Ethrocyte to converge. $p = 16$, desired residual $10^{-5}$\relax }}{88}
+\contentsline {figure}{\numberline {7$\cdot $7}{\ignorespaces Speedups from multiple ethrocyte tests with varying panels / cell and number of cells. $p = 16$, desired residual $10^{-5}$\relax }}{92}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {A$\cdot $1}{\ignorespaces \emph {FMM\_plan} interface\relax }}{104}
+\contentsline {figure}{\numberline {A$\cdot $2}{\ignorespaces Methods exposed by executor / context\relax }}{105}
+\contentsline {figure}{\numberline {A$\cdot $3}{\ignorespaces Tree methods\relax }}{108}
+\contentsline {figure}{\numberline {A$\cdot $4}{\ignorespaces Evaluator execution\relax }}{108}
+\contentsline {figure}{\numberline {A$\cdot $5}{\ignorespaces Kernel operators\relax }}{109}

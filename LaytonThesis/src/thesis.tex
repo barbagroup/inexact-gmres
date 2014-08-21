@@ -1,0 +1,243 @@
+% BU ECE template for MS thesis and PhD dissertation.
+%
+%==========================================================================%
+% MAIN PREAMBLE 
+%==========================================================================%
+\documentclass[12pt]{report}          % Single-sided printing for the library
+%\documentclass[12pt,twoside]{report} % Double-sided printing
+\usepackage[intlimits]{amsmath}
+\usepackage{amsfonts,amssymb}
+\DeclareSymbolFontAlphabet{\mathbb}{AMSb}
+%\usepackage{natbib}
+\usepackage{apalike}
+%\usepackage{float}
+%\usepackage[bf]{caption2}       
+%\setcaptionmargin{0.5in}
+\usepackage{fancyheadings,fancybox,ifthen}
+\usepackage{bu_ece_thesis}
+\usepackage{url}
+\usepackage{lscape,afterpage}
+\usepackage{xspace}
+\usepackage{textcomp}
+
+\usepackage{mathtools}
+\usepackage{verbatim}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage[noend]{algpseudocode}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{subfig}
+\usepackage{appendix}
+\usepackage{undertilde}
+\usepackage{lscape}
+
+% code listings
+\usepackage{listings}
+\lstset{
+	language=C++,
+	numbers=left,
+	numberstyle=\tiny,
+	stepnumber=2, numbersep=5pt,
+	basicstyle=\ttfamily\footnotesize,
+	keywordstyle=\color{blue},
+	commentstyle=\color{cblue},
+	xleftmargin=\parindent,
+	numbers=left,
+	numberstyle=\tiny
+}
+
+\usepackage{multirow}
+
+% colours
+\definecolor{cblue}{rgb}{0.098,0.357,0.675}	
+
+%==========================================================================%
+%%% graphicx and pdf creation
+\usepackage[]{graphicx}
+%\usepackage{psfrag}
+%\DeclareGraphicsExtensions{.eps}   % extension for included graphics
+%\usepackage{thumbpdf}              % thumbnails for ps2pdf
+%\usepackage[ps2pdf,                % hyper-references for ps2pdf
+%bookmarks=true,%                   % generate bookmarks ...
+%bookmarksnumbered=true,%           % ... with numbers
+%hypertexnames=false,%              % needed for correct links to figures !!!
+%breaklinks=true,%                  % breaks lines, but links are very small
+%linkbordercolor={0 0 1},%          % blue frames around links
+%pdfborder={0 0 112.0}]{hyperref}%  % border-width of frames 
+%                                   % will be multiplied with 0.009 by ps2pdf
+%\hypersetup{
+%  pdfauthor   = {Joe Graduate <joe.graduate@bu.edu>},
+%  pdftitle    = {dissertation.pdf},
+%  pdfsubject  = {doctoral dissertations},
+%  pdfkeywords = {mathematics, science, technology},
+%  pdfcreator  = {LaTeX with hyperref package},
+%  pdfproducer = {dvips + ps2pdf}
+%}
+%==========================================================================%
+% customized commands can be placed here
+%\newcommand{\figref}[1]{Figure~\ref{#1}}
+%\newcommand{\chapref}[1]{Chapter~\ref{#1}}
+%\newcommand{\latex}{\LaTeX\xspace}
+
+% DEFINITIONS
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\cpu}{\textsc{cpu}}
+\newcommand{\gpu}{\textsc{gpu}}
+\newcommand{\cuda}{\textsc{cuda}}
+\newcommand{\mpi}{\textsc{mpi}}
+\newcommand{\bem}{\textsc{bem}}
+\newcommand{\bie}{\textsc{bie}}
+\newcommand{\fmm}{\textsc{fmm}}
+\newcommand{\fmmbem}{\fmm-\bem}
+\newcommand{\aca}{\textsc{aca}}
+\newcommand{\cpp}{\textsc{c++}}
+\newcommand{\blas}{\textsc{blas}}
+\newcommand{\sse}{\textsc{sse}}
+
+% CURLY LETTERS
+\newcommand{\bigO}{\mathcal{O}}
+\renewcommand{\O}[1]{\mathcal{O}(#1)}
+
+% FMM OPERATOR DEFINITIONS
+%\newcommand{\ptop}{\textsc{p2p}}
+%\newcommand{\ptom}{\textsc{p2m}}
+%\newcommand{\mtom}{\textsc{m2m}}
+%\newcommand{\mtop}{\textsc{m2p}}
+%\newcommand{\mtol}{\textsc{m2l}}
+%\newcommand{\ltol}{\textsc{l2l}}
+%\newcommand{\ltop}{\textsc{l2p}}
+
+\newcommand{\ptom}{\textsc{p}\texttwooldstyle\textsc{m}\xspace} % P2M
+\newcommand{\ltop}{\textsc{l}\texttwooldstyle\textsc{p}\xspace} % L2P
+\newcommand{\mtop}{\textsc{m}\texttwooldstyle\textsc{p}\xspace} % M2P
+\newcommand{\mtom}{\textsc{m}\texttwooldstyle\textsc{m}\xspace} % M2M
+\newcommand{\mtol}{\textsc{m}\texttwooldstyle\textsc{l}\xspace} % M2L
+\newcommand{\ltol}{\textsc{l}\texttwooldstyle\textsc{l}\xspace}  % L2L
+\newcommand{\ptop}{\textsc{p}\texttwooldstyle\textsc{p}\xspace} % P2P
+
+% MISC THINGS
+\newcommand{\ncrit}{N_{\text{CRIT}}}
+\newcommand{\pmin}{p_{\text{min}}}
+\newcommand{\tsolve}{t_{\text{solve}}}
+\newcommand{\csr}{\textsc{csr}}
+\newcommand{\nvidia}{\textsc{nvidia}}
+\newcommand{\amg}{\textsc{amg}}
+
+% SOLVER DEFINITIONS
+\newcommand{\cg}{\textsc{cg}}
+\newcommand{\gmres}{\textsc{gmres}}
+\newcommand{\fgmres}{\textsc{fgmres}}
+\newcommand{\bicgstab}{\textsc{bicgstab}}
+
+% the text 'd' for integrals
+\newcommand{\di}[1]{\text{d}#1}
+% partial derivatives (frac)
+\newcommand{\partiald}[2]{\frac{\partial #1}{\partial #2}}
+% partial derivatives (inline)
+\newcommand{\partialdi}[2]{\partial #1 / \partial #2}
+% \hat{n}
+\newcommand{\nhat}{\hat{n}}
+% define a vector - undertilde
+%\newcommand{\vect}[1]{\utilde{#1}}
+% - bold
+\newcommand{\vect}[1]{\mathbf{#1}}
+% curly L
+\renewcommand{\L}{\mathcal{L}}
+% curly D
+\newcommand{\D}{\mathcal{D}}
+% sign
+\newcommand{\sign}{\text{sign}}
+% basis vectors
+\newcommand{\e}{\vect{e}}
+% dyadic product
+\newcommand{\dyad}[2]{#1 \otimes #2}
+
+%==========================================================================%
+
+%==========================================================================%
+% BEGIN
+%==========================================================================%
+\begin{document}
+
+%\include{TODO}
+
+% The preliminary pages
+\include{Prelim/prelim}        
+\cleardoublepage
+
+% -------------------------------------
+% CHAPTER 1: INTRODUCTION
+% -------------------------------------
+\include{Introduction/intro}
+\cleardoublepage
+
+% -------------------------------------
+% CHAPTER 2: BACKGROUND
+% -------------------------------------
+\include{Background/background}
+\cleardoublepage
+
+% -------------------------------------
+% CHAPTER 3: NUMERICAL METHODS
+% -------------------------------------
+\include{Numerical_Methods/methods}
+\cleardoublepage
+
+% -------------------------------------
+% CHAPTER 4: FMM IMPLEMENTATION
+% -------------------------------------
+\include{FMM_Implementation/Implementation}
+\cleardoublepage
+
+% -------------------------------------
+% CHAPTER 5: LAPLACE
+% -------------------------------------
+\include{Laplace/laplace}
+\cleardoublepage
+
+% -------------------------------------
+% CHAPTER 6: STOKES
+% -------------------------------------
+\include{Stokes/stokes}
+\cleardoublepage
+
+% -------------------------------------
+% CHAPTER 7: Red Blood Cells
+% -------------------------------------
+\include{RBC/rbc}
+\cleardoublepage
+
+% -------------------------------------
+% CHAPTER 8: CONCLUSIONS
+% -------------------------------------
+\include{Conclusion/conclusion}
+\cleardoublepage
+
+\begin{appendices}
+% -------------------------------------
+% APPENDIX A: FMM_Plan
+% -------------------------------------
+\newpage
+\include{Appendix/FMM_Plan}
+\cleardoublepage
+
+\end{appendices}
+%==========================================================================%
+% Bibliography
+\newpage
+\singlespace
+\bibliographystyle{apalike}
+
+% each subdirectory can have its own BiBTeX file
+\bibliography{FastMethods,bem,scicomp,InexactMatVec,Misc,barba,scbib}
+\cleardoublepage
+
+%==========================================================================%
+% Curriculum Vitae
+\include{Prelim/cv} 
+
+%==========================================================================%
+\end{document}

@@ -1,0 +1,343 @@
+%!TEX root = ../thesis.tex
+
+\chapter{FMM\_plan}
+\label{chapter:fmm_plan}
+\thispagestyle{myheadings}
+
+\section{Description}\label{sec:overview}
+
+{\lstinline|FMM_plan|} is an open-source software library for fast multipole methods, implemented in C++. It provides a simple user interface and modular design for easy development. 
+
+\section{Software Components}\label{sec:components}
+
+{\lstinline|FMM_plan|} is comprised of $5$ major components:
+
+\begin{enumerate}
+
+\item {\lstinline|FMM_plan|} -- User interface for the library, hides all internal details from users.
+
+\item {\lstinline|Executor|} -- Dictates runtime behaviour of the {\fmm}: contains source and target trees, evaluators and storage for bodies and series expansions. All access to underlying data handled through here (also known as a {\lstinline|Context|} within evaluators).
+
+\item {\lstinline|Tree|} -- Hierarchical decomposition of the space. Provides access to boxes and interactions between them (parents, children).
+
+\item {\lstinline|Evaluator|} -- Traverses the tree and calls kernel operators
+
+\item {\lstinline|Kernel|} -- Contains all operators (P2P, M2L etc.) -- Implements specific equations, such as Laplace, Stokes, Yukawa etc.
+
+\end{enumerate}
+
+\noindent
+We will now go into more detail about each of these components, and useful terms.
+
+\subsection{Important terms}\label{subsec:important_terms}
+
+This section will briefly introduce important terms that will be used throughout the following descriptions.
+
+\begin{itemize}
+
+\item \emph{Point} ({\lstinline|point_type|}) -- A simple point in space. Used, for instance, within the {\lstinline|tree|}, where the full definition of the body is unnecessary. A simple example of this would be: {\lstinline|typedef Vec<3,double> point_type|}.
+
+%\begin{center}\begin{figure*}[h]\begin{lstlisting}
+%		typedef Vec<3,double> point_type
+%\end{lstlisting}\end{figure*}\end{center}
+
+\item \emph{Body} ({\lstinline|source_type, target_type|}) -- An individual element that will be evaluated. Examples include points in 3D space (for astrophysics), point vortices and panels (for {\bem} calculations). Examples include: \\
+{\lstinline|typedef TriangularPanel source_type //  BEM|} and \\
+{\lstinline|typedef point_type source_type // FMM|}
+
+%\begin{center}\begin{figure*}[h]\begin{lstlisting}
+%		typedef point_type source_type; // FMM
+%		typedef TriangularPanel source_type; // BEM
+%\end{lstlisting}\end{figure*}\end{center}
+
+\item \emph{Box} ({\lstinline|box_type|}) -- A physical subdivision of space, containing some number of child boxes or points.
+
+\item \emph{Multipole Expansion} ({\lstinline|multipole_type|}) -- Singular expansion used in both treecode and {\fmm} to approximate the influence of far-away boxes. For instance, for spherical harmonic expansions: \\ 
+{\lstinline|typedef std::vector<std::complex<double>> multipole_type|}
+
+%\begin{center}\begin{figure*}[h]\begin{lstlisting}
+%		typedef std::vector<std::complex<double>> multipole_type;
+%\end{lstlisting}\end{figure*}\end{center}
+
+\item \emph{Local Expansion} ({\lstinline|multipole_type|}) -- Regular expansion used in {\fmm} to approximate the influence of far-away boxes. Translated and converted from a multipole expansion. For  spherical harmonic expansions: \\
+{\lstinline|typedef std::vector<std::complex<double>> local_type|}.
+
+%\begin{center}\begin{figure*}[h]\begin{lstlisting}
+%		typedef std::vector<std::complex<double>> local_type;
+%\end{lstlisting}\end{figure*}\end{center}
+
+\end{itemize}
+
+\subsection{Plan}\label{subsec:plan}
+
+As the main forward-facing part of the library, the plan is designed to be very simple with all details abstracted away (and chosen through an options object). A single line is required to create the entire {\fmm} framework, and another line to get the result, as shown in \ref{code:plan}.
+
+\begin{figure*}[h]
+
+\begin{lstlisting}
+// define a kernel_type
+typedef SphericalLaplace kernel_type;
+// construct a kernel, in this case with p=5
+kernel_type K(5);
+// construct a plan with sources == targets
+FMM_plan<kernel_type> plan(K,sources,options);
+// construct a plan with sources != targets
+FMM_plan<kernel_type> plan(K,sources,targets,options);
+// execute a plan with given charges
+auto results = plan.execute(charges);
+\end{lstlisting}
+\caption{\emph{FMM\_plan} interface}
+\label{code:plan}
+
+\end{figure*}
+
+\subsection{Executor / Context}\label{subsec:executor}
+
+This object contains the abstraction of all details within the {\fmm}. It holds the tree, all evaluators, and provides the interface between the evaluators and all underlying data (sorted sources, charges and targets, multipole and local expansions etc.). It does this by providing the public interface shown in \ref{code:executor}.
+
+\begin{figure*}[h]
+
+\begin{lstlisting}
+// MAC satisfied between two boxes?
+bool accept_multipole(const box_type& source, const box_type& target);
+// get multipole / local expansions for a given box
+multipole_type& multipole_expansion(const box_type& box);
+local_type& local_expansion(const box_type& box);
+// box center
+point_type center(const box_type& box);
+// iterators to sources
+body_source_iterator source_begin(const box_type& box);
+body_source_iterator source_end(const box_type& box);
+// iterators to charges
+body_charge_iterator charge_begin(const box_type& box);
+body_charge_iterator charge_end(const box_type& box);
+// iterators to targets
+body_target_iterator target_begin(const box_type& box);
+body_target_iterator target_end(const box_type& box);
+// iterators to results
+body_result_iterator result_begin(const box_type& box);
+body_result_iterator result_end(const box_type& box);
+\end{lstlisting}
+\caption{Methods exposed by executor / context}
+\label{code:executor}
+\end{figure*}
+
+\subsection{Tree}\label{subsec:tree}
+
+Defines the concept of a {\lstinline|Box|}, and decomposes the space into these boxes based on a maximum number of bodies per box, $N_{\text{CRIT}}$. Provides an interface to those boxes, \ref{code:tree}. Default is an Octree ($3D$), but anything that provides the correct interface could be used.
+
+\begin{figure*}[h]
+
+\begin{lstlisting}
+// Box and Box methods
+//
+// get box data
+unsigned Box::index() const;
+unsigned Box::level() const;
+point_type Box::extents() const;
+unsigned Box::num_children() const;
+bool Box::is_leaf() const;
+point_type Box::center() const;
+Box Box::parent() const;
+body_iterator Box::body_begin() const;
+body_iterator Box::body_end() const;
+box_iterator Box::child_begin() const;
+box_iterator Box::child_end() const;
+// Equality operators (based on box index)
+bool Box::operator==(const Box& b) const;
+bool Box::operator<(const Box& b) const;
+
+// Construct a tree
+template <typename SourceIterator>
+void construct_tree(SourceIterator s_begin, SourceIterator s_end,
+		    unsigned NCRIT);
+// bounding box this tree encompasses
+bounding_box<point_type> bounding_box() const;
+// number of bodies, boxes, levels contained in the tree
+unsigned size() const;
+unsigned boxes() const;
+unsigned levels() const;
+// check if a box is contained within this tree
+bool contains(const box_type& box) const;
+// root box
+box_type& root() const;
+// iterators to values stored in the tree (entire tree)
+body_iterator body_begin() const;
+body_iterator body_end() const;
+box_iterator box_begin() const;
+box_iterator box_end() const;
+// iterators to boxes on a given level
+box_iterator box_begin(unsigned level) const;
+box_iterator box_end(unsigned level) const;
+// get a box from its index
+box_type& box(int idx) const;
+\end{lstlisting}
+\caption{Tree methods}
+\label{code:tree}
+\end{figure*}
+
+\subsection{Evaluator}\label{subsec:evaluator}
+
+Controls traversal of the tree, and calls kernel operators. Can be constructed with arbitrary state, and has a single called method, \ref{code:evaluator}. Obtains data for operator calls through the Context's public interface. The evaluator can be customized to provide any kind of evaluation, including treecode / {\fmm}, only considering the near-field (for preconditioners, kernels with negligible far-fields), or modifying the manner in which domains are evaluated -- the sparse-matrix form of the near-field from \S\ref{sec:fmm_near_field} is implemented using a customized evaluator.
+
+\begin{figure*}[h]
+
+\begin{lstlisting}
+// execute the evaluator with a given context
+void execute(context_type& context) const;
+\end{lstlisting}
+\caption{Evaluator execution}
+\label{code:evaluator}
+\end{figure*}
+
+\subsection{Kernel}\label{subsec:kernel}
+
+This contains all the operator methods required for a treecode \/{\fmm}: P2P, M2L etc. Can keep arbitrary state (for instance precomputed translation matrices), and can offer different granularities of computation for different architectures. The following types must be defined:
+
+\begin{itemize}
+
+\item {\lstinline|point_type|} -- A point in physical space (i.e. $(x,y,z)$).
+\item {\lstinline|kernel_value_type|} -- result of $\K(x_i, x_j)$.
+\item {\lstinline|source_type|} -- Source body, i.e. point for {\fmm}, panel for {\bem}. Must be convertible to {\lstinline|point_type|} by: {\lstinline|static_cast<point_type>(source_type)|}
+\item {\lstinline|charge_type|} -- Charge associated with each source
+\item {\lstinline|target_type|} -- Analogous to {\lstinline|source_type|} with the same casting restriction.
+\item {\lstinline|result_type|} -- Product of {\lstinline|charge_type * kernel_value_type|}.
+\item {\lstinline|multipole_type|} -- Multipole expansion type
+\item {\lstinline|local_type|} -- Local expansion type
+
+\end{itemize}
+
+\noindent
+To perform a calculation, the following operators must be defined:
+
+\begin{itemize}
+
+\item \emph{Treecode} -- P2P, P2M, M2M, M2P
+\item \emph{FMM} -- P2P, P2M, M2M, M2L, L2L, L2P
+
+\end{itemize}
+
+\noindent
+and must have signatures defined in \ref{code:kernel_operators}
+
+\begin{figure*}
+\begin{lstlisting}
+// P2P - One of (non-exhaustive):
+kernel_value_type operator()(const target_type& t,
+                             const source_type& s) const;
+template <typename SourceIter, typename ChargeIter,
+	  typename TargetIter, typename ResultIter>
+void P2P(SourceIter s_first, SourceIter s_last, ChargeIter c_first,
+	 TargetIter t_first, TargetIter t_last,
+	 ResultIter r_first) const;
+
+// P2M - One of:
+void P2M(const source_type& source, const charge_type& charge,
+	 const point_type& center, multipole_type& M) const;
+template <typename SourceIter, typename ChargeIter>
+void P2M(SourceIter s_first, SourceIter s_last, ChargeIter c_first,
+	 const point_type& center, multipole_type& M) const;
+
+// M2M
+void M2M(const multipole_type& source, multipole_type& target,
+	 const point_type& translation) const;
+
+// M2P - one of:
+void M2P(const multipole_type& M, const point_type& center,
+	 const target_type& target, result_type& result) const;
+template <typename TargetIter, typename ResultIter>
+void M2P(const multipole_type& M, const point_type& center,
+	 TargetIter t_first, TargetIter t_last,
+	 ResultIter r_first) const;
+	 
+// M2L
+void M2L(const multipole_type& source, local_type& target,
+	 const point_type& translation) const;
+
+// L2L
+void L2L(const local_type& source, local_type& target,
+	 const point_type& translation) const;
+
+// L2P - one of:
+void L2P(const local_type& source, const point_type& center,
+	 const target_type& target, result_type& result) const;
+template <typename TargetIter, typename ResultIter>
+void L2P(const local_type& source, const point_type& center,
+	 TargetIter t_first, TargetIter t_last,
+	 ResultIter r_first) const;
+\end{lstlisting}
+\caption{Kernel operators}
+\label{code:kernel_operators}
+\end{figure*}
+
+\noindent
+The kernels currently available are:
+
+% Equation | Expansion | T / F | Constructor options | Class name
+\begin{table}[htdp]
+\begin{center}
+\begin{tabular}{|c c|c|c|c|c|}
+
+\hline
+ & & & & & \\
+Equation & $\K$ & Expansion & Treecode/{\fmm} & Param. & Class \\
+\hline
+ & & & & & \\
+\multirow{3}{*}{Laplace} & \multirow{3}{*}{$\frac{1}{r}$} & Spherical & \multirow{3}{*}{Both} & \multirow{3}{*}{$p$} & \lstinline|LaplaceSpherical| \\
+ & & & & & \\
+  &  & Cartesian & & & \lstinline|LaplaceCartesian| \\
+  & & & & & \\ 
+  \hline 
+  & & & & & \\
+\multirow{3}{*}{Yukawa} & \multirow{3}{*}{$\frac{e^{-kr}}{r}$} & Spherical & Treecode & \multirow{3}{*}{$p,\;k$} & \lstinline|YukawaSpherical| \\
+ & & & & & \\
+ & & Cartesian & Both & & \lstinline|YukawaCartesian| \\
+ & & & & & \\
+ \hline
+ & & & & & \\
+ Helmholtz & $\frac{e^{-ikr}}{r}$ & Spherical & {\fmm} & $p,\;k,\;\epsilon$ & \lstinline|HelmholtzSpherical| \\
+ & & & & & \\ 
+ \hline
+ & & & & & \\
+ % Stokes & $\frac{\delta_{ij}}{r} + \frac{(x_i-y_i)(x_j-y_j)}{r^{3}}$ & Spherical & Both & $p$ & \lstinline|StokesSpherical| \\
+ Stokes & (\ref{eqn:stokeslet}) & Spherical & Both & $p$ & \lstinline|StokesSpherical| \\
+ & & & & & \\
+ \hline
+
+\end{tabular}
+\end{center}
+\caption{Available kernels}
+\label{table:kernels}
+\end{table}%
+
+
+\section{Example}\label{sec:fmm_plan_example}
+
+Now all of the software components have been introduced, it is worthwhile to demonstrate how a traditional treecode / {\fmm} maps to our library. The main components are:
+
+\begin{enumerate}
+
+\item Construct the tree
+\item Create multipole expansions at leaf boxes
+\item Translate multipole expansions up the tree
+\item Long-range interactions (M2P for treecode, M2L for {\fmm})
+\item Translate local expansions down the tree and evaluate them ({\fmm} only)
+\item Perform local evaluations (P2P)
+
+\end{enumerate}
+
+\noindent
+At a high level, we can think of this as two main ``phases'':
+
+\begin{enumerate}
+
+\item Create a tree,
+\item Traverse tree, calling operators.
+
+\end{enumerate}
+
+\noindent
+In our library, first a {\lstinline|FMM_Plan|} object is created -- this constructs the {\lstinline|Tree|} internally, as well as setting up the {\lstinline|Executor/Context|} and the desired combination of {\lstinline|Evaluator|}s. When the plan's {\lstinline|execute(charges)|} method is called, the {\lstinline|Evaluator|} traverses the {\lstinline|Tree|} and calls the appropriate combination of {\lstinline|Kernel|}s using appropriate data requested from the {\lstinline|Context|}. In it worth noting that as long as each component presents the appropriate interface, the underlying implementation is unimportant.
+
+
+% The tree is constructed using a {\lstinline|Tree|}, all traversal is done through an {\lstinline|Evaluator|}, and all operators are called through a {\lstinline|Kernel|}. All the underlying data is handled within a {\lstinline|Context|}, and a combination of {\lstinline|Evaluators|} is constructed and executed by the {\lstinline|Executor|}. In this way, each module requires a minimal amount of information about other components.

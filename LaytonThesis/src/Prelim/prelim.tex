@@ -1,0 +1,144 @@
+%!TEX root = ../thesis.tex
+
+% This file contains all the necessary setup and commands to create
+% the preliminary pages according to the buthesis.sty option.
+
+\title{Fast multipole boundary element solutions with inexact Krylov iterations and relaxation strategies}
+
+\author{Simon Layton}
+
+% Type of document prepared for this degree:
+%   1 = Master of Science thesis,
+%   2 = Doctor of Philisophy dissertation.
+%   3 = Master of Science thesis and Doctor of Philisophy dissertation.
+\degree=2
+
+\prevdegrees{B.Sc., University of Bristol, 2008 \\
+M.S., Boston University, 2011}
+
+\department{Department of Mechanical Engineering}
+
+% Degree year is the year the diploma is expected, and defense year is
+% the year the dissertation is written up and defended. Often, these
+% will be the same, except for January graduation, when your defense
+% will be in the fall of year X, and your graduation will be in
+% January of year X+1
+\defenseyear{2013}
+\degreeyear{2013}
+
+% For each reader, specify appropriate label {First, second, third},
+% then name, then title. Warning: If you have more than five readers
+% you are out of luck, because it will overflow to a new page.
+% Sometimes you may wish to put part of the title in with the name
+\reader{First}{Lorena Barba, PhD}
+{Assistant Professor of Mechanical Engineering}
+\reader{Second}{Sheryl Grace, PhD}{Associate Professor of Mechanical Engineering}
+\reader{Third}{Paul Barbone, PhD}{Associate Professor of Mechanical Engineering}
+\reader{Fourth}{Emily Ryan, PhD}{Assistant Professor of Mechanical Engineering}
+
+% The Major Professor is the same as the first reader, but must be
+% specified again for the abstract page
+\majorprof{Lorena A. Barba, PhD}{\mbox{Department of Mechanical Engineering}}
+
+%                       PRELIMINARY PAGES
+% According to the BU guide the preliminary pages consist of:
+% title, copyright (optional), approval,  acknowledgments (opt.),
+% abstract, preface (opt.), Table of contents, List of tables (if
+% any), List of illustrations (if any). The \tableofcontents,
+% \listoffigures, and \listoftables commands can be used in the
+% appropriate places. For other things like preface, do it manually
+% with something like \newpage\section*{Preface}.
+
+% This is an additional page (do not hand it in at the library) to print
+% boxed-in title, author and degree statement so that they are visible through
+% the opening in BU covers used for reports. This makes a nicely bound copy.
+\buecethesistitleboxpage
+
+% Make the titlepage based on the above information.  If you need
+% something special and can't use the standard form, you can specify
+% the exact text of the titlepage yourself.  Put it in a titlepage
+% environment and leave blank lines where you want vertical space.
+% The spaces will be adjusted to fill the entire page.
+\maketitle
+\cleardoublepage
+
+% The copyright page is blank except for the notice at the bottom. You
+% must provide your name in capitals.
+\copyrightpage
+\cleardoublepage
+
+% Now include the approval page based on the readers information
+\approvalpage
+\cleardoublepage
+
+% Here goes your favorite quote.
+\newpage
+\thispagestyle{empty}
+\input{Prelim/quote}
+\cleardoublepage
+
+% The acknowledgment page should go here. Use something like
+% \newpage\section*{Acknowledgments} followed by your text.
+\newpage
+\section*{\centerline{Acknowledgments}}
+\input{Prelim/ack}
+\cleardoublepage
+
+% The abstractpage environment sets up everything on the page except
+% the text itself.  The title and other header material are put at the
+% top of the page, and the supervisors are listed at the bottom.  A
+% new page is begun both before and after.  Of course, an abstract may
+% be more than one page itself.  If you need more control over the
+% format of the page, you can use the abstract environment, which puts
+% the word "Abstract" at the beginning and single spaces its text.
+
+\begin{abstractpage}
+\input{Prelim/abs}
+\end{abstractpage}
+\cleardoublepage
+
+% Now you can include a preface. Again, use something like
+% \newpage\section*{Preface} followed by your text
+
+% Table of contents comes after preface
+\tableofcontents
+\cleardoublepage
+
+% If you have tables, uncomment the following line
+%\listoftables
+%\cleardoublepage
+
+% If you have figures, uncomment the following line
+\newpage
+\listoffigures
+\cleardoublepage
+
+% List of Abbrevs is NOT optional (Martha Wellman likes all abbrevs listed)
+\chapter*{List of Abbreviations}
+\begin{center}
+  \begin{tabular}{lll}
+    \hspace*{2em} & \hspace*{1in} & \hspace*{4.5in} \\
+    BEM  & \dotfill & Boundary Element Method \\
+    FMM  & \dotfill & Fast Multipole Method \\
+    GMRES & \dotfill & Generalized minimal residual \\
+    FGMRES & \dotfill & Flexible generalized minimal residual \\
+    BLAS & \dotfill & Basic Linear Algebra Subroutines \\
+    P2P & \dotfill & Particle-to-Particle \\
+    P2M & \dotfill & Particle-to-Multipole \\
+    M2M & \dotfill & Multipole-to-Multipole \\
+    M2L & \dotfill & Multipole-to-Local \\
+    L2L & \dotfill & Local-to-Local \\
+    L2P & \dotfill & Local-to-Particle
+  \end{tabular}
+\end{center}
+\cleardoublepage
+
+% List of algorithms
+\newpage
+\listofalgorithms
+\cleardoublepage
+
+% END OF THE PRELIMINARY PAGES
+
+\newpage
+\endofprelim

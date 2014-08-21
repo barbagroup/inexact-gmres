@@ -1,0 +1,64 @@
+This is a BU ECE MS Thesis and PhD Dissertation preparation package for
+LaTeX/BiBTeX typsetting environment.
+
+The main thesis file "thesis.tex" calls other files included in individual
+directories. LaTeX style is defined in "bu_ece_thesis.sty", while bibliography
+LaTeX style is defined in "apalike.sty" and bibliography BiBTeX style is
+defined in "apalike.bst".
+
+There is included an additional title page (do not hand it in at the library)
+to print boxed-in title, author and degree statement so that they are visible
+through the opening in BU covers used for reports. This makes a nicely bound
+copy.
+
+You can easily add new chapters by creating new sub-directories and adding new
+EPS files to "Figures" sub-directory in each chapter (note that a graphics path
+can be set in each chapter so that when inserting EPS files you do not need to
+include the full path - files are found automatically if placed in "Figures").
+
+This package has been tested under Linux on ISS server, but should work well
+with MiKTeX on Windows. It has not been tested on a Mac. However, please note
+that the default setup in your particular incarnation of Latex may differ from
+the one from ISS server, and, therefore, dimensions, margins, etc. may not
+conform to BU thesis requirements.  You can easily manipulate the following
+parameters to meet BU thesis requirements:
+
+  in thesis.tex file:
+
+  * \documentclass[12pt]{report}          - font size (10pt, 11pt, 12pt)
+  * \documentclass[12pt,twoside]{report}  - double-sided printing (not for
+                                            library)
+
+  in bu_ece_thesis.sty file:
+
+  * \oddsidemargin 0.5in       - left margin
+  * \evensidemargin 0.0in      - right margin, only for double-sided printing
+  * \textwidth 6.0in           - width of text leaving about 1" right margin
+  * \topmargin 0in             - top margin together with head separator give
+  * \headsep 24pt                the total 1.5" top margin
+  * \textheight 8.5in          - text height leaving about 1" margin at bottom
+
+The confusion (Why 0.5" left margin results in 1.5" margin on paper?) stems
+from the fact that there exist hidden margins, usually set to 1", that are
+setup during installation. If these are not 1" then the above values will be
+off. The fact that 1"+0.5" may not equal exactly 1.5" stems from the fact that it
+was fine-tuned for a specific printer, which may have its own offset.
+
+In summary, you need to fine tune these parameters yourself for your specific
+Latex installation and printer.
+
+PDF caveat: In order to create a good-quality PDF version of the thesis
+(especially if it includes grayscale images) under Linux, first prepare a
+PostScript file using "dvips -P pdf -G0 " (G0 fixes the ligature problem), and
+then convert to PDF as follows:
+
+"ps2pdf -dMaxSubsetPct=100 -dCompatibilityLevel=1.2 \
+             -dSubsetFonts=true -dEmbedAllFonts=true -dAutoFilterColorImages=false \
+             -dAutoFilterGrayImages=false -dColorImageFilter=/FlateEncode \
+             -dGrayImageFilter=/FlateEncode -dModoImageFilter=/FlateEncode  "
+
+However, this process slightly reduces page size and should only be used to
+prepare a PDF version for web use, archiving, etc. In order to print for the
+library, please use directly the "dvips" command. If you are printing from
+Windows, whether to a printer or PDF, make sure that no scaling takes place
+in the software you are using for printing.

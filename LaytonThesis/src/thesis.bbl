@@ -1,0 +1,234 @@
+\begin{thebibliography}{}
+
+\bibitem[Abramowitz and Stegun, 1964]{stegun1964}
+Abramowitz, M. and Stegun, I., editors (1964).
+\newblock {\em Handbook of Mathematical Functions}.
+\newblock National Bureau of Standards, second edition.
+
+\bibitem[Barnes and Hut, 1986]{BarnesHut1986}
+Barnes, J. and Hut, P. (1986).
+\newblock A hierarchical {$O(N \log N)$} force-calculation algorithm.
+\newblock {\em Nature}, 324:446--449.
+
+\bibitem[Boschitsch et~al., 1999]{Boschitsch99}
+Boschitsch, A.~H., Fenley, M.~O., and Olson, W.~K. (1999).
+\newblock {A} fast adaptive multipole algorithm for calculating screened
+  {Coulomb} {(Yukawa)} interactions.
+\newblock {\em Journal of Computational Physics}, 151:212--241.
+
+\bibitem[Bouras and Frayss{\'e}, 2005]{bourasfraysse2005}
+Bouras, A. and Frayss{\'e}, V. (2005).
+\newblock Inexact matrix-vector products in krylov methods for solving linear
+  systems: A relaxation strategy.
+\newblock {\em SIAM Journal on Matrix Analysis and Applications}, 26(3):660--678.
+
+\bibitem[Brebbia and Dominguez, 1992]{BrebbiaDominguez1992}
+Brebbia, C. and Dominguez, I. (1992).
+\newblock {\em Boundary Elements An Introductory Course}.
+\newblock WIT Press, 2nd edition.
+
+\bibitem[Chaillat et~al., 2011]{Chailletetal2011}
+Chaillat, S., Semblat, J., and Bonnet, M. (2011).
+\newblock A preconditioned 3-d multi-region fast multipole solver for seismic
+  wave propagation in complex geometries.
+\newblock {\em Communications in Computational Physics}, 11(2):594--609.
+
+\bibitem[Dijkstra and Mattheij, 2006]{DijkstraMattheij06}
+Dijkstra, W. and Mattheij, R. M.~M. (2006).
+\newblock The condition number of the {BEM}-matrix arising from {Laplace's}
+  equation.
+\newblock Technical report, OAI Repository of the Technische Universiteit
+  Eindhoven (TU/e)
+
+\bibitem[Dijkstra and Mattheij, 2007]{dijkstramattheij2007}
+Dijkstra, W. and Mattheij, R. M.~M. (2007).
+\newblock Condition number of the {BEM} matrix arising from the stokes
+  equations in {2D}.
+\newblock Technical report, Eindhoven University of Technology.
+
+\bibitem[Dongarra and Sullivan, 2000]{DongarraSulli2000}
+Dongarra, J. and Sullivan, F. (2000).
+\newblock The top 10 algorithms of the twentieth century.
+\newblock {\em Computing in Science and Engineering}, 2(1):22--23.
+
+\bibitem[Fachinotti et~al., 2007]{fachinotti2007}
+Fachinotti, V.~D., Cardona, A., D'Elia, J., and Paquay, S. (2007).
+\newblock {BEM} for the analysis of fluid flow around {MEMS}.
+\newblock {\em Mec{\'a}nica Computacional}, XXIV: 1104--19
+
+\bibitem[Fata, 2009]{fata2009}
+Fata, S.~N. (2009).
+\newblock Explicit expressions for {3D} boundary integrals in potential theory.
+\newblock {\em International Journal for Numerical Methods in Engineering}, 78:32--47.
+
+\bibitem[Fata, 2011]{fata2011}
+Fata, S.~N. (2011).
+\newblock Explicit expressions for three-dimensional boundary integrals in
+  linear elasticity.
+\newblock {\em Journal of Computational and Applied Mathematics}, 235(15):4480--4495
+
+\bibitem[Frangi and di. Gioia, 2005]{frangi2005}
+Frangi, A. and di. Gioia, A. (2005).
+\newblock Multipole {BEM} for the evaluation of damping forces on {MEMS}.
+\newblock {\em Computational Mechanics}, 37(1): 24--31
+
+\bibitem[Fu et~al., 1998]{fuEtal98}
+Fu, Y., Klimkowski, K.~J., Rodin, G.~J., Berger, E., Browne, J.~C., Singer,
+  J.~K., Van De~Geijn, R.~A., and Vemangati, K.~S. (1998).
+\newblock A fast solution method for three-dimensional many-particle problems
+  of linear elasticity.
+\newblock {\em International Journal for Numerical Methods in Engineering}, 42(7): 1215--1229.
+
+\bibitem[Gomez and Powert, 1997]{gomez1997}
+Gomez, J. and Powert, H. (1997).
+\newblock A multipole direct and indirect bem for 2d cavity flow at low
+  reynolds number.
+\newblock {\em Engineering Analysis with Boundary Elements}, 19(1):17--31.
+
+\bibitem[Greengard, 1987]{greengard1987}
+Greengard, L. (1987).
+\newblock {\em The rapid evaluation of potential fields in particle systems}.
+\newblock The MIT Press.
+
+\bibitem[Greengard et~al., 1998]{GreengardETal1998}
+Greengard, L., Huang, J., Rokhlin, V., and Wandzura, S. (1998).
+\newblock Accelerating fast multipole methods for the {H}elmholtz equation at
+  low frequencies.
+\newblock {\em IEEE Computational Science and Engineering}, 5(3):32--38.
+
+\bibitem[Greengard and Rokhlin, 1987]{GreengardRokhlin1987}
+Greengard, L. and Rokhlin, V. (1987).
+\newblock A fast algorithm for particle simulations.
+\newblock {\em Journal of Computational Physics}, 73(2):325--348.
+
+\bibitem[Greengard and Rokhlin, 1997]{GreengardRokhlin1997}
+Greengard, L. and Rokhlin, V. (1997).
+\newblock A new version of the fast multipole method for the {L}aplace equation
+  in three dimensions.
+\newblock {\em Acta Numerica}, 6.1 (1997): 229--269.
+
+\bibitem[Huang et~al., 2009]{HuangJiaZhang2009}
+Huang, J., Jia, J., and Zhang, B. (2009).
+\newblock {FMM-Yukawa}: An adaptive fast multipole method for screened
+  {Coulomb} interactions.
+\newblock {\em Computational Physics Communications}, 180(11):2331--2338.
+
+\bibitem[Klaseboer et~al., 2011]{klaseboeretal2011}
+Klaseboer, E., Manica, R., Chan, D. Y.~C., and Khoo, B.~C. (2011).
+\newblock {BEM} simulations of potential flow with viscous effects as applied
+  to a rising bubble.
+\newblock {\em Engineering Analysis with Boundary Elements}, 35:480--494.
+
+\bibitem[Kr{\"u}ger, 2012]{kruger2012}
+Kr{\"u}ger, T. (2012).
+\newblock {\em Computer Simulation Study of Collective Phenomena in Dense
+  Suspensions of Red Blood Cells under Shear}.
+\newblock Springer.
+
+\bibitem[Liu, 2009]{Liu2009}
+Liu, Y. (2009).
+\newblock {\em Fast multipole boundary element method: Theory and applications
+  in engineering}.
+\newblock Cambridge University Press.
+
+\bibitem[Majchrzak and Freus, 2003]{majchrzakfreus2003}
+Majchrzak, E. and Freus, K. (2003).
+\newblock Boundary element method in the inverse problems of steady heat
+  transfer.
+\newblock Technical report, Scientific Reseach of the Institue of Mathematics
+  and Computer Science.
+
+\bibitem[Nabors et~al., 1994]{Nabors94}
+Nabors, K., Korsmeyer, F.~T., Leighton, F.~T., and White, J. (1994).
+\newblock Preconditioned, adaptive, multipole-accelerated iterative methods for
+  three-dimensional first-kind integral equations of potential theory.
+\newblock {\em SIAM Journal on Scientific Computing}, 15(3):713--735.
+
+\bibitem[Panti, 2008]{panti2008}
+Panti, E. (2008).
+\newblock Boundary element method for heat transfer in a buried pipe.
+\newblock Master's thesis, University of Reading.
+
+\bibitem[Plimpton, 1995]{Plimpton1995}
+Plimpton, S. (1995).
+\newblock Fast parallel algorithms for short-range molecular dynamics.
+\newblock {\em Journal of Computational Physics}, 117(1):1--19.
+
+\bibitem[Pozrikidis, 1992]{Pozrikidis1992}
+Pozrikidis, C. (1992).
+\newblock {\em Boundary integral and singularity methods for linearized viscous
+  flow}.
+\newblock Cambridge University Press.
+
+\bibitem[Rahimian et~al., 2010]{RahimianETal2010}
+Rahimian, A., Lashuk, I., Veerapaneni, S., Chandramowlishwaran, A., Malhotra,
+  D., Moon, L., Sampath, R., Shringarpure, A., Vetter, J., Vuduc, R., Zorin,
+  D., and Biros, G. (2010).
+\newblock Petascale direct numerical simulation of blood flow on 200k cores and
+  heterogeneous architectures.
+\newblock In {\em Proceedings of the 2010 ACM/IEEE International Conference for
+  High Performance Computing, Networking, Storage and Analysis}, SC '10, pages
+  1--11. IEEE Computer Society.
+
+\bibitem[Roache, 1998]{roache1998}
+Roache, P.~J. (1998).
+\newblock {\em Verification and Validation in Computational Science and
+  Engineering}.
+\newblock Hermosa Publishers.
+
+\bibitem[Rodrigues, 1815]{Rodrigues1815}
+Rodrigues, O. (1815).
+\newblock {\em De l'attraction des sph{\'e}ro{\"\i}des}.
+\newblock PhD thesis.
+
+\bibitem[Saad, 1993]{saad1993}
+Saad, Y. (1993).
+\newblock A flexible inner-outer preconditioned gmres algorithm.
+\newblock {\em SIAM Journal of Scientific Computing}, 14(2):461--469.
+
+\bibitem[Saad and Schultz, 1986]{SaadSchultz1986}
+Saad, Y. and Schultz, M. (1986).
+\newblock {GMRES}: A generalized minimal residual algorithm for solving
+  nonsymmetric linear systems.
+\newblock {\em SIAM Journal on Scientific and Statistical Computing}, 7:856--869.
+
+\bibitem[Sidje and Winkles, 2011]{sidjewinkles2011}
+Sidje, R. and Winkles, N. (2011).
+\newblock Evaluation of the performance of inexact {GMRES}.
+\newblock {\em Journal of Computational and Applied Mathematics}, 235(8): 1956--1975
+
+\bibitem[Simoncini and Szyld, 2003]{simonciniszyld2003}
+Simoncini, V. and Szyld, D. (2003).
+\newblock Theory of inexact krylov subspace methods and applications to
+  scientific computing.
+\newblock {\em SIAM Journal on Scientific Computing}, 25(2):454--477.
+
+\bibitem[Tornberg and Greengard, 2008]{tornberg2008}
+Tornberg, A.-K. and Greengard, L. (2008).
+\newblock A fast multipole method for the three-dimensional stokes equations.
+\newblock {\em Journal of Computational Physics}, 227:1613--1619.
+
+\bibitem[Van~den Eshof and Sleijpen, 2004]{vandeneshofsleijpen2004}
+Van~den Eshof, J. and Sleijpen, G. (2004).
+\newblock Inexact krylov subspace methods for linear systems.
+\newblock {\em SIAM Journal on Matrix Analysis Applications}, 26(1):125--153.
+
+\bibitem[Yokota et~al., 2010]{YokotaETal2010}
+Yokota, R., Bardhan, J.~P., Knepley, M.~G., Barba, L.~A., and Hamada, T.
+  (2010).
+\newblock Biomolecular electrostatics using a fast multipole {BEM on up to 512
+  GPUs} and a billion unknowns.
+\newblock {\em Compututational Physics Communications}, 182.6 (2011): 1272--1283
+
+\bibitem[Yokota and Barba, 2013]{YokotaBarba2012b}
+Yokota, R. and Barba, L.~A. (2013).
+\newblock {FMM}-based vortex method for simulation of isotropic turbulence on
+  {GPUs}, compared with a spectral method.
+\newblock {\em Computers \& Fluids}, 80:17--27.
+
+\bibitem[Zinchenko and Davis, 2003]{zinchenko2003}
+Zinchenko, A. and Davis, R. (2003).
+\newblock Large-scale simulations of concentrated emulsion flows.
+\newblock {\em Philosophical Transactions, Seria A, Mathematical, Physical and Engineering Sciences}, 361(1806): 813--845
+
+\end{thebibliography}

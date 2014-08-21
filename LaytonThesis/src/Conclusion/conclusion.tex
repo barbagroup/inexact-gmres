@@ -1,0 +1,68 @@
+%!TEX root = ../thesis.tex
+
+\chapter{Conclusions}
+\label{chapter:conclusions}
+\thispagestyle{myheadings}
+
+% set this to the location of the figures for this chapter. it may
+% also want to be ../Figures/2_Body/ or something. make sure that
+% it has a trailing directory separator (i.e., '/')!
+\graphicspath{{Conclusions/}}
+
+\section{Achievements and Findings}
+
+% applied relaxed solver to FMM-BEM
+The theory of inexact-Krylov iterations has been applied for the first time for {\fmmbem} problems and verified against standard {\gmres} solvers. It has been tested for both Laplace and Stokes problems and the convergence of the associated linear solves, along with the resulting accuracy of the result has been found to be comparable in all cases. Further, this new method has been applied to the field of the flow of red blood cells (ethrocytes), and has demonstrated significant \emph{algorithmic} performance gains in this engineering example. More detailed conclusions can be summarized as follows.
+
+% verified on simple Laplace problems, explored parameter space
+For the simplest test problem explored, experiments using the Laplace equation showed the validity of using a relaxed {\gmres} solver for {\fmmbem}. In all cases, the relaxed solver provided reduced time-to-solution, while maintaining comparable iteration counts, convergence rates and final residuals. In the course of a parameter study involving these equations, we determined the following general rules for the use of a relaxed method:
+
+\begin{itemize}
+\item Higher required precisions will result in more significant reductions to time-to-solution, due to the strong scaling with respect to series truncation value, $p$ in the {\fmm}.
+
+\item Problems that require large numbers of iterations in order to reach a satisfactory solution tolerance will benefit more from relaxed schemes -- the nature of {\gmres} results in a large number of iterations requiring comparatively low accuracy from the matrix-vector product; iterations that benefit greatly from relaxation's reduced accuracy requirement.
+
+\item The traditional thinking within the {\fmm} community that the computation time for near and far-fields should be balanced, requires modifications for use within a relaxed solver. As the desired tolerance, and thus required $p$ decreases, the cost of the far-field reduces significantly, while the near-field cost stays constant. Thus, for minimized time-to-solution, the best configuration is to shrink the near-field to the smallest possible whilst retaining accuracy. The higher cost of initial iterations compared to balanced evaluations is made up for by the larger number of low-cost iterations during the remainder of the solve.
+\end{itemize}
+
+% verified on tougher Stokes problem, verified speedups
+We next used a more difficult problem, creeping or Stokes flow, to test our conclusions from the Laplace experiments, and to show the applicability of the inexact {\gmres} to a tougher, more relevant problem. In all cases, once again, the relaxed solver gave comparable iteration counts and final residuals, while providing significant speedups, in the order of $3-4\times$, for time-to-solution. These experiments also contributed the idea that a \emph{minimum} value of $p$ may need to be set for tough problems, in order to maintain overall accuracy. 
+
+% applied to RBC problem, single & multiple cells, explored speedups
+Finally, the insights provided from test problems were applied to a more significant, real-world application, the flow of red blood cells. These experiments demonstrated that for a relevant simulation, the relaxed {\gmres} solver can provide significant reductions in solution time, often by a factor of $4\times$, resulting in huge time savings. As a corollary to the reduced time, the relaxed solver also provides a more memory-efficient method, due to the smaller near-field, and thus reduced memory footprint of the near-field sparse matrix.
+
+% summarise w/bullet points
+In summary, the following discoveries were made in this work:
+\begin{enumerate}
+\item The theory behind inexact Krylov solvers is fully applicable to {\fmmbem} applications, and can provide significant benefits in terms of time-to-solution, while requiring little effort to add to an existing {\fmmbem} code.
+
+\item Based on the accuracy required, and number of iterations required to solve the linear system, we can predict whether a problem will benefit or not from relaxed solvers.
+
+\item Relaxation can be applied successfully to more difficult systems, such as those from the Stokes equations. After these experiments we can say with some confidence that relaxation is likely to work with any equation, as long as accuracy and iteration count requirements are met.
+
+\item There are significant \emph{algorithmic} performance benefits from using a relaxed solver. Speedups obtained from the current implementation for Stokes problems were consistently in the $3-4\times$ range, and due to the algorithmic nature of the improvement, should be comparable for other implementations.
+\end{enumerate}
+
+\section{Further Work}
+
+% This thesis has already presented a significant body of work, however there are always more capabilities to be added, and improvements to make. The following suggestions for further work would both increase the number of problems that could be tackled and provide more options for researchers. Due to the algorithmic nature of the improvements presented in the previous chapters, we would expect all of the following to benefit from relaxation schemes, 
+
+\subsection{Distributed-memory Parallelization}
+
+We already have a basic shared-memory parallel evaluator for the {\fmmbem}, however for large problems we run in problems with memory consumption, especially when trying to use the sparse-matrix form of the near-field shown in \S\ref{sec:fmm_near_field}. Moving to a full parallel code would allow us to compute much larger problems due to both the addition of extra computing power, and access to more memory.
+
+\subsection{Hypersingular / Dual Formulation for Stokes}
+
+While we have used a standard, or ``conventional'' formulation for our Stokes {\bem}, it is also possible to reformulate the problem in terms of a Hypersingular {\bem}, so-named for the existence of a new hypersingular operator that appears. This formulation can have problems with the uniqueness of solutions, so  a combination of both conventional and hypersingular formulations was proposed \cite{Liu2009} in order to maintain the better linear system characteristics of the hypersingular form, while retaining a unique solution. This combined approach would change the convergence properties of the {\bem} by reducing the number of iterations, while increasing the amount of work per iteration, and thus potential savings from relaxation, due to the additional operators required. 
+
+\subsection{Higher-Order Elements}
+
+While this thesis concentrates on {\bem} with flat, constant-value triangles, there exist other, higher-order elements. Common examples of these would be flat panels with either linear or quadratic distributions of value across them, or even curved panels. These additions would provide better accuracy with fewer panels for some classes of problems, at the cost of more computational work for the {\ptop} and {\ptom} operators, changing the balance of near and far-field computation for relaxed problems.
+
+\subsection{Linear-Elasticity Equations}
+
+A natural extension of the work on the Stokes equations would be extending to the linear elasticity equations. There already exist formulations of the {\fmm} based around decomposition into harmonic {\fmm}s \cite{fuEtal98}, similar to those for Stokes. Further, the analytical integration routines used in \S\ref{subsubsec:analytical} were originally for linear elasticity, and were modified for our use for Stokes problems. Not only would this be a relatively simple addition to the work, but it would open up whole new application areas, both stand-alone and in conjunction with the red-blood cell work in chapter \ref{chapter:rbc}. In particular, the application of ethrocytes moving and deforming within blood vessels would be enabled with this set of additional {\fmm} kernels.
+
+\subsection{FMM Algorithmic improvements}
+
+As stated in \S\ref{sec:laplace_expansions}, there exist several algorithmic improvements for the Laplace {\fmm} used for all problems in this thesis. These improvements lower the complexity of translation operators from $\O{p^{4}}$ to $\O{p^{3}}$, making the {\fmm} more efficient, especially for high accuracy (high $p$) cases. While we would still expect relaxation schemes to provide a significant benefit to solution times, the balance of near and far-field computations would be likely to change.

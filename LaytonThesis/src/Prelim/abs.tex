@@ -1,0 +1,14 @@
+%!TEX root = ../thesis.tex
+
+Boundary element methods (\bem) have been used for years to solve a multitude of engineering problems, ranging from Bioelectrostatics, to fluid flows over micro-electromechanical devices and deformations of cell membranes. Only requiring the discretization of a surface into panels rather than the entire domain, they effectively reduce the dimensionality of a problem by one.
+
+This reduction in dimensionality nevertheless comes at a cost. {\bem} requires the solution of a large, dense linear system with each matrix element formed of an integral between two panels, often performed used an iterative solver based on Krylov subspace methods. This requires the repeated calculation of a matrix vector product that can be approximated using a hierarchical approximation known as the fast multipole method (\fmm). While adding complexity, this reduces order of the time-to-solution from $\O{cN^{2}}$ to $\O{cN}$, where $c$ is some function of the condition number of the dense matrix.
+
+This thesis obtains algorithmic speedups for the solutions of {\fmmbem} systems by applying the mathematical theory behind inexact matrix-vector products to our solver, implementing a relaxation scheme to control the error incurred by the {\fmm} in order to minimize the total time-to-solution. The theory is extensively verified for both Laplace equation and Stokes flow problems, with an investigation to determine how further problems may benefit from the addition of a relaxed solver. We also present experiments for the Stokes flow around both single and multiple red blood cells, an area of ongoing research, showing good speedups that would be applicable for any other code that chose to implement a similar relaxed solver. All of these results are obtained with an easy-to-use, extensible and open-source {\fmmbem} code.
+
+
+% Engineering problems become ever larger, and we continually look for better ways to simulate them. Boundary elements (BEM) are a integral formulation over a surface, only requiring discretization of the surface rather than the entire domain, effectively reducing the dimensionality of a problem from a volume to a surface in 3D.
+
+% BEM requires the iterative solution of a large dense linear system, in our case solved using GMRES, a Krylov subspace method that uses repeated matrix-vector products. These are accelerated using a fast multipole method or treecode, reducing the time to solution from O(N^2) to O(N).
+
+% We apply the mathematical theory behind inexact matrix products and relaxation to our BEM solver, utilizing the ability of fast multipole methods to control error in order to minimize time to solution. This is combined with preconditioners and inner-outer solvers, and extensively tested in a new, extensible computational framework.

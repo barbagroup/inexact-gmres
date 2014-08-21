@@ -1,0 +1,98 @@
+%!TEX root = ../thesis.tex
+
+\addcontentsline{toc}{chapter}{Curriculum Vitae}
+
+\thispagestyle{empty}
+
+\begin{center}
+{\LARGE {\bf CURRICULUM VITAE}}\\
+\vspace{0.5in}
+{\large {\bf Simon Layton}}
+\end{center}
+
+% \setcounter{section}{0}
+\setcounter{secnumdepth}{-1}
+
+\section*{Research Interests}
+
+Fast multipole methods ({\fmm}) and fast multipole accelerated Boundary element methods. High- performance computing using heterogenous architectures especially {\nvidia}’s {\cuda} environment. Classical algebraic multigrid for engineering applications, including computational fluid dynamics, most notably immersed boundary techniques. Also interested in sparse linear algebra, notably sparse matrix-matrix products and iterative linear solvers. Further experience in fast multipole and boundary element methods.
+
+\section*{Internships}
+
+\paragraph{May-August 2012 -- DevTech Compute intern, NVIDIA}
+
+Worked on integrating the internal NVAMG library into a large open source scientific code. Work included implementing new features to the library using CUDA and optimizing these codes. Also worked on the interception and analysis of BLAS calls in a major structural analysis code, including work on moving suitable calls to cuBLAS and analyzing and profiling full simulation runs on sample industrial problems.
+
+\paragraph{June-September 2011 -- Emerging Applications intern, NVIDIA}
+
+Worked with Jonathan Cohen on finite-volume methods (1 mo.) and algebraic multigrid ({\amg}) in {\cuda} (remaining time) Work on {\amg} included a complete port of the previous {\cpu} only code from within the group to {\cuda}, testing and verification against the Hypre open-source package.
+
+\section*{Education}
+
+\paragraph{PhD, Mechanical Engineering, Boston University, Expected September 2013}
+
+Thesis: \emph{Fast multipole boundary element methods with inexact Krylov iterations and relaxation strategies} -- Use of fast multipole methods as an inexact matrix-vector product for boundary element methods when solved using Krylov iterative methods. The theory behind inexact matrix-vector products is applied to adaptively control the error produced by the fast multipole method in order to minimize the time to solution for boundary element formulations of example engineering problems involving the Laplace and Stokes equations.
+
+\paragraph{MS, Mechanical Engineering, Boston University, Awarded January 2011}
+
+Concentrations: Computational Fluid Dynamics, Fast Evaluation Algorithms, Heterogenous Computing
+
+\paragraph{BSc, Mathematics and Computer Science, University of Bristol, 2008}
+
+Concentrations: Applied Mathematics, Algorithms, Numerical Methods
+
+
+\section*{Publications}
+
+\begin{itemize}
+\item ``How to obtain efficient GPU kernels: an illustration using FMM \& FGT algorithms'', F. A. Cruz, S. K. Layton, L. A. Barba, \emph{Comput. Phys. Commun.}, Volume 182, Issue 10, p.2084-2098 (2011)
+\end{itemize}
+
+\section*{Conference Contributions and Talks}
+
+\begin{itemize}
+\item ``Classical algebraic multigrid for CFD with CUDA'', GTC 2012, San Jose, CA
+
+\item ``Classical algebraic multigrid for engineering applications'', {\cuda} Fast Forward, {\nvidia}
+Booth, SC ’11, Seattle, WA, 14th Nov. 2011
+
+\item ``Classical algebraic multigrid using CUDA'', GPU@BU Workshop, Nov. 8th 2011, Boston University
+
+\item ``cuIBM - a GPU-accelerated immersed boundary method'', S. K. Layton, A. Krishnan, L. A. Barba, International Conference in Parallel CFD, Barcelona, Spain, 16-20 May 2011.
+
+\item ``The parallel Fast Gauss Transform in an heterogenous computing environment'', S. K. Layton, F. A. Cruz, L. A. Barba, US National Congress in Computational Mechanics, USNCCM'09; Columbus, OH, July 2009.
+\end{itemize}
+
+\section*{Workshops}
+
+Pan-American Advanced Studies Institute (PASI) - Universidad Santa Maria, Valparaiso, Chile
+(January 2011) - Fully funded by NSF
+
+\section*{Fellowships}
+
+\begin{itemize}
+\item Dean’s Fellow, Boston University College of Engineering, 2008-2009
+\item Graduate Teaching Fellow, Boston University College of Engineering, Fall 2009
+\end{itemize}
+
+\section*{Research}
+
+\paragraph{2009-Present} -- Research Assistant at Boston University for Prof. L. Barba, working on heterogenous computing using {\cuda} with varied applications, including fast multipole accelerated boundary element methods, relaxed Krylov solvers, algebraic multigrid, fast evaluation of sums of Gaussians, Computational Fluid dynamics and high order non-oscillatory finite difference schemes for systems of conservation equations.
+
+\paragraph{2008-09} -- Research Assistant at Boston University for Prof. L. Barba, working on fast evaluation of Gaussians and heterogenous computing using {\cuda}.
+
+\paragraph{2007-08} -- 9 month final mathematics research project with Prof. L. Barba: ``Implementation and numerical experimentation of fast algorithms for particle methods with Gaussians''
+
+\section*{Teaching}
+
+\paragraph{2009}
+Teaching assistant for Fluid Mechanic course, ME303, Boston University
+
+\section*{Skills and Qualifications}
+
+\begin{itemize}
+\item Use and administration of Linux, Mac OS X, Microsoft Windows systems
+\item Programming in C, C++, CUDA, Python, bash, Java, Matlab, Mathematica
+\item Use of Boost, OpenMP, MPI, Cusp, Thrust and varied other software libraries
+\item Familiar with CFD packages such as OpenFOAM and Gerris
+\end{itemize}•

@@ -1,0 +1,7 @@
+\contentsline {algorithm}{\numberline {1}{\ignorespaces Right-Preconditioned GMRES \cite {SaadSchultz1986}\relax }}{10}
+\contentsline {algorithm}{\numberline {2}{\ignorespaces Tree Construction\relax }}{15}
+\contentsline {algorithm}{\numberline {3}{\ignorespaces Upward sweep\relax }}{16}
+\contentsline {algorithm}{\numberline {4}{\ignorespaces Interaction Stage\relax }}{17}
+\contentsline {algorithm}{\numberline {5}{\ignorespaces Downward Sweep\relax }}{17}
+\contentsline {algorithm}{\numberline {6}{\ignorespaces Right-Preconditioned FGMRES \cite {saad1993}\relax }}{21}
+\contentsline {algorithm}{\numberline {7}{\ignorespaces Lazy Upward sweep\relax }}{44}
