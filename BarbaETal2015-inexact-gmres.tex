@@ -84,7 +84,7 @@
 
 \title{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES WITH FAST-MULTIPOLE BOUNDARY ELEMENT METHOD} 
 
-\author{L. A Barba\thanks{The George Washington University, Washington DC, 20056 
+\author{Lorena A. Barba\thanks{The George Washington University, Washington DC, 20056 
 (\email{labarba@gwu.edu})}
 \and Simon K. Layton\thanks{If you want to be first author, you have to write ...}}
 
@@ -170,29 +170,29 @@ Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both fir
 
 
 
-\begin{figure}[b]
+\begin{figure}[h]
 \begin{center}
-	\subfloat[][128 panels]{\includegraphics[natwidth=4.73in,width=0.45\textwidth]{sphere128.pdf}\label{fig:sphere128}}\qquad
-	\subfloat[][2048 panels]{\includegraphics[natwidth=4.73in,width=0.45\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
+	\subfloat[][128 panels]{\includegraphics[natwidth=4.73in,natheight=3.94in,width=0.4\textwidth]{sphere128.pdf}\label{fig:sphere128}}\qquad
+	\subfloat[][2048 panels]{\includegraphics[natwidth=4.73in,natheight=3.94in,width=0.4\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
 	\caption{Triangular discretizations of a spherical surface.}
 	\label{fig:glob_spheres}
 \end{center}
 \end{figure}
 %
-\begin{figure}[b]
+\begin{figure}[t]
 \begin{center}
-	\includegraphics[natwidth=3in,width=0.6\textwidth]{LaplaceConvergence.pdf}
+	\includegraphics[natwidth=3in,natheight=2in,width=0.6\textwidth]{LaplaceConvergence.pdf}
 	\caption{Convergence of 1st-kind (open circles with solid line) and 2nd-kind (open circles with dotted line) solvers for the Laplace equation on a sphere, using a right-preconditioned \gmres with \fmm-accelerated matrix-vecctor products, and parameters: $\theta_{\text{MAC}} = 0.5$, $p=10$, and solver tolerance of $10^{-6}$.}
 	\label{fig:laplaceconvergence}
 \end{center}
 \end{figure}
 
-Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and the value of $p$ required in the \fmm-accelerated mat-vecs to continue convergence. We used a sphere discretized with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-5}$ with an initial value of $p$ set to 8. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 3 is sufficient by the seventh iteration. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale from $\bigO(p^{4})$ for spherical harmonics to $\bigO(p^{6})$ for Cartesian expansions.
+Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and  what value of $p$ is required in the \fmm-accelerated mat-vecs to continue convergence. We discretized a sphere with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-5}$ with an initial value of $p$ set to 8. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 3 is sufficient by the seventh iteration. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale from $\bigO(p^{4})$ for spherical harmonics to $\bigO(p^{6})$ for Cartesian expansions.
 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[natwidth=3.7in,width=0.65\textwidth]{LaplaceResidualIterations.pdf}
+	\includegraphics[natwidth=3.7in,natheight=2in,width=0.65\textwidth]{LaplaceResidualIterations.pdf}
 	\caption{In a test using a sphere discretized with $32,768$ triangles, the residual $\|r_{k}\|$ decreases with successive \gmres iterations while the necessary $p$ to achieve convergence drops quickly.}
 	\label{fig:residualp}
 \end{figure}
