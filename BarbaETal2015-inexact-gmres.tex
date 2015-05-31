@@ -314,15 +314,15 @@ The final case looks at the situation where the application might demand large i
 \end{table}%
 
 \subsection{Inexact {\small GMRES} for solving the Stokes equation}
-Like before, we start with a grid-convergence study to build confidence that the Stokes solver is correct and converges to the right solution at the expected rate. As an application of the Stokes equation, we chose low-Reynolds-number flow, using a spherical geometry for the grid-convergence study. This classical problem of fluid mechanics has an analytical solution that gives the drag force on the sphere as $F_d = 6\pi\mu Ru_x$. We solve a first-kind integral equation for the traction force, $\vect{t}$, by imposing $\vect{u} = (1,0,0)^{T}$ at the center of every panel, and compute the drag force with
+Like before, we start with a grid-convergence study to build confidence that the Stokes solver is correct and converges to the right solution at the expected rate. As an application of the Stokes equation, we chose low-Reynolds-number flow, using a spherical geometry for the grid-convergence study. This classical problem of fluid mechanics has an analytical solution that gives the drag force on the sphere as $F_d = 6\pi\mu Ru_x$, where $\mu$ is the viscosity of the fluid, $R$ is the Reynolds number and $u_x$ is the free stream velocity, taken in the $x$-direction. We solve a first-kind integral equation for the traction force, $\vect{t}$, by imposing $\vect{u} = (1,0,0)^{T}$ at the center of every panel, and compute the drag force with
 
 \begin{equation}
 	\label{eqn:stokes_traction_drag}
 	F_d = \int_\Gamma t_x\;\di{\Gamma'} = \sum_{j=1}^{N} t_{x_j}\cdot A_j
 \end{equation}
 
-For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver. We increased the value of $p$ until the solution stopped improving.
-
+For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver. We first increased the value of $p$ until the solution stopped improving, and settle for $p=16$ in this case, using a $10^{-5}$ tolerance in the iterative solver.
+Figure \ref{fig:stokes_convergence} shows that we indeed observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations.
 
 \begin{figure}[h]
 \begin{center}
@@ -332,15 +332,20 @@ For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag fo
 \end{center}
 \end{figure}
 
+Like with the Laplace equation, we need to show that the relaxation strategy does not hinder convergence and that there is a potential for speed-ups. We solved the problem of Stokes flow around a sphere, discretized with $8,192$ panels, and compared the residual history of a fixed-$p$ solver with a relaxed \gmres with an initial $p=16$. Figure \ref{fig:stokes_residual_history_relaxed} shows that the residual history (for the traction force) is similar for both relaxed and non-relaxed \gmres, both methods reaching the stipulated tolerance of $10^{-5}$ after about 27 iterations.
+The number of iterations needed to converge is larger in the case of the Stokes equation compared to the Laplace equation, which bodes well for the speed-up that we could get from relaxation. Moreover, the fast multipole expansions for the Stokes kernel are equivalent to four Laplace expansions, which combines with the larger number of iterations to offer greater speed-ups.
 
 
 \begin{figure}[h]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesResidualHistory.pdf}
-	\caption{Residual history solving for surface traction on the surface of a sphere, $10^{-5}$ solver tolerance, $8,192$ panels, $p=16$.}
+	\caption{Residual history solving for surface traction on the surface of a sphere (first-kind integral problem), with a $10^{-5}$ solver tolerance, $8,192$ panels, and $p=16$ in the multipole expansions.}
 	\label{fig:stokes_residual_history_relaxed}
 \end{center}
 \end{figure}
+
+Figure \ref{fig:stokes_relaxation_breakdown} illustrates clearly how we need to adjust the balance between near field and far field when using relaxation strategies. Because most of the time is spent computing at the low values of $p$, we need to start with a bloated far field. The bar plot shows the breakdown of time spent in the {\ptop} and {\mtol} kernels for each iteration: although the first iteration is unbalanced, with far field taking about 8 times as much \cpu\ time as near field, later iterations are close to balanced and the total time to solution is optimal. 
+The figure also includes a plot of the residual history. We note that we ran extensive tests on the minimum value of $p$ that could be allowed in the relaxed solver, without degrading convergence and accuracy. 
 
 
 \begin{figure}[h]
@@ -350,6 +355,28 @@ For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag fo
 	\label{fig:stokes_relaxation_breakdown}
 \end{center}
 \end{figure}
+
+
+
+\begin{table}[ht]
+\footnotesize
+\begin{center}
+\begin{tabular}{c|cc|cc|cc}
+  & \multicolumn{2}{c|}{2048 panels} & \multicolumn{2}{c|}{8192 panels} & \multicolumn{2}{c}{32768 panels} \\
+ $\pmin$ & Error & $it$ & Error & $it$ & Error & $it$ \\ \hline
+  & & & & & & \\
+ 5 & $4.70\times 10^{-2}$ & 22 & $2.44\times 10^{-2}$ & 28 & $1.34\times 10^{-2}$ & 28 \\
+ 4 & $4.49\times 10^{-2}$ & 23 & $2.51\times 10^{-2}$ & 29 & $1.25\times 10^{-2}$ & 29 \\
+ 3 & $4.64\times 10^{-2}$ & 22 & $2.78\times 10^{-2}$ & 29 & $1.39\times 10^{-2}$ & 29 \\
+ 2 & $4.95\times 10^{-2}$ & 25 & $2.62\times 10^{-2}$ & 33 & $3.18\times 10^{-2}$ & 39 \\
+ 1 & $4.96\times 10^{-2}$ & 25 & $2.99\times 10^{-2}$ & 51 & $4.77\times 10^{-2}$ & 53 
+\end{tabular}
+\end{center}
+\caption{Effect of $p_{\text{min}}$ on accuracy and convergence for Stokes flow around a sphere for differing values of $N$. Error is on the total drag force in the $x$-direction, $F_x$.}
+\label{tab:stokes_min_p}
+\end{table}%
+
+
 
 \begin{figure}[h]
 \begin{center}
