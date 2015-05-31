@@ -9,6 +9,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{subfig}
+\usepackage{textcomp}
 \usepackage{xspace}
 
 \graphicspath{{figs/}} %  PATH to figure files-- change to ./ for submission
@@ -311,6 +312,43 @@ The final case looks at the situation where the application might demand large i
 \caption{Speed-up of the relaxation strategy on solving a Laplace 1st-kind integral problem on a sphere discretized with $32,768$ panels, with increasing iteration count; $p$ fixed to a value of 10. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
 \label{tab:laplace_1st_iterations_relaxation}
 \end{table}%
+
+\subsection{Inexact {\small GMRES} for solving the Stokes equation}
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesConvergence.pdf}
+	\caption{Convergence of first-kind equation for Stokes flow around a sphere. Initial $p=16$, linear system solved to $10^{-5}$ tolerance.}
+	\label{fig:stokes_convergence}
+\end{center}
+\end{figure}
+
+
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesResidualHistory.pdf}
+	\caption{Residual history solving for surface traction on the surface of a sphere, $10^{-5}$ solver tolerance, $8,192$ panels, $p=16$.}
+	\label{fig:stokes_residual_history_relaxed}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSolveBreakdown.pdf}
+	\caption{Residual history solving for surface traction on the surface of a sphere, with time breakdown between {\ptop} and {\mtol}. $10^{-5}$ solver tolerance, $8,192$ panels, $p=16$.}
+	\label{fig:stokes_relaxation_breakdown}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSpeedupRelaxation.pdf}
+	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$. $10^{-5}$ solver tolerance, $p=16$. }
+	\label{fig:stokes_speedup}
+\end{center}
+\end{figure}
 
 
 \section{Conclusion} 
