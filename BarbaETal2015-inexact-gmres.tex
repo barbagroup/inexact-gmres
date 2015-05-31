@@ -345,7 +345,7 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 \end{figure}
 
 Figure \ref{fig:stokes_relaxation_breakdown} illustrates clearly how we need to adjust the balance between near field and far field when using relaxation strategies. Because most of the time is spent computing at the low values of $p$, we need to start with a bloated far field. The bar plot shows the breakdown of time spent in the {\ptop} and {\mtol} kernels for each iteration: although the first iteration is unbalanced, with far field taking about 8 times as much \cpu\ time as near field, later iterations are close to balanced and the total time to solution is optimal. 
-The figure also includes a plot of the residual history. We note that we ran extensive tests on the minimum value of $p$ that could be allowed in the relaxed solver, without degrading convergence and accuracy. 
+The figure also includes a plot of the residual history. We should add that we ran extensive tests on the minimum value of $p$ that could be allowed in the relaxed solver, without degrading convergence and accuracy. Table \ref{tab:stokes_min_p} presents some of the data from these tests: for finer surface discretizations, the error degrades when the relaxed value of $p$ is allowed to drop below 3 or 4. To be conservative and avoid any degradation in accuracy, we used a $\pmin=5$ for all further cases with the Stokes equation.
 
 
 \begin{figure}[h]
@@ -376,6 +376,7 @@ The figure also includes a plot of the residual history. We note that we ran ext
 \label{tab:stokes_min_p}
 \end{table}%
 
+Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \gmres iterations for four, increasingly finer surface discretizations. For $N=8,192$ and above, speed-up is $3.5\times$ or more.
 
 
 \begin{figure}[h]
@@ -392,6 +393,7 @@ The figure also includes a plot of the residual history. We note that we ran ext
 We have shown the first successful application of a relaxation strategy for fast-multipole-accelerated boundary element methods. Testing the relaxation strategy on Laplace problems, we confirmed that it converges to the right solution, it provides moderate speed-ups over using a fixed $p$, and it leads to initially bloated far-fields to obtain the minimum time to solution.
 Exploring the performance advantage of relaxing the value of $p$ as \gmres iterations advance, we conclude that problems requiring high accuracy and/or resulting in more ill-conditioned linear systems will experience the best speed-ups, which for Laplace problems can be in the order of $2-4\times$.
 
+In the case of the Stokes equation, the speed-ups that can be obtained using a relaxation strategy are larger, due to the fact that Stokes problems require both more iterations to converge (and the relaxed solver spends more time at low $p$) and more work per iteration (equivalent to four Laplace evaluations). Relaxed \gmres iterations in this case reduced the time to solution by $3.5\times$ to $4.5\times$. It's important for Stokes flow to also enforce a minimum value of $p$ to avoid accuracy degradation.
 
  
 %% Acnowledgements
