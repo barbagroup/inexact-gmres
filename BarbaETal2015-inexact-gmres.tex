@@ -314,6 +314,15 @@ The final case looks at the situation where the application might demand large i
 \end{table}%
 
 \subsection{Inexact {\small GMRES} for solving the Stokes equation}
+Like before, we start with a grid-convergence study to build confidence that the Stokes solver is correct and converges to the right solution at the expected rate. As an application of the Stokes equation, we chose low-Reynolds-number flow, using a spherical geometry for the grid-convergence study. This classical problem of fluid mechanics has an analytical solution that gives the drag force on the sphere as $F_d = 6\pi\mu Ru_x$. We solve a first-kind integral equation for the traction force, $\vect{t}$, by imposing $\vect{u} = (1,0,0)^{T}$ at the center of every panel, and compute the drag force with
+
+\begin{equation}
+	\label{eqn:stokes_traction_drag}
+	F_d = \int_\Gamma t_x\;\di{\Gamma'} = \sum_{j=1}^{N} t_{x_j}\cdot A_j
+\end{equation}
+
+For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver. We increased the value of $p$ until the solution stopped improving.
+
 
 \begin{figure}[h]
 \begin{center}
