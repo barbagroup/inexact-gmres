@@ -106,7 +106,7 @@ Abstract text here.
 
 \pagestyle{myheadings}
 \thispagestyle{plain}
-\markboth{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES}{WITH FAST MULTIPOLE BOUNDARY ELEMENT METHOD}
+\markboth{L. A. Barba and S. K. Layton}{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES}
 
 \section{Introduction}
 
@@ -181,8 +181,8 @@ Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both fir
 %
 \begin{figure}[t]
 \begin{center}
-	\includegraphics[natwidth=3in,natheight=2in,width=0.55\textwidth]{LaplaceConvergence.pdf}
-	\caption{Convergence of 1st-kind (open circles with solid line) and 2nd-kind (open circles with dotted line) solvers for the Laplace equation on a sphere, using a right-preconditioned \gmres with \fmm-accelerated matrix-vecctor products, and parameters: $\theta_{\text{MAC}} = 0.5$, $p=10$, and solver tolerance of $10^{-6}$.}
+	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceConvergence.pdf}
+	\caption{Convergence of 1st-kind (open circles with solid line) and 2nd-kind (open circles with dotted line) solvers for the Laplace equation on a sphere, using a right-preconditioned \gmres with \fmm-accelerated matrix-vecctor products, with parameters: $\theta_{\text{MAC}} = 0.5$, $p=10$, and solver tolerance of $10^{-6}$ (no relaxation).}
 	\label{fig:laplaceconvergence}
 \end{center}
 \end{figure}
@@ -193,7 +193,7 @@ But we note that only the far-field evaluation can be sped-up with the relaxatio
 \begin{figure}[h]
 	\centering
 	\includegraphics[natwidth=3.7in,natheight=2in,width=0.65\textwidth]{LaplaceResidualIterations.pdf}
-	\caption{In a test using a sphere discretized with $32,768$ triangles, the residual $\|r_{k}\|$ decreases with successive \gmres iterations while the necessary $p$ to achieve convergence drops quickly.}
+	\caption{In a test using a sphere discretized with $32,768$ triangles, the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly.}
 	\label{fig:residualp}
 \end{figure}
 
@@ -202,25 +202,23 @@ To find out how much is the potential speed-up, we compared the time to solution
 
 \begin{figure}%[h]
 	\centering
-	\includegraphics[natwidth=3in,natheight=2in,width=0.55\textwidth]{LaplaceSpeedupRelaxation.pdf}
+	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceSpeedupRelaxation.pdf}
 	\caption{Speedup using a relaxation strategy for three different triangulations of a sphere, using 1st-kind and 2nd-kind integral formulations.}
 	\label{fig:relaxation_timing}
 \end{figure}
 
 
 \begin{table}[h]
+\footnotesize
 \begin{center}
 \begin{tabular}{c|cc|cc|c}
   & \multicolumn{2}{c|}{Non-Relaxed} & \multicolumn{2}{c|}{Relaxed} & \\
   N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up \\
-   & & & & & \\ \hline
+ \hline
    & & & & & \\
   2048 & 400 & 0.27 & 200 & 0.40 & 0.675 \\
-   & & & & & \\
   8192 & 400 & 2.58 & 200 & 1.7 & 1.52 \\
-   & & & & & \\
   32768  & 400 & 7.1 & 200 & 5.07 & 1.40 \\
-   & & & & & \\
   131072  & 400 & 30.1 & 200 & 20.72 & 1.45 \\
  
 \end{tabular}
@@ -230,18 +228,16 @@ To find out how much is the potential speed-up, we compared the time to solution
 \end{table}%
 
 \begin{table}[h]
+\footnotesize
 \begin{center}
 \begin{tabular}{c|cc|cc|c}
   & \multicolumn{2}{c|}{Non-Relaxed} & \multicolumn{2}{c|}{Relaxed} & \\
   N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up \\
-   & & & & & \\ \hline
+ \hline
    & & & & & \\
   2048 & 400 & 0.13 & 200 & 0.64 & 0.20 \\
-   & & & & & \\
   8192 & 400 & 1.49 & 200 & 1.19 & 1.25 \\
-   & & & & & \\
   32768 & 400 & 6.77 & 200 & 5.92 & 1.14 \\
-   & & & & & \\
   131072 & 400 & 30.01 & 200 & 24.2 & 1.24 \\
  
 \end{tabular}
@@ -250,12 +246,44 @@ To find out how much is the potential speed-up, we compared the time to solution
 \label{tab:laplace_2nd_relaxation}
 \end{table}%
 
-The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation} show a speed-up for the three larger grids---also plotted on Figure \ref{fig:relaxation_timing}---of about $1.4\times$ for the 1st-kind integral formulation and $1.2\times$ for the 2nd-kind formulation. These are moderate speedups, but these tests already taught us something: that one has to give up on the idea of partitioning the domain between a near-field and a far-field in a way that balances the time spent computing each one---an accepted idea in \fmm applications. When relaxing the accuracy of the \gmres iterations, the time taken to compute the far field decreases significantly. This means that to minimize time-to-solution when using relaxed \gmres, the near- and far-fields should not be balanced, but rather the far-field should be bloated. As a result, the first couple of iterations are completely dominated by the time to compute the near-field, but this is offset by the benefit of much cheaper iterations from then on. This is a simple but unexpected and counter-intuitive algorithmic consequence of the idea of inexact \gmres with \fmm.
+The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation} show a speed-up for the three larger grids---also plotted on Figure \ref{fig:relaxation_timing}---of about $1.4\times$ for the 1st-kind integral formulation and $1.2\times$ for the 2nd-kind formulation. These are moderate speedups, but these tests already taught us something: that one has to give up on the idea of partitioning the domain between a near-field and a far-field in a way that balances the time spent computing each one---an accepted idea in \fmm applications. When relaxing the accuracy of the \gmres iterations, the time taken to compute the far field decreases significantly. This means that to minimize time-to-solution when using relaxed \gmres, the near and far fields should not be balanced, but rather the far field should be bloated. As a result, the first couple of iterations are completely dominated by the time to compute the far field, but this is offset by the benefit of much cheaper iterations from then on. This is a simple but unexpected and counter-intuitive algorithmic consequence of the idea of inexact \gmres with \fmm.
+
+It's clear that greater benefits from the relaxation strategy should derive from two situations: (a) where higher accuracy is needed (necessitating an initially higher $p$) , and (b) where the linear system demands a greater number of iterations to reach a set tolerance (resulting in more computations done at low $p$). To demonstrate this, we now present two tests that force these situations. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceRelaxationP.pdf}
+	\caption{Timings for solving a 1st-kind Laplace integral formulation on a sphere discretized with $32,768$ panels, using a relaxed \gmres with different initial values of $p$, compared with a fixed-$p$ solver. The iteration count was capped at 10 for all cases.}
+	\label{fig:laplace_p_speedup}
+\end{figure}
+
+Figure \ref{fig:laplace_p_speedup} shows the timings obtained in a situation where the initial $p$ is incrementally larger, representing applications that demand higher accuracy. The test consists of a 1st-kind Laplace integral solver on a sphere discretized with $32,768$ panels, enforcing a fixed number of $10$ \gmres iterations (which results in a residual of $~5.5\times 10^{-5}$ for the sphere). Table \ref{tab:laplace_1st_p_relaxation} shows the data for this test: the speed-up is greater with larger initial values of $p$, leveling at around $2\times$ when initial $p$ is greater than 8. Note again the shortest time-to-solution requires an unbalanced tree on the first iteration, with a bloated far field. This means that the first (high-$p$) iteration is much slower than the corresponding fixed-$p$ case: the speed-up is thus purely a product of the low-cost later iterations.
+
+\begin{table}[h]
+\footnotesize
+\begin{center}
+\begin{tabular}{c|cc|cc|c}
+  & \multicolumn{2}{c|}{Relaxed} & \multicolumn{2}{c|}{Non-Relaxed} & \\
+  $p$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup \\
+   \hline
+   & & & & & \\
+  5 & 100 & 4.21 & 100 & 6.34 & 1.51 \\
+  8 & 100 & 6.24 & 400 & 12.4 & 1.99 \\
+  10 & 150 & 8.76 & 400 & 18.5 & 2.11 \\
+  12 & 150 & 13.2  & 600 & 25.3 & 1.92 \\
+  15 & 150 & 19.3 & 600 & 38.3 & 1.98 \\
+ 
+\end{tabular}
+\end{center}
+\caption{Speed-up when using a relaxation strategy on a Laplace 1st-kind integral solver, compared with a non-relaxed solver, with increasing value of the initial $p$ (representing increased accuracy demands of the application), for a sphere discretized with $32,768$ panels.}
+\label{tab:laplace_1st_p_relaxation}
+\end{table}%
+
 
 
 \section{Conclusion} 
 
-
+We have shown the first successful application of a relaxation strategy for fast-multipole-accelerated boundary element methods. Testing the relaxation strategy on Laplace problems, we confirmed that it converges to the right solution, it provides moderate speed-ups over using a fixed $p$, and it leads to initially bloated far-fields to obtain the minimum time to solution.
 
  
 %% Acnowledgements
