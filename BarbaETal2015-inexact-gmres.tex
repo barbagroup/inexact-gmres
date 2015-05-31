@@ -9,6 +9,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{subfig}
+\usepackage{xspace}
 
 \graphicspath{{figs/}} %  PATH to figure files-- change to ./ for submission
 
@@ -18,13 +19,11 @@
 \newcommand{\K}{\mathbb{K}}
 \newcommand{\cpu}{\textsc{cpu}}
 \newcommand{\gpu}{\textsc{gpu}}
-\newcommand{\cuda}{\textsc{cuda}}
-\newcommand{\mpi}{\textsc{mpi}}
-\newcommand{\bem}{\textsc{bem}}
-\newcommand{\bie}{\textsc{bie}}
-\newcommand{\fmm}{\textsc{fmm}}
+
+\newcommand{\bem}{\textsc{bem}\xspace}
+\newcommand{\fmm}{\textsc{fmm}\xspace}
 \newcommand{\fmmbem}{\fmm-\bem}
-\newcommand{\aca}{\textsc{aca}}
+
 \newcommand{\cpp}{\textsc{c++}}
 \newcommand{\blas}{\textsc{blas}}
 \newcommand{\sse}{\textsc{sse}}
@@ -46,15 +45,13 @@
 \newcommand{\ncrit}{N_{\text{CRIT}}}
 \newcommand{\pmin}{p_{\text{min}}}
 \newcommand{\tsolve}{t_{\text{solve}}}
-\newcommand{\csr}{\textsc{csr}}
-\newcommand{\nvidia}{\textsc{nvidia}}
-\newcommand{\amg}{\textsc{amg}}
+
 
 % SOLVER DEFINITIONS
 \newcommand{\cg}{\textsc{cg}}
-\newcommand{\gmres}{\textsc{gmres}}
-\newcommand{\fgmres}{\textsc{fgmres}}
-\newcommand{\bicgstab}{\textsc{bicgstab}}
+\newcommand{\gmres}{\textsc{gmres}\xspace}
+\newcommand{\fgmres}{\textsc{fgmres}\xspace}
+\newcommand{\bicgstab}{\textsc{bicgstab}\xspace}
 
 % the text 'd' for integrals
 \newcommand{\di}[1]{\text{d}#1}
@@ -167,17 +164,39 @@ The next step is to apply an appropriate numerical integration scheme in order t
 \section{Results}
 
 \subsection{Inexact {\small GMRES} for the solution of Laplace's equation}
-To start, we looked at grid-convergence using a sphere with constant potential and charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$.
+To start, we looked at grid-convergence comparing with the analytical solution using a sphere with constant potential and charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. To make surface triangulations of a sphere with increasing refinement, we started with an 8-triangle closed surface, then split recursively each triangle into four smaller ones. Figure \ref{fig:glob_spheres} shows two example discretizations. We solved the boundary-element problem by collocation in both the first-kind and second-kind integral formulations, using a standard right-preconditioned \gmres with fast-multipole-accelerated matrix-vector products and the semi-analytical integrals for the singular terms. For the far-field approximations, we used spherical-harmonic expansions with the following parameters in the \fmm: $\theta_{\text{MAC}} = 0.5$, $p = 10$, and a tolerance of $10^{-6}$ in the iterative solver. 
+Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both first-kind and second-kind formulations of the boundary element method on a sphere. They display the expected orders of convergence for boundary element methods: slightly faster than $\O{1/\sqrt{N}}$ in the 1st-kind formulation and $\O{1/N}$ for the 2nd-kind formulation. This gives confidence on our \bem code, the singular/near-singular integral calculations, and the far-field approximation using the \fmm.
 
 
-\begin{center}
+
+
 \begin{figure}[b]
+\begin{center}
 	\subfloat[][128 panels]{\includegraphics[natwidth=4.73in,width=0.45\textwidth]{sphere128.pdf}\label{fig:sphere128}}\qquad
 	\subfloat[][2048 panels]{\includegraphics[natwidth=4.73in,width=0.45\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
 	\caption{Triangular discretizations of a spherical surface.}
 	\label{fig:glob_spheres}
-\end{figure}
 \end{center}
+\end{figure}
+%
+\begin{figure}[b]
+\begin{center}
+	\includegraphics[natwidth=3in,width=0.6\textwidth]{LaplaceConvergence.pdf}
+	\caption{Convergence of 1st-kind (open circles with solid line) and 2nd-kind (open circles with dotted line) solvers for the Laplace equation on a sphere, using a right-preconditioned \gmres with \fmm-accelerated matrix-vecctor products, and parameters: $\theta_{\text{MAC}} = 0.5$, $p=10$, and solver tolerance of $10^{-6}$.}
+	\label{fig:laplaceconvergence}
+\end{center}
+\end{figure}
+
+Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and the value of $p$ required in the \fmm-accelerated mat-vecs to continue convergence. We used a sphere discretized with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-5}$ with an initial value of $p$ set to 8. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 3 is sufficient by the seventh iteration. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale from $\bigO(p^{4})$ for spherical harmonics to $\bigO(p^{6})$ for Cartesian expansions.
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[natwidth=3.7in,width=0.65\textwidth]{LaplaceResidualIterations.pdf}
+	\caption{In a test using a sphere discretized with $32,768$ triangles, the residual $\|r_{k}\|$ decreases with successive \gmres iterations while the necessary $p$ to achieve convergence drops quickly.}
+	\label{fig:residualp}
+\end{figure}
+
 
 \section{Conclusion} 
 
