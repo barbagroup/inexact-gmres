@@ -197,13 +197,13 @@ But we note that only the far-field evaluation can be sped-up with the relaxatio
 	\label{fig:residualp}
 \end{figure}
 
-To find out how much is the potential speed-up, we compared the time to solution for different cases with and without the relaxation strategy. Using three surface discretizations, we solved the boundary-element problem with 1st- and 2nd-kind formulations to a solver tolerance of $10^{-5}$, using a multi-threaded evaluator on 4 \cpu\ cores. In each case, we were careful to set the value of $\ncrit$ to minimize the time to solution of the particular test case. Figure \ref{fig:relaxation_timing} shows the speed-up in time spent solving the linear system of equations to the specified tolerance. The detailed results are given in the subsequent Tables.
+To find out how much is the potential speed-up, we compared the time to solution for different cases with and without the relaxation strategy. Using three surface discretizations, we solved the boundary-element problem with 1st- and 2nd-kind formulations to a solver tolerance of $10^{-5}$, using a multi-threaded evaluator on 4 \cpu\ cores. In each case, we were careful to set the value of $\ncrit$ to minimize the time to solution of the particular test case. Figure \ref{fig:relaxation_timing} shows the speed-up in the time spent solving the linear system of equations to the specified tolerance. The detailed results are given in the subsequent Tables.
 
 
 \begin{figure}%[h]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceSpeedupRelaxation.pdf}
-	\caption{Speedup using a relaxation strategy for three different triangulations of a sphere, using 1st-kind and 2nd-kind integral formulations.}
+	\caption{Speedup using a relaxation strategy for three different triangulations of a sphere, using 1st-kind and 2nd-kind integral formulations. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
 	\label{fig:relaxation_timing}
 \end{figure}
 
@@ -253,11 +253,11 @@ It's clear that greater benefits from the relaxation strategy should derive from
 \begin{figure}[h]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceRelaxationP.pdf}
-	\caption{Timings for solving a 1st-kind Laplace integral formulation on a sphere discretized with $32,768$ panels, using a relaxed \gmres with different initial values of $p$, compared with a fixed-$p$ solver. The iteration count was capped at 10 for all cases.}
+	\caption{Timings for solving a 1st-kind Laplace integral formulation on a sphere discretized with $32,768$ panels, using a relaxed \gmres with different initial values of $p$, compared with a fixed-$p$ solver. The iteration count was capped at 10 for all cases. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
 	\label{fig:laplace_p_speedup}
 \end{figure}
 
-Figure \ref{fig:laplace_p_speedup} shows the timings obtained in a situation where the initial $p$ is incrementally larger, representing applications that demand higher accuracy. The test consists of a 1st-kind Laplace integral solver on a sphere discretized with $32,768$ panels, enforcing a fixed number of $10$ \gmres iterations (which results in a residual of $~5.5\times 10^{-5}$ for the sphere). Table \ref{tab:laplace_1st_p_relaxation} shows the data for this test: the speed-up is greater with larger initial values of $p$, leveling at around $2\times$ when initial $p$ is greater than 8. Note again the shortest time-to-solution requires an unbalanced tree on the first iteration, with a bloated far field. This means that the first (high-$p$) iteration is much slower than the corresponding fixed-$p$ case: the speed-up is thus purely a product of the low-cost later iterations.
+Figure \ref{fig:laplace_p_speedup} shows the timings obtained in a situation where the initial $p$ is incrementally larger, representing applications that demand higher accuracy. The test consists of a 1st-kind Laplace integral solver on a sphere discretized with $32,768$ panels, enforcing a fixed number of $10$ \gmres iterations (which results in a residual of $~5.5\times 10^{-5}$ for the sphere). Table \ref{tab:laplace_1st_p_relaxation} shows the data for this test: the speed-up is greater with larger initial values of $p$, leveling at around $2\times$ when initial $p$ is greater than 8. Note again that the shortest time-to-solution requires an unbalanced tree on the first iteration, with a bloated far field. This means that the first (high-$p$) iteration is much slower than the corresponding fixed-$p$ case: the speed-up is thus purely a product of the low-cost later iterations.
 
 \begin{table}[h]
 \footnotesize
@@ -275,15 +275,49 @@ Figure \ref{fig:laplace_p_speedup} shows the timings obtained in a situation whe
  
 \end{tabular}
 \end{center}
-\caption{Speed-up when using a relaxation strategy on a Laplace 1st-kind integral solver, compared with a non-relaxed solver, with increasing value of the initial $p$ (representing increased accuracy demands of the application), for a sphere discretized with $32,768$ panels.}
+\caption{Speed-up when using a relaxation strategy on a Laplace 1st-kind integral solver, compared with a non-relaxed solver, with increasing value of the initial $p$ (representing increased accuracy demands of the application), for a sphere discretized with $32,768$ panels. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
 \label{tab:laplace_1st_p_relaxation}
 \end{table}%
 
+The final case looks at the situation where the application might demand large iteration counts, as could be encountered in harder-to-precondition cases. Keeping the value of $p$ fixed at 10, we ran several cases with increasing number of (set) \gmres iterations, representing more ill-conditioned problems. Figure \ref{fig:laplace_iterations_speedup} shows how cases with larger iteration counts experience greater speed-up from the relaxation strategy. As seen in the data of Table \ref{tab:laplace_1st_iterations_relaxation}, each non-relaxed iteration adds approximately $1.68$s to $\tsolve$, while each relaxed iteration adds $0.276$s; we can thus extrapolate a speed-up nearing $5\times$ at 100 iterations.
+
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceRelationIterations.pdf}
+	\caption{Speed-ups for solving a 1st-kind Laplace integral problem on a sphere discretized with $32,768$ panels, as the \gmres iteration count increases; $p=10$ for all cases. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
+	\label{fig:laplace_iterations_speedup}
+\end{figure}
+
+
+\begin{table}[h]
+\footnotesize
+\begin{center}
+\begin{tabular}{c|cc|cc|c}
+  & \multicolumn{2}{c|}{Relaxed} & \multicolumn{2}{c|}{Non-Relaxed} & \\
+  Iterations & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup \\
+ \hline
+   & & & & & \\
+  5 & 100 & 8.57 & 400 & 10.0 & 1.17 \\
+  10 & 100 & 9.81 & 400 & 18.4 & 1.88 \\
+  15 & 100 & 11.1 & 400 & 26.9 & 2.42 \\
+  20 & 100 & 12.4 & 400 & 35.3 & 2.85 \\
+  25 & 100 & 13.7 & 400 & 43.8 & 3.20 \\
+  50 & 100 & 20.6 & 400 & 86.2 & 4.18 \\
+ 
+\end{tabular}
+\end{center}
+\caption{Speed-up of the relaxation strategy on solving a Laplace 1st-kind integral problem on a sphere discretized with $32,768$ panels, with increasing iteration count; $p$ fixed to a value of 10. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
+\label{tab:laplace_1st_iterations_relaxation}
+\end{table}%
 
 
 \section{Conclusion} 
 
 We have shown the first successful application of a relaxation strategy for fast-multipole-accelerated boundary element methods. Testing the relaxation strategy on Laplace problems, we confirmed that it converges to the right solution, it provides moderate speed-ups over using a fixed $p$, and it leads to initially bloated far-fields to obtain the minimum time to solution.
+Exploring the performance advantage of relaxing the value of $p$ as \gmres iterations advance, we conclude that problems requiring high accuracy and/or resulting in more ill-conditioned linear systems will experience the best speed-ups, which for Laplace problems can be in the order of $2-4\times$.
+
 
  
 %% Acnowledgements
