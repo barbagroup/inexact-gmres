@@ -336,7 +336,7 @@ Like with the Laplace equation, we need to show that the relaxation strategy doe
 The number of iterations needed to converge is larger in the case of the Stokes equation compared to the Laplace equation, which bodes well for the speed-up that we could get from relaxation. Moreover, the fast multipole expansions for the Stokes kernel are equivalent to four Laplace expansions, which combines with the larger number of iterations to offer greater speed-ups.
 
 
-\begin{figure}[h]
+\begin{figure}%[t]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesResidualHistory.pdf}
 	\caption{Residual history solving for surface traction on the surface of a sphere (first-kind integral problem), with a $10^{-5}$ solver tolerance, $8,192$ panels, and $p=16$ in the multipole expansions.}
@@ -348,7 +348,7 @@ Figure \ref{fig:stokes_relaxation_breakdown} illustrates clearly how we need to 
 The figure also includes a plot of the residual history. We should add that we ran extensive tests on the minimum value of $p$ that could be allowed in the relaxed solver, without degrading convergence and accuracy. Table \ref{tab:stokes_min_p} presents some of the data from these tests: for finer surface discretizations, the error degrades when the relaxed value of $p$ is allowed to drop below 3 or 4. To be conservative and avoid any degradation in accuracy, we used a $\pmin=5$ for all further cases with the Stokes equation.
 
 
-\begin{figure}[h]
+\begin{figure}%[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSolveBreakdown.pdf}
 	\caption{Residual history solving for surface traction on the surface of a sphere, with time breakdown between {\ptop} and {\mtol}. $10^{-5}$ solver tolerance, $8,192$ panels, $p=16$.}
@@ -379,7 +379,7 @@ The figure also includes a plot of the residual history. We should add that we r
 Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \gmres iterations for four, increasingly finer surface discretizations. For $N=8,192$ and above, speed-up is $3.5\times$ or more.
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSpeedupRelaxation.pdf}
 	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$. $10^{-5}$ solver tolerance, $p=16$. }
@@ -401,9 +401,9 @@ To create a surface discretization for a red blood cell, we start with a sphere 
 	z(\rho) = \pm \frac{1}{2}\sqrt{1 - \left(\frac{\rho}{r}\right)^{2}}\left ( C_0 + C_2 \left(\frac{\rho}{r}\right)^{2} + C_4\left(\frac{\rho}{r}\right)^{4}\right )
 \end{equation}
 
-\noindent where $x' = x\cdot r,\; y' = y\cdot r,\; \rho = \sqrt{x'^{2}+y'^{2}}$. Table \ref{tab:rbc_parameterization_constants} lists the constants in this equation and  Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.
+\noindent where $x' = x\cdot r,\; y' = y\cdot r,\; \rho = \sqrt{x'^{2}+y'^{2}}$. Table \ref{tab:rbc_parameterization_constants} lists the constants and  Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.
 
-\begin{table}[t]
+\begin{table}%[h]
 \footnotesize
 \begin{center}
 \begin{tabular}{c|c|c|c}
@@ -417,7 +417,7 @@ To create a surface discretization for a red blood cell, we start with a sphere 
 \end{table}%
 
 
-\begin{figure}[b]
+\begin{figure}%
 \begin{center}
 	\subfloat[512 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.35\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
 	\subfloat[2048 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.35\textwidth]{RBC2048.pdf}\label{fig:rbc2048}}
@@ -428,7 +428,7 @@ To create a surface discretization for a red blood cell, we start with a sphere 
 
 A grid-convergence study using the geometry of a red blood cell requires that we use Richardson extrapolation \cite{roache1998}, since we don't have an analytical solution for this situation. We calculated the drag on a red blood cell in uniform Stokes flow using three surface meshes, consecutively refined by a constant factor $c=4$. 
 If the value $f_1$ corresponds to that obtained using the coarsest mesh and $f_3$ with the finest, then we can obtain the extrapolated value approximating the exact solution with the following formula:
-%
+
 \begin{equation}
 	\bar{f} = \frac{f_1f_3-f_2^{2}}{f-1 -2f_2+f_3}
 \end{equation}
@@ -469,7 +469,15 @@ Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with res
 \end{figure}
 
 
-%Cited in \cite{kruger2012}
+\begin{figure}[b]
+\begin{center}
+	\includegraphics[natwidth=6in,natheight=2.88in,width=0.75\textwidth]{4Cells_arrow.pdf}
+	\caption{Surfaces for four red blood cells in a uniform Stokes flow.}
+	\label{fig:multiple_cells}
+\end{center}
+\end{figure}
+
+
 
 \section{Conclusion} 
 
