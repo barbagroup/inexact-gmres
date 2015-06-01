@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99c (TeX Live 2009)
+The top-level auxiliary file: BarbaETal2015-inexact-gmres.aux
+The style file: siam.bst
+Database file #1: bem.bib
+Database file #2: CompBio.bib
+Database file #3: FastMethods.bib
+Database file #4: InexactMatVec.bib
+Database file #5: scicomp.bib
+You've used 3 entries,
+            2030 wiz_defined-function locations,
+            532 strings with 4414 characters,
+and the built_in function-call counts, 1170 in all, are:
+= -- 120
+> -- 43
+< -- 0
++ -- 17
+- -- 14
+* -- 90
+:= -- 180
+add.period$ -- 3
+call.type$ -- 3
+change.case$ -- 16
+chr.to.int$ -- 0
+cite$ -- 3
+duplicate$ -- 53
+empty$ -- 82
+format.name$ -- 14
+if$ -- 251
+int.to.chr$ -- 0
+int.to.str$ -- 3
+missing$ -- 3
+newline$ -- 12
+num.names$ -- 6
+pop$ -- 10
+preamble$ -- 1
+purify$ -- 13
+quote$ -- 0
+skip$ -- 52
+stack$ -- 0
+substring$ -- 95
+swap$ -- 26
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 12
+warning$ -- 0
+while$ -- 15
+width$ -- 4
+write$ -- 29
