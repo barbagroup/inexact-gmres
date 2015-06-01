@@ -401,26 +401,14 @@ To create a surface discretization for a red blood cell, we start with a sphere 
 	z(\rho) = \pm \frac{1}{2}\sqrt{1 - \left(\frac{\rho}{r}\right)^{2}}\left ( C_0 + C_2 \left(\frac{\rho}{r}\right)^{2} + C_4\left(\frac{\rho}{r}\right)^{4}\right ),
 \end{equation}
 
-\noindent where $x' = x\cdot r,\; y' = y\cdot r,\; \rho = \sqrt{x'^{2}+y'^{2}}$. Table \ref{tab:rbc_parameterization_constants} lists the constants and  Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.
+\noindent where $x' = x\cdot r,\; y' = y\cdot r,\; \rho = \sqrt{x'^{2}+y'^{2}}$, and the coefficients are: $r=3.91\mu$m,  $C_0= 0.81\mu$m, $C_2= 7.83\mu$m and $C_4=-4.39\mu$m.
+Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.
 
-\begin{table}%[h]
-\footnotesize
+
+\begin{figure}[h]
 \begin{center}
-\begin{tabular}{c|c|c|c}
-	$r$ & $C_0$ & $C_2$ & $C_4$ \\   \hline
-	& & &\\
-	  $3.91\mu$m & $0.81\mu$m  & $7.83\mu$m  & $-4.39\mu$m
-\end{tabular}
-\end{center}
-\caption{Constants for equation \eqref{eqn:rbc_parameterization}, from Ref.~\cite{EvansFung1972}. }
-\label{tab:rbc_parameterization_constants}
-\end{table}%
-
-
-\begin{figure}%
-\begin{center}
-	\subfloat[512 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.35\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
-	\subfloat[2048 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.35\textwidth]{RBC2048.pdf}\label{fig:rbc2048}}
+\vspace{1cm}	\subfloat[512 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
+\vspace{1cm}	\subfloat[2048 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC2048.pdf}\label{fig:rbc2048}}
 	\caption{Surface geometries of red blood cells obtained from transforming sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.}
 	\label{fig:glob_rbc}
 \end{center}
@@ -440,7 +428,7 @@ Table \ref{tab:rbc_richardson_values} presents the computed values of the drag f
 \end{equation}
 
 \noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.481$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
-Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with respect to the extrapolated value, as a function of the mesh size.
+Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with respect to the extrapolated value, as a function of the mesh size. The plot includes the error obtained with four meshes, with the extrapolated value obtained with the first three, coarser meshes.
 
 \begin{table}[h]
 \footnotesize
@@ -468,6 +456,8 @@ Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with res
 \end{center}
 \end{figure}
 
+
+For the next tests, we used four red blood cells in a sparse, linear arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem.
 
 \begin{figure}[b]
 \begin{center}
