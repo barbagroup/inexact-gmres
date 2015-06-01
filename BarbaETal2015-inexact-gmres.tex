@@ -457,7 +457,19 @@ Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with res
 \end{figure}
 
 
-For the next tests, we used four red blood cells in a sparse, linear arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem.
+The calculations with increasingly finer surface meshes take more time to complete not only because the number of unknowns is larger, but also because they may require a greater number of iterations to converge to a desired residual.
+Figure \ref{fig:single_cell_iterations} shows that the number of iterations needed as the surface mesh varies from size $N=128$ to $8,192$ increases from 19 to 37. For further refined meshes, the number of iterations remains about the same. This is an indication that the surface mesh is sufficiently refined with $8,192$ panels for one red blood cell.
+
+\begin{figure}
+\begin{center}
+	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{EthrocyteSingleCellIterations.pdf}
+	\caption{Number of iterations needed for the system to converge for increasingly refined surface meshes on one red blood cell; $p = 16$, target residual $10^{-5}$.}
+	\label{fig:single_cell_iterations}
+\end{center}
+\end{figure}
+
+
+For the next tests, we used four red blood cells in a sparse, linear arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem. We take copies of a red blood cell, discretized with $8,192$ panels, shift spatially and randomly rotate each one, resulting an arrangement like that shown in Figure \ref{fig:multiple_cells}.
 
 \begin{figure}[b]
 \begin{center}
