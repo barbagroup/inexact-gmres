@@ -387,19 +387,63 @@ Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \g
 \end{center}
 \end{figure}
 
+\subsection{Application to red blood cells in Stokes flow}
+
+A number of medical applications will benefit from greater understanding of the microflows around red blood cells and of the mechanical effects on the cells from this flow. 
+The most notable example is perhaps the deadly malaria infection, which changes red blood cells making them stiffer thus disrupting the flow of blood in capillaries \cite{FedosovETal2011}.
+Any design of a biomedical device that processes blood at the micrometer-scale needs to consider the mechanical behavior of blood at the cellular level \cite{Freund2014}. Blood is a dense suspension of mostly red blood cells and smaller concentrations of white blood cells and platelets. The flow regime in small capillaries is at very low Reynolds numbers, and thus completely dominated by viscous effects. 
+Red blood cells are very flexible, so any physiologically realistic simulation should take into account their elastic deformations. But here we are only attempting to show the benefit of our relaxation strategy on the Stokes solver, and thus limit our study to the steady Stokes flow around a red-blood-cell geometry. The unsteady problem of coupled Stokes flow and linear elasticity can be approached by repeated solution of boundary-integral problems at every time step, and would equally benefit from the speed-ups seen on a single Stokes solution.
+
+To create a surface discretization for a red blood cell, we start with a sphere discretized into triangular panels and transform every vertex $v = v(x,y,z)$, with $x,y,z\in [-1,1]$, into $v' = v'(x',y',z(\rho'))$ using the formula presented in Ref.~\cite{EvansFung1972}:
+
+\begin{equation}
+	\label{eqn:rbc_parameterization}
+	z(\rho) = \pm \frac{1}{2}\sqrt{1 - \left(\frac{\rho}{r}\right)^{2}}\left ( C_0 + C_2 \left(\frac{\rho}{r}\right)^{2} + C_4\left(\frac{\rho}{r}\right)^{4}\right ).
+\end{equation}
+
+\noindent where $x' = x\cdot r,\; y' = y\cdot r,\; \rho = \sqrt{x'^{2}+y'^{2}}$. The constants are listed in table \ref{tab:rbc_parameterization_constants}, and the transformed shapes obtained from two sphere triangulations are shown in Figure \ref{fig:glob_rbc}.
+
+\begin{table}[t]
+\footnotesize
+\begin{center}
+\begin{tabular}{c|c|c|c}
+	$r$ & $C_0$ & $C_2$ & $C_4$ \\   \hline
+	& & &\\
+	  $3.91\mu$m & $0.81\mu$m  & $7.83\mu$m  & $-4.39\mu$m
+\end{tabular}
+\end{center}
+\caption{Constants for equation \eqref{eqn:rbc_parameterization}, from Ref.~\cite{EvansFung1972}. }
+\label{tab:rbc_parameterization_constants}
+\end{table}%
+
+
+\begin{figure}[b]
+\begin{center}
+	\subfloat[512 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.35\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
+	\subfloat[2048 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.35\textwidth]{RBC2048.pdf}\label{fig:rbc2048}}
+	\caption{Surface geometries of red blood cells obtained from transforming sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.}
+	\label{fig:glob_rbc}
+\end{center}
+\end{figure}
+
+
+
+%Cited in \cite{kruger2012}
 
 \section{Conclusion} 
 
-We have shown the first successful application of a relaxation strategy for fast-multipole-accelerated boundary element methods. Testing the relaxation strategy on Laplace problems, we confirmed that it converges to the right solution, it provides moderate speed-ups over using a fixed $p$, and it leads to initially bloated far-fields to obtain the minimum time to solution.
-Exploring the performance advantage of relaxing the value of $p$ as \gmres iterations advance, we conclude that problems requiring high accuracy and/or resulting in more ill-conditioned linear systems will experience the best speed-ups, which for Laplace problems can be in the order of $2-4\times$.
+We have shown the first successful application of a relaxation strategy for fast-multipole-accelerated boundary element methods, based on the theory of inexact \gmres. Testing the relaxation strategy on Laplace problems, we confirmed that it converges to the right solution, it provides moderate speed-ups over using a fixed $p$, and it leads to initially bloated far-fields to obtain the minimum time to solution.
+Exploring the performance advantage of relaxing the value of $p$ as \gmres iterations advance, we concluded that problems requiring high accuracy and/or resulting in more ill-conditioned linear systems will experience the best speed-ups, which for Laplace problems can be in the order of $2-4\times$.
 
-In the case of the Stokes equation, the speed-ups that can be obtained using a relaxation strategy are larger, due to the fact that Stokes problems require both more iterations to converge (and the relaxed solver spends more time at low $p$) and more work per iteration (equivalent to four Laplace evaluations). Relaxed \gmres iterations in this case reduced the time to solution by $3.5\times$ to $4.5\times$. It's important for Stokes flow to also enforce a minimum value of $p$ to avoid accuracy degradation.
+In the case of the Stokes equation, the speed-ups that can be obtained using a relaxation strategy are larger, due to the fact that Stokes problems require both more iterations to converge (and the relaxed solver spends more time at low $p$) and more work per iteration (equivalent to four Laplace evaluations). Relaxed \gmres iterations in this case reduced the time to solution by $3.5\times$ to $4.5\times$. We found that it's important for Stokes problems to also enforce a minimum value of $p$ to avoid accuracy or convergence degradation.
+
 
  
 %% Acnowledgements
 
 %% Bibliography
-
+\bibliographystyle{siam}
+\bibliography{bem,CompBio,FastMethods,InexactMatVec,scicomp}
 
 \end{document}
 %% end of file `docultex.tex'
