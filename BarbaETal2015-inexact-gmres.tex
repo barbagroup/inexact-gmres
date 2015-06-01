@@ -327,7 +327,7 @@ Figure \ref{fig:stokes_convergence} shows that we indeed observe convergence at 
 \begin{figure}[h]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesConvergence.pdf}
-	\caption{Convergence of first-kind equation for Stokes flow around a sphere. Initial $p=16$, linear system solved to $10^{-5}$ tolerance.}
+	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation; $p=16$, linear system solved to $10^{-5}$ tolerance.}
 	\label{fig:stokes_convergence}
 \end{center}
 \end{figure}
@@ -395,10 +395,10 @@ Any design of a biomedical device that processes blood at the micrometer-scale n
 Red blood cells are very flexible, so any physiologically realistic simulation should take into account their elastic deformations. But here we are only attempting to show the benefit of our relaxation strategy on the Stokes solver, and thus limit our study to the steady Stokes flow around a red-blood-cell geometry. The unsteady problem of coupled Stokes flow and linear elasticity can be approached by repeated solution of boundary-integral problems at every time step, and would equally benefit from the speed-ups seen on a single Stokes solution.
 
 To create a surface discretization for a red blood cell, we start with a sphere discretized into triangular panels and transform every vertex $v = v(x,y,z)$, with $x,y,z\in [-1,1]$, into $v' = v'(x',y',z(\rho'))$ using the formula presented in Ref.~\cite{EvansFung1972}:
-
+%
 \begin{equation}
 	\label{eqn:rbc_parameterization}
-	z(\rho) = \pm \frac{1}{2}\sqrt{1 - \left(\frac{\rho}{r}\right)^{2}}\left ( C_0 + C_2 \left(\frac{\rho}{r}\right)^{2} + C_4\left(\frac{\rho}{r}\right)^{4}\right )
+	z(\rho) = \pm \frac{1}{2}\sqrt{1 - \left(\frac{\rho}{r}\right)^{2}}\left ( C_0 + C_2 \left(\frac{\rho}{r}\right)^{2} + C_4\left(\frac{\rho}{r}\right)^{4}\right ),
 \end{equation}
 
 \noindent where $x' = x\cdot r,\; y' = y\cdot r,\; \rho = \sqrt{x'^{2}+y'^{2}}$. Table \ref{tab:rbc_parameterization_constants} lists the constants and  Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.
@@ -427,20 +427,20 @@ To create a surface discretization for a red blood cell, we start with a sphere 
 \end{figure}
 
 A grid-convergence study using the geometry of a red blood cell requires that we use Richardson extrapolation \cite{roache1998}, since we don't have an analytical solution for this situation. We calculated the drag on a red blood cell in uniform Stokes flow using three surface meshes, consecutively refined by a constant factor $c=4$. 
-If the value $f_1$ corresponds to that obtained using the coarsest mesh and $f_3$ with the finest, then we can obtain the extrapolated value approximating the exact solution with the following formula:
+If the value $f_1$ corresponds to that obtained using the coarsest mesh and $f_2$ and $f_3$ to those using consecutively refined ones, then we can obtain the extrapolated value approximating the exact solution with the following formula:
 
 \begin{equation}
 	\bar{f} = \frac{f_1f_3-f_2^{2}}{f-1 -2f_2+f_3}
 \end{equation}
 
-Table \ref{tab:rbc_richardson_values} presents the computed value of the drag force with three different meshes, of sizes $N=512, 2048$ and $8192$. We can also obtain the \emph{observed order of convergence}, $p$, as follows
+Table \ref{tab:rbc_richardson_values} presents the computed values of the drag force obtained with three different meshes, of sizes $N=512$, $2048$ and $8192$. We can also obtain the \emph{observed order of convergence}, $p$, as follows
 %
 \begin{equation}
 	p = \frac{\ln{\left(\frac{f_2-f_1}{f_3-f_2}\right)}}{\ln{c}},
 \end{equation}
 
-\noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, we obtain an observed order of convergence of $0.481$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
-Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with respect to the mesh size, using the extrapolated value as a reference.
+\noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.481$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
+Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with respect to the extrapolated value, as a function of the mesh size.
 
 \begin{table}[h]
 \footnotesize
