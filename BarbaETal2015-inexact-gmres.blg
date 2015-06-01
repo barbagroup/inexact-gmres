@@ -2,48 +2,49 @@ This is BibTeX, Version 0.99c (TeX Live 2009)
 The top-level auxiliary file: BarbaETal2015-inexact-gmres.aux
 The style file: siam.bst
 Database file #1: bem.bib
-Database file #2: CompBio.bib
-Database file #3: FastMethods.bib
-Database file #4: InexactMatVec.bib
-Database file #5: scicomp.bib
-You've used 3 entries,
+Database file #2: cfd.bib
+Database file #3: CompBio.bib
+Database file #4: FastMethods.bib
+Database file #5: InexactMatVec.bib
+Database file #6: scicomp.bib
+You've used 4 entries,
             2030 wiz_defined-function locations,
-            532 strings with 4414 characters,
-and the built_in function-call counts, 1170 in all, are:
-= -- 120
-> -- 43
+            554 strings with 4707 characters,
+and the built_in function-call counts, 1373 in all, are:
+= -- 134
+> -- 50
 < -- 0
-+ -- 17
-- -- 14
-* -- 90
-:= -- 180
-add.period$ -- 3
-call.type$ -- 3
-change.case$ -- 16
++ -- 20
+- -- 16
+* -- 102
+:= -- 215
+add.period$ -- 4
+call.type$ -- 4
+change.case$ -- 19
 chr.to.int$ -- 0
-cite$ -- 3
-duplicate$ -- 53
-empty$ -- 82
-format.name$ -- 14
-if$ -- 251
+cite$ -- 4
+duplicate$ -- 66
+empty$ -- 105
+format.name$ -- 16
+if$ -- 293
 int.to.chr$ -- 0
-int.to.str$ -- 3
-missing$ -- 3
-newline$ -- 12
-num.names$ -- 6
-pop$ -- 10
+int.to.str$ -- 4
+missing$ -- 5
+newline$ -- 15
+num.names$ -- 8
+pop$ -- 18
 preamble$ -- 1
-purify$ -- 13
+purify$ -- 16
 quote$ -- 0
-skip$ -- 52
+skip$ -- 57
 stack$ -- 0
-substring$ -- 95
-swap$ -- 26
+substring$ -- 100
+swap$ -- 28
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 12
+type$ -- 14
 warning$ -- 0
-while$ -- 15
-width$ -- 4
-write$ -- 29
+while$ -- 17
+width$ -- 5
+write$ -- 37

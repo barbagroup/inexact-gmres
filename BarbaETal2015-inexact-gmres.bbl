@@ -14,4 +14,8 @@
 {\sc Jonathan~B Freund}, {\em Numerical simulation of flowing blood cells},
   Ann.\ Rev.\ Fluid Mech., 46 (2014), pp.~67--95.
 
+\bibitem{roache1998}
+{\sc Patrick~J Roache}, {\em Verification and validation in computational
+  science and engineering}, Hermosa Albuquerque, 1998.
+
 \end{thebibliography}
