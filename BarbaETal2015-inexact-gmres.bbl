@@ -14,12 +14,13 @@
 {\sc Jonathan~B Freund}, {\em Numerical simulation of flowing blood cells},
   Ann.\ Rev.\ Fluid Mech., 46 (2014), pp.~67--95.
 
-\bibitem{Liu2009}
-{\sc Yijun Liu}, {\em Fast Multipole Boundary Element Method. Theory and
-  Application in Engineering}, Cambridge University Press, 2009.
-
 \bibitem{roache1998}
 {\sc Patrick~J Roache}, {\em Verification and validation in computational
   science and engineering}, Hermosa Albuquerque, 1998.
+
+\bibitem{SaadSchultz1986}
+{\sc Y.~Saad and M.~Schultz}, {\em {GMRES}: A generalized minimal residual
+  algorithm for solving nonsymmetric linear systems}, SIAM J. Sci.\ Stat.\
+  Comput., 7 (1986), pp.~856--869.
 
 \end{thebibliography}
