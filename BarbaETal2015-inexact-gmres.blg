@@ -5,46 +5,51 @@ Database file #1: bem.bib
 Database file #2: cfd.bib
 Database file #3: CompBio.bib
 Database file #4: FastMethods.bib
+Repeated entry---line 983 of file FastMethods.bib
+ : @book{Liu2009
+ :              ,
+I'm skipping whatever remains of this entry
 Database file #5: InexactMatVec.bib
 Database file #6: scicomp.bib
-You've used 4 entries,
+You've used 5 entries,
             2030 wiz_defined-function locations,
-            554 strings with 4707 characters,
-and the built_in function-call counts, 1373 in all, are:
-= -- 134
-> -- 50
+            559 strings with 4811 characters,
+and the built_in function-call counts, 1576 in all, are:
+= -- 148
+> -- 57
 < -- 0
-+ -- 20
-- -- 16
-* -- 102
-:= -- 215
-add.period$ -- 4
-call.type$ -- 4
-change.case$ -- 19
++ -- 23
+- -- 18
+* -- 114
+:= -- 250
+add.period$ -- 5
+call.type$ -- 5
+change.case$ -- 22
 chr.to.int$ -- 0
-cite$ -- 4
-duplicate$ -- 66
-empty$ -- 105
-format.name$ -- 16
-if$ -- 293
+cite$ -- 5
+duplicate$ -- 79
+empty$ -- 128
+format.name$ -- 18
+if$ -- 335
 int.to.chr$ -- 0
-int.to.str$ -- 4
-missing$ -- 5
-newline$ -- 15
-num.names$ -- 8
-pop$ -- 18
+int.to.str$ -- 5
+missing$ -- 7
+newline$ -- 18
+num.names$ -- 10
+pop$ -- 26
 preamble$ -- 1
-purify$ -- 16
+purify$ -- 19
 quote$ -- 0
-skip$ -- 57
+skip$ -- 62
 stack$ -- 0
-substring$ -- 100
-swap$ -- 28
+substring$ -- 105
+swap$ -- 30
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 14
+type$ -- 16
 warning$ -- 0
-while$ -- 17
-width$ -- 5
-write$ -- 37
+while$ -- 19
+width$ -- 6
+write$ -- 45
+(There was 1 error message)
