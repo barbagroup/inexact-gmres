@@ -404,7 +404,7 @@ To create a surface discretization for a red blood cell, we start with a sphere 
 \noindent where $x' = x\cdot r,\; y' = y\cdot r,\; \rho = \sqrt{x'^{2}+y'^{2}}$, and the coefficients are: $r=3.91\mu$m,  $C_0= 0.81\mu$m, $C_2= 7.83\mu$m and $C_4=-4.39\mu$m.
 Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.
 
-
+% this figure behaves weird, and the images appear displaced upwards/ hacked it with \vspace{1cm} before each \subfloat
 \begin{figure}[h]
 \begin{center}
 \vspace{1cm}	\subfloat[512 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
@@ -471,9 +471,10 @@ Figure \ref{fig:single_cell_iterations} shows that the number of iterations need
 
 For the next tests, we used several red blood cells in a sparse, linear arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem. To set up these tests, we make copies of a discretized red blood cell, shift spatially and randomly rotate each one, resulting an arrangement like that shown in Figure \ref{fig:multiple_cells}.
 
+% this figure behaves weird, and the images appear displaced upwards/ hacked it with \vspace{1.2cm} before \includegraphics
 \begin{figure}[h]
 \begin{center}
-	\includegraphics[natwidth=6in,natheight=2.88in,width=0.75\textwidth]{4Cells_arrow.pdf}
+\vspace{1.2cm} 	\includegraphics[natwidth=6in,natheight=2.88in,width=0.75\textwidth]{4Cells_arrow.pdf}
 	\caption{Surfaces for four red blood cells in a uniform Stokes flow.}
 	\label{fig:multiple_cells}
 \end{center}
