@@ -144,16 +144,42 @@ Either the values of the potential or its normal derivative on each panel could 
 \noindent
 and $\vect{b}$ is formed with the known terms: e.g., if $\phi$ is given on panel $j$, then $\phi_j\int_{\Gamma_j}\partialdi{G_{ij}}{\nhat_j}\;\di{\Gamma_j}$ will appear in the term $b_i$ on the right-hand side of the linear system.
 
-Inserting for $G_{ij}$ and $\partialdi{G_ij}{\nhat_j}$ in terms of $1/r$ and $\nhat_j\cdot\nabla(1/r)$ results in
+Inserting for $G_{ij}$ and $\partialdi{G_{ij}}{\nhat_j}$ in terms of $1/r$ and $\nhat_j\cdot\nabla(1/r)$ results in
 %
 \begin{eqnarray}
 	\label{eqn:laplace_bem_G}\int_{\Gamma} G_{ij}\;\di{\Gamma_j} & = & \int_{\Gamma} \frac{1}{|\vect{x}_i-\vect{x}_j|} \;\di{\Gamma_j} \\ 
 	\label{eqn:laplace_bem_dGdn}\int_{\Gamma} \partiald{G_{ij}}{\nhat_j}\;\di{\Gamma_j} & = & \int_{\Gamma}\frac{d\vect{x}\cdot\nhat_j}{|\vect{x}_i-\vect{x}_j|^{3}}\;\di{\Gamma_j}
 \end{eqnarray}
 
-The next step is to apply an appropriate numerical integration scheme in order to generate all the terms of the coefficient matrix.
+The next steps are to apply an appropriate numerical integration scheme in order to generate all the terms of the coefficient matrix, and subsequently solve the linear system of equations, as described below.
 
 \subsection{Boundary-integral solution of the Stokes equation}
+
+The Stokes equation for a flow at very low Reynolds number, $\mu\nabla^{2}\vect{u} =  \nabla p$, can be rewritten in its integral formulation by means of a similar process as that described above for the Laplace equation. But it is a vector equation and its fundamental solutions are tensors. The boundary integral form of Stokes equation is
+
+\begin{equation}
+	\label{eqn:stokes_bem_12}
+	\frac{1}{2}u_j(\vect{x_0}) = -\frac{1}{8\pi\mu}\int_{\Gamma} t_i(\vect{x})G_{ij}(\vect{x},\vect{x}_0)\;\di{\Gamma} + \frac{1}{8\pi} \int_{\Gamma} u_i(\vect{x})T_{ijk}(\vect{x},\vect{x}_0)n_k(\vect{x})\;\di{\Gamma}.
+\end{equation}
+
+\noindent where $\vect{u}$ is the velocity vector satisfying the Stokes equation (Einstein indicial summation implied), with $\sigma$ the corresponding stress tensor and $\vect{t} = \sigma\cdot\nhat$ , vectors $\vect{x}$ and $\vect{x}_0$ are two distinct points in the domain, and $\vect{G}$ and $\vect{T}$ are the stokeslet and stresslet fundamental solutions:
+%
+\begin{equation}
+	\label{eqn:stokeslet}
+	G_{ij}(\vect{x},\vect{y})=S_{ij}(\vect{x},\vect{y})  =  \frac{\delta_{ij}}{r} + \frac{(x_i-y_i)(x_j-y_j)}{r^{3}} 
+\end{equation}
+
+\begin{equation}
+	\label{eqn:stresslet}
+	T_{ijk}(\vect{x},\vect{y},\nhat)  =  6\frac{(x_i-y_i)(x_j-y_j)(x_k-y_k)n_k}{r^{5}} \end{equation}
+
+ The discretized form with constant surface panels becomes
+%
+\begin{equation}
+	\label{eqn:stokes_bem_discretized}
+	\frac{1}{2}u_i(\vect{x_0}) = -\frac{1}{8\pi\mu}\sum_{J=1}^{N}t_j\int_{\Gamma} G_{ij}(\vect{x_0}, \vect{x_J})\;\di{\Gamma_j} + \frac{1}{8\pi} \sum_{J=0}^{N}u_j\int_{\Gamma} T_{ijk}(\vect{x_0}, \vect{x_J})\cdot n_k\;\di{\Gamma_j}.
+\end{equation}
+
 
 \subsection{Numerical integration methods}
 
@@ -492,7 +518,7 @@ Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed t
 \end{center}
 \end{figure}
 
-We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, and Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $4\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are anomalous because in these cases we are unable to use the efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be interpreted as an advantage of the relaxation strategy, which leads to using smaller near fields, and thus extend the range of problem size where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu using four threads, like we do here), then the potential for a $7\times$ speed-up is real.
+We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, and Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $4\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use the efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using four threads, like we do here), then the potential for a $7\times$ speed-up is real.
 
 \begin{table}[h]
 \footnotesize
@@ -597,6 +623,8 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 	\label{fig:multiple_cell_speedup}
 \end{center}
 \end{figure}
+
+
 
 
 \section{Conclusion} 
