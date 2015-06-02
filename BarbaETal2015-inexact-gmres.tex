@@ -491,6 +491,102 @@ Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed t
 \end{center}
 \end{figure}
 
+\begin{table}[h]
+\footnotesize
+\begin{center}
+\begin{tabular}{c|c}
+ Variable & Setting \\ 
+\hline
+ & \\
+ $p_{\text{initial}}$ & $16$ \\
+ $p_{\text{min}}$ &  $5$ \\
+ solver tolerance & $10^{-5}$ \\
+ Near-field & Sparse matrix \\
+ Threads & $4$ \\
+ Solver & {\gmres} \\ 
+ Preconditioner & None
+\end{tabular}
+\end{center}
+\caption{Parameters for tests of the relaxation strategy with a red blood cell in uniform Stokes flow.}
+\label{tab:cells_relaxation_settings}
+\end{table}%
+
+
+\begin{table}[htdp]
+\footnotesize
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c}
+ & & \multicolumn{2}{c|}{Non-relaxed} & \multicolumn{2}{c|}{Relaxed} \\
+ & & \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} \\
+ N & \# unknowns & $\ncrit$ & $t_{\text{solve}}$ & $\ncrit$ & $t_{\text{solve}}$ & Speedup \\\hline
+ & & & & & \\
+ 2048 & 6144 & 200 & 44.5 & 100 & 11.0 & 4.05 \\
+ 8192 & 24576 & 400 & 177 & 150 & 52.4 & 3.37 \\
+ 32768 & 98304 & 400 & 848 & 150 & 223 & 3.80 \\
+ 131072 & 393216 & 600 & 6386\footnotemark[1] & 150 & 874 & 7.31\footnotemark[1] \\	
+\end{tabular}
+\end{center}
+\caption{Timings and speed-up of the relaxation strategy on a single red blood cell in uniform Stokes flow, with the test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
+\label{tab:single_cell_relaxation_results}
+\end{table}%
+
+\footnotetext[1]{Due to memory restrictions, the sparse-matrix representation of the near-field could not be used, resulting in a much slower {\ptop} evaluation}
+
+
+\begin{table}[htdp]
+\footnotesize
+\begin{center}
+\begin{tabular}{c|c|c|cc|cc|c}
+\multicolumn{8}{c}{2048 panels / cell} \\
+& & & \multicolumn{2}{c}{Non-relaxed} & \multicolumn{2}{c}{Relaxed}\\
+N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup \\ \hline
+& & & & & & &  \\
+2048 & 6144 & 1 & 200 & 44.5 & 100 & 11.0 & 4.05 \\ 
+8192 & 24576 & 4 & 200 & 236 & 150 & 59.8 & 3.95 \\ 
+32768 & 98304 & 16 & 400 & 1261 & 150 & 331 & 3.81 \\
+131072 & 393216 & 64 & 300 & 9982\footnotemark[1] & 100 & 1606 & 6.22\footnotemark[1] \\
+\end{tabular}
+\end{center}
+\caption{Timings and speed-up of the relaxation strategy with several red blood cells in uniform Stokes flow, each cell discretized with 2048 panels and test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
+\label{tab:multiple_cell_relaxation_results_2048}
+\end{table}
+
+
+\begin{table}[htdp]
+\footnotesize
+\begin{center}
+\begin{tabular}{c|c|c|cc|cc|c}
+\multicolumn{8}{c}{8192 panels / cell} \\
+& & &  \multicolumn{2}{c}{Non-relaxed} & \multicolumn{2}{c}{Relaxed}\\
+N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup \\ \hline
+& & & & & & &  \\
+8192 & 24576 & 1 & 400 & 177 & 150 & 52.4 & 3.37 \\ 
+32768 & 98304 & 4 & 400 & 1375 & 150 & 315 & 4.37 \\
+131072 & 393216 & 16 & 300 & 15980\footnotemark[1] & 100 & 1692 & 9.44\footnotemark[1] \\
+\end{tabular}
+\end{center}
+\caption{Timings and speed-up of the relaxation strategy with several red blood cells in uniform Stokes flow, each cell discretized with $8,192$ panels and test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
+\label{tab:multiple_cell_relaxation_results_8192}
+\end{table}
+
+
+\begin{table}[htdp]
+\footnotesize
+\begin{center}
+\begin{tabular}{c|c|c|cc|cc|c}
+\multicolumn{8}{c}{32768 panels / cell} \\
+& & & \multicolumn{2}{c}{Non-relaxed} & \multicolumn{2}{c}{Relaxed}\\
+N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup \\ \hline
+& & & & & & &  \\
+32768 & 98304 & 1 & 400 & 848 & 150 & 223 & 3.80 \\
+131072 & 393216 & 4 & 300 & 9629\footnotemark[1] & 100 & 1247 & 7.72\footnotemark[1] \\	
+\end{tabular}
+\end{center}
+\caption{Timings and speed-up of the relaxation strategy with several red blood cells in uniform Stokes flow, each cell discretized with $32,768$ panels and test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
+\label{tab:multiple_cell_relaxation_results_32768}
+\end{table}
+
+
 
 \section{Conclusion} 
 
