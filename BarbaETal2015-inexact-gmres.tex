@@ -518,7 +518,7 @@ Figure \ref{fig:single_cell_iterations} shows that the number of iterations need
 \end{figure}
 
 
-For the next tests, we used several red blood cells in a sparse, linear arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem. To set up these tests, we make copies of a discretized red blood cell, shift spatially and randomly rotate each one, resulting an arrangement like that shown in Figure \ref{fig:multiple_cells}.
+For the next tests, we used several red blood cells in a sparse spatial arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem. We set up a collection of red blood cells by making copies of a discretized cell, then randomly rotating each one, and shifting it spatially in each  coordinate direction by a positive random amount that ensures they do not overlap. The resulting arrangement may look like that shown in Figure \ref{fig:multiple_cells}.
 
 % this figure behaves weird, and the images appear displaced upwards/ hacked it with \vspace{1.2cm} before \includegraphics
 \begin{figure}[h]
