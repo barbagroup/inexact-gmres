@@ -793,8 +793,8 @@ Vol.\ #3, No.\ #4, pp.\ #5
 \definecolor{strip}{cmyk}{0,0,0,1}
 
 
-\RequirePackage[dvips]{graphics,graphicx}
-\RequirePackage[colorlinks,pdfmark,dvips]{hyperref}
+%\RequirePackage[dvips]{graphics,graphicx}
+%\RequirePackage[colorlinks,pdfmark,dvips]{hyperref}
 \def\wwwbrowser{C:\string\Program\space
 Files\string\Plus!\string\Microsoft\space
 Internet\string\iexplore.exe}
