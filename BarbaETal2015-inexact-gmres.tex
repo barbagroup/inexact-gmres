@@ -469,9 +469,9 @@ Figure \ref{fig:single_cell_iterations} shows that the number of iterations need
 \end{figure}
 
 
-For the next tests, we used four red blood cells in a sparse, linear arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem. We take copies of a red blood cell, discretized with $8,192$ panels, shift spatially and randomly rotate each one, resulting an arrangement like that shown in Figure \ref{fig:multiple_cells}.
+For the next tests, we used several red blood cells in a sparse, linear arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem. To set up these tests, we make copies of a discretized red blood cell, shift spatially and randomly rotate each one, resulting an arrangement like that shown in Figure \ref{fig:multiple_cells}.
 
-\begin{figure}[b]
+\begin{figure}[h]
 \begin{center}
 	\includegraphics[natwidth=6in,natheight=2.88in,width=0.75\textwidth]{4Cells_arrow.pdf}
 	\caption{Surfaces for four red blood cells in a uniform Stokes flow.}
@@ -479,6 +479,17 @@ For the next tests, we used four red blood cells in a sparse, linear arrangement
 \end{center}
 \end{figure}
 
+Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed to converge to a solver tolerance of $10^{-5}$ when using three different surface mesh sizes on each cell: $N=2048$, $8,192$ and $32,768$. In all cases $p = 16,\;p_{\text{min}} = 5$. Figure \ref{fig:multiple_cell_iterations} shows that the number of iterations needed to converge increases sharply with the number of red blood cells in the system, while the number of panels per cell has a smaller effect in this range of mesh sizes. In all cases, the number of iterations is between 45 and 65, and thus we expect to see good speed-ups using the relaxation strategy.
+
+
+
+\begin{figure}
+\begin{center}
+	\includegraphics[natwidth=7in,natheight=3.5in,width=0.85\textwidth]{EthrocyteMultipleCellIterations.pdf}
+	\caption{Number of iterations needed to converge to a desired residual of $10^{-5}$ for systems with multiple red blood cells, discretized with different mesh sizes ($p = 16$).}
+	\label{fig:multiple_cell_iterations}
+\end{center}
+\end{figure}
 
 
 \section{Conclusion} 
