@@ -1,5 +1,13 @@
 \begin{thebibliography}{1}
 
+\bibitem{Appel1985}
+{\sc Andrew~W. Appel}, {\em An efficient program for many-body simulation},
+  SIAM J. Sci.\ Stat.\ Comput., 6 (1985), pp.~85--103.
+
+\bibitem{BarnesHut1986}
+{\sc J.~Barnes and P.~Hut}, {\em A hierarchical {$O(N \log N)$}
+  force-calculation algorithm}, Nature, 324 (1986), pp.~446--449.
+
 \bibitem{EvansFung1972}
 {\sc Evan Evans and Yuan-Cheng Fung}, {\em Improved measurements of the
   erythrocyte geometry}, Microvascular research, 4 (1972), pp.~335--347.
@@ -13,6 +21,10 @@
 \bibitem{Freund2014}
 {\sc Jonathan~B Freund}, {\em Numerical simulation of flowing blood cells},
   Ann.\ Rev.\ Fluid Mech., 46 (2014), pp.~67--95.
+
+\bibitem{GreengardRokhlin1987}
+{\sc L.~Greengard and V.~Rokhlin}, {\em A fast algorithm for particle
+  simulations}, J. Comput.\ Phys., 73 (1987), pp.~325--348.
 
 \bibitem{roache1998}
 {\sc Patrick~J Roache}, {\em Verification and validation in computational
