@@ -479,7 +479,7 @@ For the next tests, we used several red blood cells in a sparse, linear arrangem
 \end{center}
 \end{figure}
 
-Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed to converge to a solver tolerance of $10^{-5}$ when using three different surface mesh sizes on each cell: $N=2048$, $8,192$ and $32,768$. In all cases $p = 16,\;p_{\text{min}} = 5$. Figure \ref{fig:multiple_cell_iterations} shows that the number of iterations needed to converge increases sharply with the number of red blood cells in the system, while the number of panels per cell has a smaller effect in this range of mesh sizes. In all cases, the number of iterations is between 45 and 65, and thus we expect to see good speed-ups using the relaxation strategy.
+Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed to converge to a solver tolerance of $10^{-5}$ when using three different surface mesh sizes on each cell: $N=2048$, $8192$ and $32,768$. In all cases $p = 16,\;p_{\text{min}} = 5$. Figure \ref{fig:multiple_cell_iterations} shows that the number of iterations needed to converge increases sharply with the number of red blood cells in the system, while the number of panels per cell has a smaller effect in this range of mesh sizes. In all cases, the number of iterations is between 45 and 65, and thus we expect to see good speed-ups using the relaxation strategy.
 
 
 
@@ -490,6 +490,8 @@ Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed t
 	\label{fig:multiple_cell_iterations}
 \end{center}
 \end{figure}
+
+We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, and Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $4\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are anomalous because in these cases we are unable to use the efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be interpreted as an advantage of the relaxation strategy, which leads to using smaller near fields, and thus extend the range of problem size where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu using four threads, like we do here), then the potential for a $7\times$ speed-up is real.
 
 \begin{table}[h]
 \footnotesize
@@ -507,7 +509,7 @@ Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed t
  Preconditioner & None
 \end{tabular}
 \end{center}
-\caption{Parameters for tests of the relaxation strategy with a red blood cell in uniform Stokes flow.}
+\caption{Parameters for the tests of the relaxation strategy with red blood cells in uniform Stokes flow.}
 \label{tab:cells_relaxation_settings}
 \end{table}%
 
@@ -530,7 +532,7 @@ Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed t
 \label{tab:single_cell_relaxation_results}
 \end{table}%
 
-\footnotetext[1]{Due to memory restrictions, the sparse-matrix representation of the near-field could not be used, resulting in a much slower {\ptop} evaluation}
+\footnotetext[1]{Due to memory restrictions, the sparse-matrix representation of the near-field could not be used, resulting in a much slower {\ptop} evaluation.}
 
 
 \begin{table}[htdp]
@@ -586,6 +588,14 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 \label{tab:multiple_cell_relaxation_results_32768}
 \end{table}
 
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[natwidth=4in,natheight=3in,width=0.55\textwidth]{EthrocyteMultipleCellSpeedup.pdf}
+	\caption{Speed-ups of the relaxation strategy with several red blood cells in uniform Stokes flow, using different mesh sizes on each cell. The abscissa value corresponds to the total number of panels (all cells). Test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
+	\label{fig:multiple_cell_speedup}
+\end{center}
+\end{figure}
 
 
 \section{Conclusion} 
