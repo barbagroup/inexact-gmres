@@ -13,10 +13,20 @@
 
 \usepackage{amsmath}
 \usepackage{amsfonts,amssymb}
-\usepackage{graphicx}
+\usepackage{calc}
+
 \usepackage{subfig}
 \usepackage{textcomp}
 \usepackage{xspace}
+
+%% The SIAM class file is loading these packages like this:
+%\RequirePackage[dvips]{graphics,graphicx}
+%\RequirePackage[colorlinks,pdfmark,dvips]{hyperref}
+
+%% I don't want to use dvips so let's load them again
+\usepackage{graphicx}
+\usepackage[pdftex]{hyperref}
+
 
 \graphicspath{{figs/}} %  PATH to figure files-- change to ./ for submission
 
@@ -189,6 +199,20 @@ The Stokes equation for a flow at very low Reynolds number, $\mu\nabla^{2}\vect{
 
 \subsection{Numerical integration methods}
 
+The boundary integral formulations all demand that we compute integrals of the type $\int_{\Gamma} \K_{ij}\;\di{\Gamma_j}$, where $\K_{ij}=\K(\vect{x}_j-\vect{x}_i)$ is the kernel, the point $\vect{x}_j$ is on the panel surface $\Gamma_j$ and the point $\vect{x}_i$ is a target or evaluation point. Because the kernel $\K$ is often singular, we need specific approaches depending on the distance $\vect{x}_i-\vect{x}_j$. Where the target point is far enough from the surface $\Gamma_j$, simple quadrature with a few Gauss points will suffice. As the target point \emph{nears} the source panel (with the definition of ``near'' to be determined), we need high-accuracy quadrature. Finally, in the case where the target point is on the source panel, the integral is (close to) singular and we must use analytical or semi-analytical integrals. Figure \ref{fig:integration_domain} illustrates the three situations.
+
+% This image went off the page and I had to hack an \hspace{-4cm} before the \includegraphics and add a \clearspace after the figure for the graphic to not go out of the text margins --- this was a problem when using the hyperref package as loaded in the SIAM class file. 
+% As a better solution, but still a hack, I commented out the RequirePackage lines that loaded hyperref and graphicx using dvips in the class file, and loaded them in the preamble here. 
+\begin{figure}[t]
+	\begin{centering}
+\includegraphics[natwidth=5.15in,natheight=2.6in,width=0.55\textwidth]{IntegrationDomain.pdf}
+	\caption{Integration domains}
+	\label{fig:integration_domain}
+	\end{centering}
+\end{figure}
+%\clearpage % had to hack this in to get the graphic within the text margins when using the unmodified SIAM class file
+
+
 \subsection{Krylov subspace methods}
 
 For large linear systems of equations $A\vect{x}=\vect{b}$, direct solution is generally unfeasible and iterative solution methods are preferred. Krylov subspace methods derive from the Cayley-Hamilton theorem, which states that you can express the inverse of a  matrix $A$ as a linear combination of its powers. A Krylov subspace is spanned by the products of $b$ and powers of $A$; to order-$r$, this is: $K_{r}(A,b) = \text{span}\{ b, Ab, A^{2}b, ..., A^{r-1}b\}$.
@@ -220,7 +244,7 @@ Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both fir
 
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \begin{center}
 	\subfloat[][128 panels]{\includegraphics[natwidth=4.73in,natheight=3.94in,width=0.4\textwidth]{sphere128.pdf}\label{fig:sphere128}}\qquad
 	\subfloat[][2048 panels]{\includegraphics[natwidth=4.73in,natheight=3.94in,width=0.4\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
@@ -240,7 +264,7 @@ Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both fir
 Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and  what value of $p$ is required in the \fmm-accelerated mat-vecs to continue convergence. We discretized a sphere with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-5}$ with an initial value of $p$ set to 8. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 3 is sufficient by the seventh iteration. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale from $\bigO(p^{4})$ for spherical harmonics to $\bigO(p^{6})$ for Cartesian expansions.
 But we note that only the far-field evaluation can be sped-up with the relaxation strategy, which means that the correct balance between near field and far field in the \fmm could change as we reset $p$ in the later iterations.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 	\includegraphics[natwidth=3.7in,natheight=2in,width=0.65\textwidth]{LaplaceResidualIterations.pdf}
 	\caption{In a test using a sphere discretized with $32,768$ triangles, the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly.}
@@ -300,7 +324,7 @@ The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_
 
 It's clear that greater benefits from the relaxation strategy should derive from two situations: (a) where higher accuracy is needed (necessitating an initially higher $p$) , and (b) where the linear system demands a greater number of iterations to reach a set tolerance (resulting in more computations done at low $p$). To demonstrate this, we now present two tests that force these situations. 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceRelaxationP.pdf}
 	\caption{Timings for solving a 1st-kind Laplace integral formulation on a sphere discretized with $32,768$ panels, using a relaxed \gmres with different initial values of $p$, compared with a fixed-$p$ solver. The iteration count was capped at 10 for all cases. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
@@ -333,7 +357,7 @@ The final case looks at the situation where the application might demand large i
 
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceRelationIterations.pdf}
 	\caption{Speed-ups for solving a 1st-kind Laplace integral problem on a sphere discretized with $32,768$ panels, as the \gmres iteration count increases; $p=10$ for all cases. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
@@ -373,7 +397,7 @@ Like before, we start with a grid-convergence study to build confidence that the
 For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver. We first increased the value of $p$ until the solution stopped improving, and settle for $p=16$ in this case, using a $10^{-5}$ tolerance in the iterative solver.
 Figure \ref{fig:stokes_convergence} shows that we indeed observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesConvergence.pdf}
 	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation; $p=16$, linear system solved to $10^{-5}$ tolerance.}
@@ -453,11 +477,12 @@ To create a surface discretization for a red blood cell, we start with a sphere 
 \noindent where $x' = x\cdot r,\; y' = y\cdot r,\; \rho = \sqrt{x'^{2}+y'^{2}}$, and the coefficients are: $r=3.91\mu$m,  $C_0= 0.81\mu$m, $C_2= 7.83\mu$m and $C_4=-4.39\mu$m.
 Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.
 
-% this figure behaves weird, and the images appear displaced upwards/ hacked it with \vspace{1cm} before each \subfloat
-\begin{figure}[h]
+% This figure behaved weird when using the unmodified SIAM class file, and the images appeared displaced upwards; needed to hack it with \vspace{1cm} before each \subfloat
+% It now works well with the RequirePackage lines commented out on the .cls file !!
+\begin{figure}[ht]
 \begin{center}
-\vspace{1cm}	\subfloat[512 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
-\vspace{1cm}	\subfloat[2048 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC2048.pdf}\label{fig:rbc2048}}
+	\subfloat[512 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
+	\subfloat[2048 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC2048.pdf}\label{fig:rbc2048}}
 	\caption{Surface geometries of red blood cells obtained from transforming sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.}
 	\label{fig:glob_rbc}
 \end{center}
@@ -520,10 +545,11 @@ Figure \ref{fig:single_cell_iterations} shows that the number of iterations need
 
 For the next tests, we used several red blood cells in a sparse spatial arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem. We set up a collection of red blood cells by making copies of a discretized cell, then randomly rotating each one, and shifting it spatially in each  coordinate direction by a positive random amount that ensures they do not overlap. The resulting arrangement may look like that shown in Figure \ref{fig:multiple_cells}.
 
-% this figure behaves weird, and the images appear displaced upwards/ hacked it with \vspace{1.2cm} before \includegraphics
-\begin{figure}[h]
+% This figure behaved weird with the unmodified SIAM class file, and the images appeared displaced upwards, needing to hacked it with \vspace{1.2cm} before \includegraphics
+% Now it works well with the modified SIAM class file
+\begin{figure}[ht]
 \begin{center}
-\vspace{1.2cm} 	\includegraphics[natwidth=6in,natheight=2.88in,width=0.75\textwidth]{4Cells_arrow.pdf}
+\includegraphics[natwidth=6in,natheight=2.88in,width=0.75\textwidth]{4Cells_arrow.pdf}
 	\caption{Surfaces for four red blood cells in a uniform Stokes flow.}
 	\label{fig:multiple_cells}
 \end{center}
@@ -639,7 +665,7 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 \end{table}
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \begin{center}
 	\includegraphics[natwidth=4in,natheight=3in,width=0.55\textwidth]{EthrocyteMultipleCellSpeedup.pdf}
 	\caption{Speed-ups of the relaxation strategy with several red blood cells in uniform Stokes flow, using different mesh sizes on each cell. The abscissa value corresponds to the total number of panels (all cells). Test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
