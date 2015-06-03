@@ -239,9 +239,10 @@ Krylov methods include the conjugate gradient method, the biconjugate gradient s
 
 Fast multipole methods were invented to accelerate the solution of $N$-body problems, that is, problems seeking to determine the motion of $N$ bodies that interact with each other via a long-distance effect (like electrostatics or gravitation). A direct approach to such a problem takes $\O{N^{2}}$ time to compute. The first \emph{fast} algorithms for $N$-body problems \cite{Appel1985,BarnesHut1986} combined two ideas: (1) approximating the effect of groups of distant bodies with a few moments (of the charges or masses), and (2) using a hierarchical sub-division of space to determine the acceptable distances to apply these approximations.
  These ideas produced the treecode algorithms, with $\bigO(N\log N)$ time to compute.
-The fast multipole method \cite{GreengardRokhlin1987} introduces a third, key idea that leads to $\bigO(N)$ scaling: allowing groups of distant bodies to interact with \emph{groups} of targets, by means of a mathematical representation called local expansions. 
+The fast multipole method \cite{GreengardRokhlin1987} introduces a third, key idea that leads to $\bigO(N)$ scaling: allowing groups of distant bodies to interact with \emph{groups} of targets, by means of a mathematical representation called local expansion.
 
 A typical $N$-body problem evaluates a potential $\phi$ on $i=1\cdots N$ bodies
+using the following expression
 %
 \begin{equation}\label{eqn:nbody}
 	\phi_{i} = \sum_{j=0,\; j\ne i}^{N} q_{j}\cdot\K(\vect{x}_{i},\vect{x}_{j}) \; = \; \sum_{j=0}^{N}\K_{ij}q_{j},
@@ -727,6 +728,25 @@ In the case of the Stokes equation, the speed-ups that can be obtained using a r
 		\State $x_{k} \gets x_{0} + M^{-1}V_{k}y_{k}$ 
 	\end{algorithmic}
 \end{algorithm}
+ 
+ \begin{algorithm}
+ \footnotesize
+	\caption{Matrix-vector multiplication.}
+	\label{alg:matvec}
+	\begin{algorithmic}
+		%\Require 
+		\State Initialize $\mathbf{v}$
+		\For{Collocation points $i=1\cdots N_p$}
+			\State $w_i \gets 0$
+			\For{Integration panels $j=1 \cdots N_p$}
+				\For{Gauss integration points $k= 1 \cdots N_k$}
+				\State $w_i \gets w_i + v_j \cdot q_k \cdot S_j \, \frac{1}{|\mathbf{x_i}-\mathbf{x_k}|}$
+				\EndFor
+			\EndFor
+		\EndFor 
+	\end{algorithmic}
+\end{algorithm}
+
  
 %% Acnowledgements
 
