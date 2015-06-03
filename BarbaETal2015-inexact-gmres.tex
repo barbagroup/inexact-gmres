@@ -178,7 +178,7 @@ The Stokes equation for a flow at very low Reynolds number, $\mu\nabla^{2}\vect{
 	\frac{1}{2}u_j(\vect{x_0}) = -\frac{1}{8\pi\mu}\int_{\Gamma} t_i(\vect{x})G_{ij}(\vect{x},\vect{x}_0)\;\di{\Gamma} + \frac{1}{8\pi} \int_{\Gamma} u_i(\vect{x})T_{ijk}(\vect{x},\vect{x}_0)n_k(\vect{x})\;\di{\Gamma}.
 \end{equation}
 
-\noindent where $\vect{u}$ is the velocity vector satisfying the Stokes equation (Einstein indicial summation implied), with $\sigma$ the corresponding stress tensor and $\vect{t} = \sigma\cdot\nhat$ , vectors $\vect{x}$ and $\vect{x}_0$ are two distinct points in the domain, and $\vect{G}$ and $\vect{T}$ are the stokeslet and stresslet fundamental solutions:
+\noindent where $\vect{u}$ is the velocity vector satisfying the Stokes equation (Einstein indicial summation implied), with $\sigma$ the corresponding stress tensor and $\vect{t} = \sigma\cdot\nhat$  the traction, vectors $\vect{x}$ and $\vect{x}_0$ are two distinct points in the domain, and $\vect{G}$ and $\vect{T}$ are the stokeslet and stresslet fundamental solutions:
 %
 \begin{equation}
 	\label{eqn:stokeslet}
@@ -189,11 +189,12 @@ The Stokes equation for a flow at very low Reynolds number, $\mu\nabla^{2}\vect{
 	\label{eqn:stresslet}
 	T_{ijk}(\vect{x},\vect{y},\nhat)  =  6\frac{(x_i-y_i)(x_j-y_j)(x_k-y_k)n_k}{r^{5}} \end{equation}
 
- The discretized form with constant surface panels becomes
+Indices $i, j, k$ denote here the Cartesian-tensor components and $\delta_{ij}$ is the Kr{\"o}necker delta. Discretizing the boundary with $N$ surface panels results in sums that we now number with the index $J$.
+The discretized form with constant surface panels becomes
 %
 \begin{equation}
 	\label{eqn:stokes_bem_discretized}
-	\frac{1}{2}u_i(\vect{x_0}) = -\frac{1}{8\pi\mu}\sum_{J=1}^{N}t_j\int_{\Gamma} G_{ij}(\vect{x_0}, \vect{x_J})\;\di{\Gamma_j} + \frac{1}{8\pi} \sum_{J=0}^{N}u_j\int_{\Gamma} T_{ijk}(\vect{x_0}, \vect{x_J})\cdot n_k\;\di{\Gamma_j}.
+	\frac{1}{2}u_j(\vect{x_0}) = -\frac{1}{8\pi\mu}\sum_{J=1}^{N}t_i\int_{\Gamma} G_{ij}(\vect{x}_J, \vect{x}_0)\;\di{\Gamma_J} + \frac{1}{8\pi} \sum_{J=0}^{N}u_i\int_{\Gamma} T_{ijk}(\vect{x}_J, \vect{x}_0)\cdot n_k\;\di{\Gamma_J}.
 \end{equation}
 
 
