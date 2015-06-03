@@ -200,7 +200,7 @@ The discretized form with constant surface panels becomes
 
 \subsection{Numerical integration methods}
 
-The boundary integral formulations all demand that we compute integrals of the type $\int_{\Gamma} \K_{ij}\;\di{\Gamma_j}$, where $\K_{ij}=\K(\vect{x}_j-\vect{x}_i)$ is the kernel, the point $\vect{x}_j$ is on the panel surface $\Gamma_j$ and the point $\vect{x}_i$ is a target or evaluation point. Because the kernel $\K$ is often singular, we need specific approaches depending on the distance $\vect{x}_i-\vect{x}_j$. Where the target point is far enough from the surface $\Gamma_j$, simple quadrature with a few Gauss points will suffice. As the target point \emph{nears} the source panel (with the definition of ``near'' to be determined), we need high-accuracy quadrature. Finally, in the case where the target point is on the source panel, the integral is (close to) singular and we must use analytical or semi-analytical integrals. Figure \ref{fig:integration_domain} illustrates the three situations.
+The boundary integral formulations all demand that we compute integrals of the type $\int_{\Gamma} \K_{ij}\;\di{\Gamma_j}$, where $\K_{ij}=\K(\vect{x}_j-\vect{x}_i)$ is the kernel, the point $\vect{x}_j$ is on the panel surface $\Gamma_j$ and the point $\vect{x}_i$ is a target or evaluation point. Because the kernel $\K$ is often singular, we need specific approaches depending on the distance $\vect{x}_j-\vect{x}_i$. Where the target point is far enough from the surface $\Gamma_j$, simple quadrature with a few Gauss points will suffice. As the target point \emph{nears} the source panel (with the definition of ``near'' to be determined), we need high-accuracy quadrature. Finally, in the case where the target point is on the source panel, the integral is (close to) singular and we must use analytical or semi-analytical integrals. Figure \ref{fig:integration_domain} illustrates the three situations.
 
 % This image went off the page and I had to hack an \hspace{-4cm} before the \includegraphics and add a \clearspace after the figure for the graphic to not go out of the text margins --- this was a problem when using the hyperref package as loaded in the SIAM class file. 
 % As a better solution, but still a hack, I commented out the RequirePackage lines that loaded hyperref and graphicx using dvips in the class file, and loaded them in the preamble here. 
@@ -212,6 +212,17 @@ The boundary integral formulations all demand that we compute integrals of the t
 	\end{centering}
 \end{figure}
 %\clearpage % had to hack this in to get the graphic within the text margins when using the unmodified SIAM class file
+
+
+Applying Gauss quadrature to the integrals appearing in the coefficients of the boundary element discretization for Laplace's equation, \eqref{eqn:laplace_bem_G} and \eqref{eqn:laplace_bem_dGdn}, for example, gives
+%
+\begin{eqnarray}
+	\int_{\Gamma} G(\vect{x}_i,\vect{x}_j)\;\di{\Gamma_j} & \approx & \sum_{k=1}^{K} w_k\cdot S_j\cdot \frac{1}{|\vect{x}_i-\vect{x}_k|},\;\;\vect{x}_k \in \Gamma_j, \\ 
+	\int_{\Gamma} \partiald{G(\vect{x}_i,\vect{x}_j)}{\nhat_j}\;\di{\Gamma_j} & \approx & \sum_{k=1}^{K}w_k\cdot S_j\cdot \frac{d\vect{x}\cdot\nhat_j}{|\vect{x}_i-\vect{x}_k|^{3}},\;\;\vect{x}_k \in \Gamma_j,
+\end{eqnarray}
+
+\noindent
+with $w_k$ the area-normalized Gauss quadrature weights and $S_j$ the surface area of panel $\Gamma_j$. To control the accuracy of the integration, we vary the number of quadrature points, using for example $K< 4$ for targets that are far enough and $K\sim 20$ for near-singular situations. 
 
 
 \subsection{Krylov subspace methods}
