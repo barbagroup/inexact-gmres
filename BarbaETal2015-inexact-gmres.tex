@@ -245,7 +245,7 @@ A typical $N$-body problem evaluates a potential $\phi$ on $i=1\cdots N$ bodies
 using the following expression
 %
 \begin{equation}\label{eqn:nbody}
-	\phi_{i} = \sum_{j=0,\; j\ne i}^{N} q_{j}\cdot\K(\vect{x}_{i},\vect{x}_{j}) \; = \; \sum_{j=0}^{N}\K_{ij}q_{j},
+	\phi_{i} = \sum_{j=0,\; j\ne i}^{N} m_{j}\cdot\K(\vect{x}_{i},\vect{x}_{j}) \; = \; \sum_{j=0}^{N}\K_{ij}m_{j},
 \end{equation}
 
 \noindent where $\K_{i,j} = \K(\vect{x}_{i},\vect{x}_{j})$ is referred to as the \emph{kernel}, and the potential is a solution of an elliptic equation, e.g., the Poisson equation $\vect{F}_i = - \nabla^2 \phi_i$ for gravitation.
