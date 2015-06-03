@@ -149,7 +149,7 @@ To write the Laplace equation, $\nabla^{2}\phi(\vect{x}) = 0$,  in its integral 
 
 Either the values of the potential or its normal derivative on each panel could be known from boundary conditions, resulting in either first-kind or second-kind integral equations. Finding the remaining unknowns requires solving a system of linear equations $A\vect{x}=\vect{b}$, where the elements of the coefficient matrix are
 %
-\begin{equation}
+\begin{equation} \label{eqn:laplace_matrix}
 	A_{ij} = 
 	\begin{cases}
 		\int_{\Gamma} G_{ij}\;\di{\Gamma_j}, & \phi\;\text{given on panel}\;j \\
@@ -226,14 +226,14 @@ with $q_k$ the area-normalized Gauss quadrature weights and $S_j$ the surface ar
 When the target point is on the source panel, the standard approach is to use analytical or semi-analytical methods for the singular and hyper-singular integrals over the panels.
 For the Laplace equation, we used a semi-analytical method. 
 [[MORE HERE+REF]]
-Several analytic integration techniques are at our disposal for dealing with the singular integrals from boundary element methods. Explicit expressions for these integrals over flat triangular domains result in recursive formulae on the edges of the integration triangle. These are available for Laplace potentials \cite{Fata2009 } and linear elastic surface potentials \cite{Fata2011}. 
+Several analytic integration techniques are at our disposal for dealing with the singular integrals from boundary element methods. Explicit expressions for these integrals over flat triangular domains result in recursive formulae on the edges of the integration triangle. These are available for Laplace potentials \cite{Fata2009} and linear elastic surface potentials \cite{Fata2011}. 
 We obtained the analytic integrals for Stokes equation from Fata's formulas for linear elasticity, after setting the Poisson ratio to $1/2$. 
 
 \subsection{Krylov subspace methods}
 
 For large linear systems of equations $A\vect{x}=\vect{b}$, direct solution is generally unfeasible and iterative solution methods are preferred. Krylov subspace methods derive from the Cayley-Hamilton theorem, which states that you can express the inverse of a  matrix $A$ as a linear combination of its powers. A Krylov subspace is spanned by the products of $b$ and powers of $A$; to order-$r$, this is: $K_{r}(A,b) = \text{span}\{ b, Ab, A^{2}b, ..., A^{r-1}b\}$.
 Krylov methods include the conjugate gradient method, the biconjugate gradient stabilized method (\textsc{bicgstab}) and the generalized minimal residual method, \gmres \cite{SaadSchultz1986}, which we use. We list the pseudocode of a right-preconditioned {\gmres} algorithm in the Appendix as Algorithm \ref{alg:gmres}. The greatest cost per iteration is the matrix-vector product (matvec), $w\gets A\cdot x$, taking $\O{N^{2}}$ time in a direct implementation. However, given the structure of the coefficient matrix in boundary element methods, this operation can be reduced to $\O{N}$ time using, for example, the fast multiple method.
-
+The key is understanding the matrix-vector product as an $N$-body problem. Let's consider the first-kind integral problem for the Laplace equation. In \eqref{eqn:laplace_matrix} we see that the matrix coefficients are $\int_{\Gamma} G_{ij}\;\di{\Gamma_j}$ in this case. Applying Gauss quadrature to obtain the coefficients 
 
 \subsection{Fast multipole method}
 
