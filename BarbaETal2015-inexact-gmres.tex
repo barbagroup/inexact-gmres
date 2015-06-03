@@ -217,12 +217,12 @@ The boundary integral formulations all demand that we compute integrals of the t
 Applying Gauss quadrature to the integrals appearing in the coefficients of the boundary element discretization for Laplace's equation, \eqref{eqn:laplace_bem_G} and \eqref{eqn:laplace_bem_dGdn}, for example, gives
 %
 \begin{eqnarray}
-	\int_{\Gamma} G(\vect{x}_i,\vect{x}_j)\;\di{\Gamma_j} & \approx & \sum_{k=1}^{K} w_k\cdot S_j\cdot \frac{1}{|\vect{x}_i-\vect{x}_k|},\;\;\vect{x}_k \in \Gamma_j, \\ 
-	\int_{\Gamma} \partiald{G(\vect{x}_i,\vect{x}_j)}{\nhat_j}\;\di{\Gamma_j} & \approx & \sum_{k=1}^{K}w_k\cdot S_j\cdot \frac{d\vect{x}\cdot\nhat_j}{|\vect{x}_i-\vect{x}_k|^{3}},\;\;\vect{x}_k \in \Gamma_j,
+	\int_{\Gamma} G(\vect{x}_i,\vect{x}_j)\;\di{\Gamma_j} & \approx & \sum_{k=1}^{K} q_k\cdot S_j\cdot \frac{1}{|\vect{x}_i-\vect{x}_k|},\;\;\vect{x}_k \in \Gamma_j, \\ 
+	\int_{\Gamma} \partiald{G(\vect{x}_i,\vect{x}_j)}{\nhat_j}\;\di{\Gamma_j} & \approx & \sum_{k=1}^{K}q_k\cdot S_j\cdot \frac{d\vect{x}\cdot\nhat_j}{|\vect{x}_i-\vect{x}_k|^{3}},\;\;\vect{x}_k \in \Gamma_j,
 \end{eqnarray}
 
 \noindent
-with $w_k$ the area-normalized Gauss quadrature weights and $S_j$ the surface area of panel $\Gamma_j$. To control the accuracy of the numerical integration, we vary the number of quadrature points, using for example $K< 4$ for targets that are far from the source panel and $K\sim 20$ for near-singular situations. 
+with $q_k$ the area-normalized Gauss quadrature weights and $S_j$ the surface area of panel $\Gamma_j$. To control the accuracy of the numerical integration, we vary the number of quadrature points, using for example $K< 4$ for targets that are far from the source panel and $K\sim 20$ for near-singular situations. 
 When the target point is on the source panel, the standard approach is to use analytical or semi-analytical methods for the singular and hyper-singular integrals over the panels.
 For the Laplace equation, we used a semi-analytical method. 
 [[MORE HERE+REF]]
