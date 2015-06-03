@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{Appel1985}
 {\sc Andrew~W. Appel}, {\em An efficient program for many-body simulation},
@@ -12,10 +12,14 @@
 {\sc Evan Evans and Yuan-Cheng Fung}, {\em Improved measurements of the
   erythrocyte geometry}, Microvascular research, 4 (1972), pp.~335--347.
 
+\bibitem{Fata2009}
+{\sc S.~N. Fata}, {\em Explicit expressions for {3D} boundary integrals in
+  potential theory}, Int.\ J. Num.\ Meth.\ Engineering, 78 (2009), pp.~32--47.
+
 \bibitem{Fata2011}
-{\sc S.~N. Fata}, {\em Explicit expressions for three-dimensional boundary
-  integrals in linear elasticity}, J.\ Comp.\ App.\ Mathematics, 235 (2011),
-  pp.~4480--4495.
+\leavevmode\vrule height 2pt depth -1.6pt width 23pt, {\em Explicit expressions
+  for three-dimensional boundary integrals in linear elasticity}, J.\ Comp.\
+  App.\ Mathematics, 235 (2011), pp.~4480--4495.
 
 \bibitem{FedosovETal2011}
 {\sc D.~A. Fedosov, B.~Caswell, S.~Suresh, and G.~E. Karniadakis}, {\em

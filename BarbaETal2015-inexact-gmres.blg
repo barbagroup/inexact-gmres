@@ -1,9 +1,5 @@
 This is BibTeX, Version 0.99c (TeX Live 2009)
 The top-level auxiliary file: BarbaETal2015-inexact-gmres.aux
-White space in argument---line 22 of file BarbaETal2015-inexact-gmres.aux
- : \citation{Fata2009
- :                    }
-I'm skipping whatever remains of this command
 The style file: siam.bst
 Database file #1: bem.bib
 Database file #2: cfd.bib
@@ -11,45 +7,44 @@ Database file #3: CompBio.bib
 Database file #4: FastMethods.bib
 Database file #5: InexactMatVec.bib
 Database file #6: scicomp.bib
-You've used 9 entries,
+You've used 10 entries,
             2030 wiz_defined-function locations,
-            592 strings with 5384 characters,
-and the built_in function-call counts, 3306 in all, are:
-= -- 341
-> -- 103
+            599 strings with 5513 characters,
+and the built_in function-call counts, 3612 in all, are:
+= -- 376
+> -- 107
 < -- 0
-+ -- 44
-- -- 32
-* -- 239
-:= -- 488
-add.period$ -- 9
-call.type$ -- 9
-change.case$ -- 42
++ -- 46
+- -- 33
+* -- 260
+:= -- 531
+add.period$ -- 10
+call.type$ -- 10
+change.case$ -- 46
 chr.to.int$ -- 0
-cite$ -- 9
-duplicate$ -- 161
-empty$ -- 251
-format.name$ -- 32
-if$ -- 726
+cite$ -- 10
+duplicate$ -- 177
+empty$ -- 276
+format.name$ -- 33
+if$ -- 796
 int.to.chr$ -- 0
-int.to.str$ -- 9
-missing$ -- 10
-newline$ -- 30
-num.names$ -- 18
-pop$ -- 31
+int.to.str$ -- 10
+missing$ -- 11
+newline$ -- 33
+num.names$ -- 19
+pop$ -- 33
 preamble$ -- 1
-purify$ -- 34
+purify$ -- 37
 quote$ -- 0
-skip$ -- 155
+skip$ -- 170
 stack$ -- 0
-substring$ -- 287
-swap$ -- 78
+substring$ -- 316
+swap$ -- 85
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 34
+type$ -- 38
 warning$ -- 0
-while$ -- 41
-width$ -- 10
-write$ -- 82
-(There was 1 error message)
+while$ -- 45
+width$ -- 12
+write$ -- 91
