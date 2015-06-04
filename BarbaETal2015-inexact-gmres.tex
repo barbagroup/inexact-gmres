@@ -237,12 +237,12 @@ For large linear systems of equations $A\vect{x}=\vect{b}$, direct solution is g
 Krylov methods include the conjugate gradient method, the biconjugate gradient stabilized method (\textsc{bicgstab}) and the generalized minimal residual method, \gmres \cite{SaadSchultz1986}, which we use. We list the pseudocode of a right-preconditioned {\gmres} algorithm in the Appendix as Algorithm \ref{alg:gmres}. The greatest cost per iteration is the matrix-vector product (matvec), $w\gets A\cdot x$, taking $\O{N^{2}}$ time in a direct implementation. However, given the structure of the coefficient matrix in boundary element methods, this operation can be reduced to $\O{N}$ time using, for example, the fast multiple method.
 The key is understanding the matrix-vector product as an $N$-body problem. Let's consider the first-kind integral problem for the Laplace equation. In \eqref{eqn:laplace_matrix} we see that the matrix coefficients are $\int_{\Gamma} G_{ij}\,\di{\Gamma_j}$ in this case. Applying Gauss quadrature to obtain the coefficients gives \eqref{eqn:gauss:1st-kind}. Thus, the matrix-vector product gives the following  for row $i$
 %
-\begin{equation}
+\begin{equation}\label{eqn:matvec-onerow}
 	\sum_{j=1}^{N_p}  \partiald{\phi_j}{\nhat_j}\; \sum_{k=1}^{K} q_k\cdot S_j\cdot \frac{1}{|\vect{x}_i-\vect{x}_k|},\;\;\vect{x}_k \in \Gamma_j, 
 \end{equation}
 
 \noindent
-The inner sum is over the Gauss quadrature points (which are only a few) and the outer sum is over the integration panels. We list the pseudocode of the full mat-vec in the Appendix as Algorithm \ref{alg:matvec}. Taking all the quadrature points together as the set of ``sources'' and all the collocation points on the panels as the set of ``targets,'' the algorithm is reduced to two for-loops instead of three, making the analogy with an $N$-body problem more clear.
+The inner sum is over the Gauss quadrature points (only a few per panel) and the outer sum is over the integration panels. We list the pseudocode of the full mat-vec in the Appendix as Algorithm \ref{alg:matvec}. Taking all the quadrature points together as the set of ``sources'' and all the collocation points on the panels as the set of ``targets,'' the algorithm is reduced to two for-loops instead of three, making the analogy with an $N$-body problem more clear.
 
 
 \subsection{Fast multipole method}
@@ -255,10 +255,18 @@ A typical $N$-body problem evaluates a potential $\phi$ on $i=1\cdots N$ bodies
 using the following expression
 %
 \begin{equation}\label{eqn:nbody}
-	\phi_{i} = \sum_{j=0,\; j\ne i}^{N} m_{j}\cdot\K(\vect{x}_{i},\vect{x}_{j}) \; = \; \sum_{j=0}^{N}\K_{ij}m_{j},
+	\phi_{i} = \sum_{j=0}^{N} m_{j}\cdot\K(\vect{x}_{i},\vect{x}_{j}) \; = \; \sum_{j=0}^{N}\K_{ij}m_{j},
 \end{equation}
 
-\noindent where $\K_{i,j} = \K(\vect{x}_{i},\vect{x}_{j})$ is referred to as the \emph{kernel}, and the potential is a solution of an elliptic equation, e.g., the Poisson equation $\vect{F}_i = - \nabla^2 \phi_i$ for gravitation.
+\noindent where $\K_{i,j} = \K(\vect{x}_{i},\vect{x}_{j})$ is referred to as the \emph{kernel}, and the potential is a solution of an elliptic equation, e.g., the Poisson equation $\vect{F}_i = - \nabla^2 \phi_i$ for gravitation. The expression in \eqref{eqn:nbody} is analogous to that for one row of the \bem\ mat-vec in Equation \eqref{eqn:matvec-onerow}, taking all $N_p \cdot K$ Gauss points collectively.
+The first step in the \fmm\ acceleration is to group the Gauss quadrature points (i.e., the ``sources'') into clusters, and represent their influence via multipole expansions at the cluster center. If using Taylor expansions, for example, truncated to the first $p$ terms,
+%
+\begin{equation}
+	\phi(\vect{x}_i) = \sum_{||\vect{k}||=0}^{p}\frac{1}{\vect{k}!}D^{\vect{k}}_{\vect{y}} \K(\vect{x}_i,\vect{y}_c)\, \sum_{j=1}^{n_c} m_j (\vect{y}_j-\vect{y}_c)^{\vect{k}},
+	\label{eqn:cartesian_multipole}
+\end{equation}
+
+\noindent where $\vect{k}=\{k_1, k_2, k_3\}$ is a multi-index, $\vect{k}! = k_1!k_2!k_3!$, $\vect{y}^{\vect{k}} = y_1^{k_1}y_2^{k_2}y_3^{k_3}$, $D_{\vect{y}}^{\vect{k}} = D^{k_1}_{y_1}D^{k_2}_{y_2}D^{k_3}_{y_3}$ is the derivative operator and $p$ is the order of the expansion.
 
 
 \begin{figure}
