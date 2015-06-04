@@ -35,6 +35,10 @@
 {\sc L.~Greengard and V.~Rokhlin}, {\em A fast algorithm for particle
   simulations}, J. Comput.\ Phys., 73 (1987), pp.~325--348.
 
+\bibitem{HessSmith1967}
+{\sc John~L Hess and AMO Smith}, {\em Calculation of potential flow about
+  arbitrary bodies}, Progress in Aerospace Sciences, 8 (1967), pp.~1--138.
+
 \bibitem{roache1998}
 {\sc Patrick~J Roache}, {\em Verification and validation in computational
   science and engineering}, Hermosa Albuquerque, 1998.
