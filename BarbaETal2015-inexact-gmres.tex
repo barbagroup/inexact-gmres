@@ -62,7 +62,7 @@
 \newcommand{\ncrit}{N_{\text{CRIT}}}
 \newcommand{\pmin}{p_{\text{min}}}
 \newcommand{\tsolve}{t_{\text{solve}}}
-
+\newcommand{\mac}{\textsc{mac}}
 
 % SOLVER DEFINITIONS
 \newcommand{\cg}{\textsc{cg}}
@@ -248,7 +248,7 @@ The inner sum is over the Gauss quadrature points (only a few per panel) and the
 \subsection{Fast multipole method}
 
 Fast multipole methods were invented to accelerate the solution of $N$-body problems, that is, problems seeking to determine the motion of $N$ bodies that interact with each other via a long-distance effect (like electrostatics or gravitation). A direct approach to such a problem takes $\O{N^{2}}$ time to compute. The first \emph{fast} algorithms for $N$-body problems \cite{Appel1985,BarnesHut1986} combined two ideas: (1) approximating the effect of groups of distant bodies with a few moments (of the charges or masses), and (2) using a hierarchical sub-division of space to determine the acceptable distances to apply these approximations.
- These ideas produced the treecode algorithms, with $\bigO(N\log N)$ time to compute.
+ These ideas produced the treecode algorithm, with $\bigO(N\log N)$ time to compute.
 The fast multipole method \cite{GreengardRokhlin1987} introduces a third, key idea that leads to $\bigO(N)$ scaling: allowing groups of distant bodies to interact with \emph{groups} of targets, by means of a mathematical representation called local expansion.
 
 A typical $N$-body problem evaluates a potential $\phi$ on $i=1\cdots N$ bodies
@@ -258,16 +258,17 @@ using the following expression
 	\phi_{i} = \sum_{j=0}^{N} m_{j}\cdot\K(\vect{x}_{i},\vect{x}_{j}) \; = \; \sum_{j=0}^{N}\K_{ij}m_{j},
 \end{equation}
 
-\noindent where $\K_{i,j} = \K(\vect{x}_{i},\vect{x}_{j})$ is referred to as the \emph{kernel}, and the potential is a solution of an elliptic equation, e.g., the Poisson equation $\vect{F}_i = - \nabla^2 \phi_i$ for gravitation. The expression in \eqref{eqn:nbody} is analogous to that for one row of the \bem\ mat-vec in Equation \eqref{eqn:matvec-onerow}, taking all $N_p \cdot K$ Gauss points collectively.
-The first step in the \fmm\ acceleration is to group the Gauss quadrature points (i.e., the ``sources'') into clusters, and represent their influence via multipole expansions at the cluster center. If using Taylor expansions, for example, truncated to the first $p$ terms,
+\noindent where $\K_{ij} = \K(\vect{x}_{i},\vect{x}_{j})$ is referred to as the \emph{kernel}, and the potential is a solution of an elliptic equation, e.g., the Poisson equation $\vect{F}_i = - \nabla^2 \phi_i$ for gravitation. The expression in \eqref{eqn:nbody} is analogous to that for one row of the \bem\ mat-vec in Equation \eqref{eqn:matvec-onerow}, taking all $N_p \cdot K$ Gauss points collectively.
+The first step in the \fmm\ acceleration of \bem\ is to group the Gauss quadrature points (i.e., the ``sources'') into clusters, and represent their influence via multipole expansions at the cluster centers. If using Taylor expansions, for example, truncated to the first $p$ terms, the potential at a point is approximated by
 %
 \begin{equation}
-	\phi(\vect{x}_i) = \sum_{||\vect{k}||=0}^{p}\frac{1}{\vect{k}!}D^{\vect{k}}_{\vect{y}} \K(\vect{x}_i,\vect{y}_c)\, \sum_{j=1}^{n_c} m_j (\vect{y}_j-\vect{y}_c)^{\vect{k}},
+	\phi(\vect{x}_i) \approx \sum_{||\vect{k}||=0}^{p}\frac{1}{\vect{k}!}D^{\vect{k}}_{\vect{y}} \K(\vect{x}_i,\vect{y}_c)\, \sum_{j=1}^{n_c} m_j (\vect{y}_j-\vect{y}_c)^{\vect{k}},
 	\label{eqn:cartesian_multipole}
 \end{equation}
 
-\noindent where $\vect{k}=\{k_1, k_2, k_3\}$ is a multi-index, $\vect{k}! = k_1!k_2!k_3!$, $\vect{y}^{\vect{k}} = y_1^{k_1}y_2^{k_2}y_3^{k_3}$, $D_{\vect{y}}^{\vect{k}} = D^{k_1}_{y_1}D^{k_2}_{y_2}D^{k_3}_{y_3}$ is the derivative operator and $p$ is the order of the expansion.
-
+\noindent where $\vect{k}=\{k_1, k_2, k_3\}$ is a multi-index, $\vect{k}! = k_1!k_2!k_3!$, $\vect{y}^{\vect{k}} = y_1^{k_1}y_2^{k_2}y_3^{k_3}$, $D_{\vect{y}}^{\vect{k}} = D^{k_1}_{y_1}D^{k_2}_{y_2}D^{k_3}_{y_3}$ is the derivative operator and $p$ is the order of the expansion. The right-most terms are the multipoles, i.e., powers of distances with respect to the cluster center, and they can all be pre-calculated for a set of sources. Forming the clusters consists of recursively sub-dividing the spatial domain until a limit number of sources $\ncrit$ remains in each box, resulting in an octree structure. 
+The step of computing the multipole expansions for each source cluster at the deepest level of the tree is referred to as the particle-to-multipole operation, {\ptom}. These multipole expansions are then translated and added to represent larger clusters (at higher levels of the tree) in the multipole-to-multipole operation, {\mtom}. The process just described is called the \emph{upward sweep}.
+At this point, a treecode algorithm evaluates the potential on target points, performing  multipole-to-particle operations, {\mtop}---in the \bem, the multipoles represent clusters of quadrature points and the potential is evaluated on collocations points, as illustrated in Figure \ref{fig:rbc_fmmbox}. As implied in Equation\eqref{eqn:cartesian_multipole}, this is an approximation; and as implied in Figure \ref{fig:rbc_fmmbox}, the approximation is acceptable for remote target points only. The parameter that dictates whether we make the approximation is the \emph{multipole acceptance criterion}, \mac, denoted by $\theta$ and enforced as the maximum allowed ratio between cluster size and distance between targets and cluster center. When the \mac\ is not satisfied, sources and targets interact directly via \eqref{eqn:nbody} (called particle-to-particle operation, \ptop). The key to achieving the optimal $\bigO(N)$ scaling are local expansions, representing a group of target points; thus, the \fmm\ adds three operations: the multipole-to-local transformation (\mtol), the local-to-local translation (\ltol) and the local-to-particle evaluation (\ltop).
 
 \begin{figure}
 \begin{center}
@@ -276,6 +277,11 @@ The first step in the \fmm\ acceleration is to group the Gauss quadrature points
 	\label{fig:rbc_fmmbox}
 \end{center}
 \end{figure}
+
+
+
+
+
 
 %$ RESULTS
 \section{Results and discussion}
