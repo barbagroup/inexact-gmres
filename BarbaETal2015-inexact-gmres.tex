@@ -306,7 +306,7 @@ Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both fir
 \begin{figure}[t]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceConvergence.pdf}
-	\caption{Convergence of 1st-kind (open circles with solid line) and 2nd-kind (open circles with dotted line) solvers for the Laplace equation on a sphere, using a right-preconditioned \gmres with \fmm-accelerated matrix-vecctor products, with parameters: $\theta_{\text{MAC}} = 0.5$, $p=10$, and solver tolerance of $10^{-6}$ (no relaxation).}
+	\caption{Convergence of 1st-kind (open circles with solid line) and 2nd-kind (open circles with dotted line) solvers for the Laplace equation on a sphere, using a right-preconditioned \gmres with \fmm-accelerated matrix-vecctor products, with parameters: $\theta_{\text{MAC}} = 0.5$, $p=10$, and solver tolerance of $10^{-6}$ (no relaxation). The relative error is with respect to the analytical solution for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$.}
 	\label{fig:laplaceconvergence}
 \end{center}
 \end{figure}
@@ -450,7 +450,7 @@ Figure \ref{fig:stokes_convergence} shows that we indeed observe convergence at 
 \begin{figure}[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesConvergence.pdf}
-	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation; $p=16$, linear system solved to $10^{-5}$ tolerance.}
+	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation; $p=16$, linear system solved to $10^{-5}$ tolerance. The relative error is with respect to the analytical solution for drag on a sphere: $F_d = 6\pi\mu Ru_x$.}
 	\label{fig:stokes_convergence}
 \end{center}
 \end{figure}
