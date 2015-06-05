@@ -297,6 +297,15 @@ But it turns out that Krylov iterations have a surprising property: the \emph{fi
 Translation operators in the \fmm can scale as $\O{p^{6}}$ or $\O{p^{4}}$---using Cartesian or spherical expansions, respectively---, so this property of Krylov methods could offer the potential for further accelerating the \bem\ solution.
 Bouras and Frayss{\'e} \cite{bouras2000relaxation,bourasfraysse2005} studied the effect of inexact Krylov iterations on convergence and accuracy via numerical experiments.
 They found that if the system matrix is perturbed, so we are computing $(A+\Delta A_k)\vect{z}$ on each iteration, and the perturbation stays nearly equal in norm to $\eta \|A\|$, then the computed solution will have an error of the same order, $\eta$. This is the situation when simply computing the mat-vec within the limits of machine precision. But they also showed the more surprising result that the magnitude of the perturbations $\Delta A_k$ can be allowed to grow as the iterations progress.
+They define a relaxation strategy whereby, for a desired final tolerance $\eta$ in the solution of the system, the mat-vecs in each iteration are computed with a coefficient matrix perturbed with $\Delta A_k$, where if $r_k$ is the residual at step $k$,
+%
+\begin{equation}\label{eqn:matrix-perturbation}
+  \|\Delta A_k\| = \varepsilon_k\|A\|, \quad \varepsilon_k=\min\left( \frac{\eta}{\min(\|r_{k-1}\|,1)}, 1\right) 
+\end{equation}
+
+\noindent The matrix perturbation is always larger than the target tolerance $\eta$, and $\varepsilon_k$ increases when $r_k$ decreases (without surpassing $1$). In other words, the accuracy of the system mat-vecs are being \emph{relaxed} as iterations proceed. This relaxation strategy led to converged solutions, using a variety of test matrices, with \gmres, \textsc{cg} and \textsc{bicgstab}---often, and remarkably, in about the same number of iterations as a non-relaxed solution. In sum, Krylov methods prove to be robust to inexact mat-vecs and only the first Krylov vectors need to be computed accurately.
+The numerical evidence was also later supported by theoretical studies \cite{simonciniszyld2003,vandeneshofsleijpen2004}.
+
 
 
 %$ RESULTS
