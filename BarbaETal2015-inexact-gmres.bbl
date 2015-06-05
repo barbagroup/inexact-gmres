@@ -59,4 +59,14 @@
   algorithm for solving nonsymmetric linear systems}, SIAM J. Sci.\ Stat.\
   Comput., 7 (1986), pp.~856--869.
 
+\bibitem{simonciniszyld2003}
+{\sc V.~Simoncini and D.~Szyld}, {\em Theory of inexact {Krylov} subspace
+  methods and applications to scientific computing}, SIAM J. Sci. Comput., 25
+  (2003), pp.~454--477.
+
+\bibitem{vandeneshofsleijpen2004}
+{\sc J~Van~den Eshof and G~Sleijpen}, {\em Inexact {Krylov} subspace methods
+  for linear systems}, SIAM J. Matrix Analysis Applications, 26 (2004),
+  pp.~125--153.
+
 \end{thebibliography}
