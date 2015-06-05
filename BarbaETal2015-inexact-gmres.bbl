@@ -8,6 +8,17 @@
 {\sc J.~Barnes and P.~Hut}, {\em A hierarchical {$O(N \log N)$}
   force-calculation algorithm}, Nature, 324 (1986), pp.~446--449.
 
+\bibitem{bouras2000relaxation}
+{\sc Amina Bouras and Val{\'e}rie Frayss{\'e}}, {\em A relaxation strategy for
+  inexact matrix-vector products for {Krylov} methods}, CERFACS TR0PA000015,
+  European Centre for Research and Advanced Training in Scientific Computation,
+   (2000).
+
+\bibitem{bourasfraysse2005}
+{\sc A~Bouras and V~Frayss{\'e}}, {\em Inexact matrix-vector products in
+  {Krylov} methods for solving linear systems: A relaxation strategy}, SIAM J.
+  Matrix Analysis Applications, 26 (2005), pp.~660--678.
+
 \bibitem{EvansFung1972}
 {\sc Evan Evans and Yuan-Cheng Fung}, {\em Improved measurements of the
   erythrocyte geometry}, Microvascular research, 4 (1972), pp.~335--347.
