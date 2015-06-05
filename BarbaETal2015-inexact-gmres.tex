@@ -278,6 +278,15 @@ At this point, a treecode algorithm evaluates the potential on target points, pe
 \end{center}
 \end{figure}
 
+The Cartesian-expansion \mtol\ operation scales as $\O{p^{6}}$, which quickly becomes expensive when requiring higher accuracy via higher $p$. Using spherical-harmonic expansions reduces this cost to  $\O{p^{4}}$, but the mathematical derivations and expressions become more cumbersome. For the sake of brevity, we omit all the details and write the final form for the spherical expansions of the Laplace potential---denoted here by $\Phi(\vect{x}_i)$ to differentiate with the spherical co-ordinate $\phi$---as follows
+
+\begin{eqnarray}
+	\Phi(\vect{x}_i) & = & \sum_{n=0}^{p}\sum_{m=-n}^{n}\frac{Y^{m}_n(\theta_i,\phi_i)}{r_i^{n+1}}\underbrace{\left \{ \sum_j^{N}q_j\rho^{n}_jY^{-m}_n(\alpha_i,\beta_i)\right \} }_{M^{m}_n} \, \text{and}\\
+	\Phi(\vect{x}_i) & = & \sum_{n=0}^{p}\sum_{m=-n}^{n}r_i^{n}Y^{m}_n(\theta_i,\phi_i)\underbrace{\left \{ \sum_j^{N}q_j\frac{Y^{-m}_n(\alpha_i,\beta_i)}{\rho^{n+1}_j}\right \} }_{L^{m}_n},
+\end{eqnarray}
+
+\noindent
+where $M^{m}_n$ and $L^{m}_n$ denote the multipole and local expansion coefficients; $Y_{n}^{m}$ is the spherical harmonic function; $(r,\theta,\phi)$ and $(\rho,\alpha,\beta)$ are the distance vectors from the center of the expansion to points $\vect{x}_i$ and $\vect{x}_j$, and $q_j$ are the weights of sources. For the purposes of this presentation, we just want to make clear the parallel between a fast $N$-body algorithm and a fast \bem\ matrix-vector product via this necessarily abbreviated summary of the \fmm.
 
 \subsection{Inexact Krylov iterations and relaxation strategies}
 
