@@ -41,7 +41,7 @@
 \newcommand{\fmm}{\textsc{fmm}\xspace}
 \newcommand{\fmmbem}{\fmm-\bem}
 
-\newcommand{\cpp}{\textsc{c++}}
+\newcommand{\cpp}{C$^{++}$}
 \newcommand{\blas}{\textsc{blas}}
 \newcommand{\sse}{\textsc{sse}}
 
@@ -303,13 +303,22 @@ They define a relaxation strategy whereby, for a desired final tolerance $\eta$ 
   \|\Delta A_k\| = \varepsilon_k\|A\|, \quad \varepsilon_k=\min\left( \frac{\eta}{\min(\|r_{k-1}\|,1)}, 1\right) 
 \end{equation}
 
-\noindent The matrix perturbation is always larger than the target tolerance $\eta$, and $\varepsilon_k$ increases when $r_k$ decreases (without surpassing $1$). In other words, the accuracy of the system mat-vecs are being \emph{relaxed} as iterations proceed. This relaxation strategy led to converged solutions, using a variety of test matrices, with \gmres, \textsc{cg} and \textsc{bicgstab}---often, and remarkably, in about the same number of iterations as a non-relaxed solution. In sum, Krylov methods prove to be robust to inexact mat-vecs and only the first Krylov vectors need to be computed accurately.
+\noindent The matrix perturbation is always larger than the target tolerance $\eta$, and $\varepsilon_k$ increases when $r_k$ decreases (without surpassing $1$). In other words, the accuracy of the system mat-vecs are being \emph{relaxed} as iterations proceed. This relaxation strategy led to converged solutions with \gmres, \textsc{cg} and \textsc{bicgstab}, using a variety of test matrices---often, and remarkably, in about the same number of iterations as a non-relaxed solution. In sum, Krylov methods proved to be robust to inexact mat-vecs and only the first Krylov vectors need to be computed accurately.
 The numerical evidence was also later supported by theoretical studies \cite{simonciniszyld2003,vandeneshofsleijpen2004}.
 
 
 
 %$ RESULTS
 \section{Results and discussion}
+We present numerical experiments with \bem\ solutions for Laplace equation and Stokes equation, including an application to Stokes flow around red blood cells. The \bem\ is accelerated with a fast multipole method using spherical expansions, implemented in an in-house code designed to use boundary elements (panels) as the sources and targets and written in \cpp. The code is multi-threaded and we ran all our tests on a lab workstation with quad-core Intel Core i7 \cpu s. Using a test with the Laplace kernel, we confirmed that our \fmm\ code scales as $\O{N}$ by timing several runs with increasing problem size; see Figure \ref{fig:fmm_scaling}.
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[width=0.5 \textwidth]{FMMScaling.pdf}
+	\caption{Scaling of our in-house \fmm\ code with respect to problem size $N$, using a Laplace kernel with spherical expansions, $p=5$ and  $\ncrit = 126$. Test ran on a lab workstation using four \cpu\ threads.}
+	\label{fig:fmm_scaling}
+\end{center}
+\end{figure}
 
 \subsection{Inexact {\small GMRES} for the solution of Laplace's equation}
 To start, we looked at grid-convergence comparing with the analytical solution using a sphere with constant potential and charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. To make surface triangulations of a sphere with increasing refinement, we started with an 8-triangle closed surface, then split recursively each triangle into four smaller ones. Figure \ref{fig:glob_spheres} shows two example discretizations. We solved the boundary-element problem by collocation in both the first-kind and second-kind integral formulations, using a standard right-preconditioned \gmres with fast-multipole-accelerated matrix-vector products and the semi-analytical integrals for the singular terms. For the far-field approximations, we used spherical-harmonic expansions with the following parameters in the \fmm: $\theta_{\text{MAC}} = 0.5$, $p = 10$, and a tolerance of $10^{-6}$ in the iterative solver. 
@@ -318,7 +327,7 @@ Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both fir
 
 
 
-\begin{figure}[ht]
+\begin{figure}%[ht]
 \begin{center}
 	\subfloat[][128 panels]{\includegraphics[natwidth=4.73in,natheight=3.94in,width=0.4\textwidth]{sphere128.pdf}\label{fig:sphere128}}\qquad
 	\subfloat[][2048 panels]{\includegraphics[natwidth=4.73in,natheight=3.94in,width=0.4\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
@@ -338,7 +347,7 @@ Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both fir
 Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and  what value of $p$ is required in the \fmm-accelerated mat-vecs to continue convergence. We discretized a sphere with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-5}$ with an initial value of $p$ set to 8. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 3 is sufficient by the seventh iteration. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale from $\bigO(p^{4})$ for spherical harmonics to $\bigO(p^{6})$ for Cartesian expansions.
 But we note that only the far-field evaluation can be sped-up with the relaxation strategy, which means that the correct balance between near field and far field in the \fmm could change as we reset $p$ in the later iterations.
 
-\begin{figure}[ht]
+\begin{figure}%[ht]
 	\centering
 	\includegraphics[natwidth=3.7in,natheight=2in,width=0.65\textwidth]{LaplaceResidualIterations.pdf}
 	\caption{In a test using a sphere discretized with $32,768$ triangles, the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly.}
@@ -398,7 +407,7 @@ The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_
 
 It's clear that greater benefits from the relaxation strategy should derive from two situations: (a) where higher accuracy is needed (necessitating an initially higher $p$) , and (b) where the linear system demands a greater number of iterations to reach a set tolerance (resulting in more computations done at low $p$). To demonstrate this, we now present two tests that force these situations. 
 
-\begin{figure}[ht]
+\begin{figure}%[ht]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceRelaxationP.pdf}
 	\caption{Timings for solving a 1st-kind Laplace integral formulation on a sphere discretized with $32,768$ panels, using a relaxed \gmres with different initial values of $p$, compared with a fixed-$p$ solver. The iteration count was capped at 10 for all cases. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
@@ -431,7 +440,7 @@ The final case looks at the situation where the application might demand large i
 
 
 
-\begin{figure}[ht]
+\begin{figure}%[ht]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceRelationIterations.pdf}
 	\caption{Speed-ups for solving a 1st-kind Laplace integral problem on a sphere discretized with $32,768$ panels, as the \gmres iteration count increases; $p=10$ for all cases. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
@@ -471,7 +480,7 @@ Like before, we start with a grid-convergence study to build confidence that the
 For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver. We first increased the value of $p$ until the solution stopped improving, and settle for $p=16$ in this case, using a $10^{-5}$ tolerance in the iterative solver.
 Figure \ref{fig:stokes_convergence} shows that we indeed observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations.
 
-\begin{figure}[ht]
+\begin{figure}%[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesConvergence.pdf}
 	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation; $p=16$, linear system solved to $10^{-5}$ tolerance. The relative error is with respect to the analytical solution for drag on a sphere: $F_d = 6\pi\mu Ru_x$.}
@@ -526,7 +535,7 @@ The figure also includes a plot of the residual history. We should add that we r
 Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \gmres iterations for four, increasingly finer surface discretizations. For $N=8,192$ and above, speed-up is $3.5\times$ or more.
 
 
-\begin{figure}[ht]
+\begin{figure}%[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSpeedupRelaxation.pdf}
 	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$. $10^{-5}$ solver tolerance, $p=16$. }
@@ -553,7 +562,7 @@ Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from
 
 % This figure behaved weird when using the unmodified SIAM class file, and the images appeared displaced upwards; needed to hack it with \vspace{1cm} before each \subfloat
 % It now works well with the RequirePackage lines commented out on the .cls file !!
-\begin{figure}[ht]
+\begin{figure}%[ht]
 \begin{center}
 	\subfloat[512 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
 	\subfloat[2048 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC2048.pdf}\label{fig:rbc2048}}
