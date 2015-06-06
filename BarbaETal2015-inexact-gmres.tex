@@ -127,7 +127,10 @@ Abstract text here.
 
 \section{Introduction}
 
-Lorem ipsum ...
+The boundary element method (\bem) is popular in applied mechanics for solving problems governed by the equations of Laplace, Stokes, Helmholtz and Lam{\'e}. Applications include electrostatics, low-Reynolds-number flow, acoustics and linear elasticity and span all scales from biomolecules, micro-electromechanical and biomedical devices to wind turbines, submarines and even problems in aerospace and geodynamics. The key feature of \bem\ is formulating the governing partial differential equations in an equivalent boundary integral equation, and discretizing over the boundary. This process reduces the dimensionality of the problem (three-dimensional problems are solved on two-dimensional surfaces), but generates dense systems of algebraic equations. 
+The computational complexity of dense solvers, scaling as $\O{N^3}$ for direct methods and $\O{N^2}$ for iterative methods, frustrated large-scale applications of \bem, until the late 1990s, when \bem\ researchers began working out how to incorporate fast algorithms 
+\cite{Liu2006}. Treecodes and fast multipole methods (\fmm) reduce the complexity of \bem\ solutions to $\O{N \log N}$ and $\O{N}$, respectively, although often with serious programming effort. Nevertheless, large-scale \bem\ simulations are now possible, especially given the parallel scalability of the \fmm \cite{YokotaETal2011a,YokotaBarba2011a}.
+
 
 
 %% METHODS
