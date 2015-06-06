@@ -42,6 +42,10 @@
 {\sc Jonathan~B Freund}, {\em Numerical simulation of flowing blood cells},
   Ann.\ Rev.\ Fluid Mech., 46 (2014), pp.~67--95.
 
+\bibitem{greengard1987}
+{\sc L~Greengard}, {\em The rapid evaluation of potential fields in particle
+  systems}, The MIT Press, 1987.
+
 \bibitem{GreengardRokhlin1987}
 {\sc L.~Greengard and V.~Rokhlin}, {\em A fast algorithm for particle
   simulations}, J. Comput.\ Phys., 73 (1987), pp.~325--348.
