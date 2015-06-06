@@ -99,7 +99,7 @@
 
 
 
-\title{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES WITH FAST-MULTIPOLE BOUNDARY ELEMENT METHOD} 
+\title{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES WITH FAST-MULTIPOLE BOUNDARY ELEMENT METHOD\thanks{This work was partially supported by the National Science Foundation under award ACI-1149784.}} 
 
 \author{Simon K. Layton\thanks{Boston University; currently at Nvidia, Corp.}
 \and Lorena A. Barba\thanks{The George Washington University, Washington DC, 20056 
@@ -113,12 +113,12 @@
 %slugger should be set to mms, siap, sicomp, sicon, sidma, sima, simax, sinum, siopt, sisc, or sirev
 
 \begin{abstract}
-Abstract text here.
+Boundary element methods produce dense linear systems that can be accelerated via multipole expansions. Solved via Krylov methods, this results in computing the matrix-vector products within each iteration with some error, at an accuracy controlled by the order of the expansion, $p$. We take advantage of a unique property of Krylov iterations that allow lower accuracy of the matrix-vector products as convergence proceeds, and propose a relaxation strategy based on progressively decreasing $p$. Via extensive numerical tests, we show that the relaxed Krylov iterations converge with speed-ups of between $2\times$ and $4\times$ for Laplace problems and between $3.5\times$ and $4.5\times$ for Stokes problems. We include an application to Stokes flow around red blood cells, computing with up to 64 cells and problem size up to 131k boundary elements and nearly 400k unknowns. The study was done with an in-house multi-threaded C++ code, on a quad-core CPU. 
 \end{abstract}
 
-\begin{keywords}\end{keywords}
+\begin{keywords}Laplace equation, Stokes equation, boundary integral equation, boundary element method, fast multipole method, iterative solvers, Krylov methods, Stokes flow\end{keywords}
 
-\begin{AMS}\end{AMS}
+\begin{AMS}35Q35, 35Q99, 45B05, 76D07, 76Z99\end{AMS}
 
 
 \pagestyle{myheadings}
