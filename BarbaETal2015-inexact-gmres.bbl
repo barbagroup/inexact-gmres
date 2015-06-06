@@ -50,6 +50,11 @@
 {\sc John~L Hess and AMO Smith}, {\em Calculation of potential flow about
   arbitrary bodies}, Progress in Aerospace Sciences, 8 (1967), pp.~1--138.
 
+\bibitem{Liu2006}
+{\sc YJ~Liu and N~Nishimura}, {\em The fast multipole boundary element method
+  for potential problems: a tutorial}, Engineering Analysis with Boundary
+  Elements, 30 (2006), pp.~371--381.
+
 \bibitem{roache1998}
 {\sc Patrick~J Roache}, {\em Verification and validation in computational
   science and engineering}, Hermosa Albuquerque, 1998.
@@ -68,5 +73,19 @@
 {\sc J~Van~den Eshof and G~Sleijpen}, {\em Inexact {Krylov} subspace methods
   for linear systems}, SIAM J. Matrix Analysis Applications, 26 (2004),
   pp.~125--153.
+
+\bibitem{YokotaBarba2011a}
+{\sc R.~Yokota and L.~A. Barba}, {\em A tuned and scalable fast multipole
+  method as a preeminent algorithm for exascale systems}, Int.\ J.\ High-perf.\
+  Comput.\ Applic.,  (2012).
+\newblock Published online 24 Jan.\ 2012
+  \href{http://doi.org/fzgqgm}{doi:10.1177/1094342011429952} preprint on
+  \href{http://arxiv.org/abs/1106.2176}{http://arxiv.org/abs/1106.2176}.
+
+\bibitem{YokotaETal2011a}
+{\sc Rio Yokota, Jaydeep~P. Bardhan, Matthew~G. Knepley, L.~A. Barba, and
+  Tsuyoshi Hamada}, {\em Biomolecular electrostatics using a fast multipole
+  {BEM on up to 512 GPUs} and a billion unknowns}, Comput.\ Phys.\ Comm., 182
+  (2011), pp.~1271--1283.
 
 \end{thebibliography}

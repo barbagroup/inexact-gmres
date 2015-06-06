@@ -7,44 +7,44 @@ Database file #3: CompBio.bib
 Database file #4: FastMethods.bib
 Database file #5: InexactMatVec.bib
 Database file #6: scicomp.bib
-You've used 15 entries,
+You've used 18 entries,
             2030 wiz_defined-function locations,
-            631 strings with 6376 characters,
-and the built_in function-call counts, 5383 in all, are:
-= -- 559
-> -- 172
+            654 strings with 7168 characters,
+and the built_in function-call counts, 6554 in all, are:
+= -- 677
+> -- 226
 < -- 0
-+ -- 72
-- -- 53
-* -- 393
-:= -- 796
-add.period$ -- 15
-call.type$ -- 15
-change.case$ -- 71
++ -- 95
+- -- 71
+* -- 485
+:= -- 974
+add.period$ -- 19
+call.type$ -- 18
+change.case$ -- 89
 chr.to.int$ -- 0
-cite$ -- 15
-duplicate$ -- 260
-empty$ -- 404
-format.name$ -- 53
-if$ -- 1179
+cite$ -- 18
+duplicate$ -- 311
+empty$ -- 481
+format.name$ -- 71
+if$ -- 1427
 int.to.chr$ -- 0
-int.to.str$ -- 15
-missing$ -- 16
-newline$ -- 48
-num.names$ -- 29
-pop$ -- 50
+int.to.str$ -- 18
+missing$ -- 19
+newline$ -- 58
+num.names$ -- 35
+pop$ -- 63
 preamble$ -- 1
-purify$ -- 57
+purify$ -- 72
 quote$ -- 0
-skip$ -- 250
+skip$ -- 298
 stack$ -- 0
-substring$ -- 460
-swap$ -- 123
+substring$ -- 549
+swap$ -- 147
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 58
+type$ -- 70
 warning$ -- 0
-while$ -- 67
-width$ -- 17
-write$ -- 135
+while$ -- 79
+width$ -- 20
+write$ -- 163
