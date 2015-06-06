@@ -312,6 +312,20 @@ They define a relaxation strategy whereby, for a desired final tolerance $\eta$ 
 \noindent The matrix perturbation is always larger than the target tolerance $\eta$, and $\varepsilon_k$ increases when $r_k$ decreases (without surpassing $1$). In other words, the accuracy of the system mat-vecs are being \emph{relaxed} as iterations proceed. This relaxation strategy led to converged solutions with \gmres, \textsc{cg} and \textsc{bicgstab}, using a variety of test matrices---often, and remarkably, in about the same number of iterations as a non-relaxed solution. In sum, Krylov methods proved to be robust to inexact mat-vecs and only the first Krylov vectors need to be computed accurately.
 The numerical evidence was also later supported by theoretical studies \cite{simonciniszyld2003,vandeneshofsleijpen2004}.
 
+In the fast multipole method, we have available error bounds for the approximations made in the various operations that make up the algorithm. Using the spherical-harmonics expansion for the Laplace kernel, for example, the error is bounded as follows 
+%
+\begin{equation}\label{eqn:multipole_error}
+	\left | \phi(r, \theta, \phi) - \sum_{n=0}^{p}\sum_{m=-n}^{n}\frac{M^{m}_{n}}{r^{n+1}}\cdot Y^{m}_{n}(\theta, \phi) \right | \leq \frac{\sum_{i=1}^{N}q_{i}}{r-a}\left ( \frac{a}{r} \right )^{p+1},
+\end{equation}
+
+\noindent where $a$ is the size of the cluster and $r$ is the distance between the multipole center and the target. Similar bounds are available for the translation and evaluation operators \cite{greengard1987}. The following expression then applies for the number of terms needed for a given accuracy,
+
+\begin{equation}\label{eqn:fmm_p}
+	p \sim \lceil -\log_{2}(\varepsilon) \rceil.
+\end{equation}
+
+\noindent In combination with Equation \eqref{eqn:matrix-perturbation}, we thus have an explicit expression relating the allowed perturbation on the mat-vec for the inexact Krylov iterations to converge, and the order of the multipole expansion in the \fmm.
+Although the \fmm error bounds are known to be rather lose, we use this approach for a conservative relaxation of $p$, and we expect that with experience and more detailed studies, the relaxation strategy could be pushed to give better speed-ups in specific applications.
 
 
 %$ RESULTS
