@@ -101,9 +101,9 @@
 
 \title{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES WITH FAST-MULTIPOLE BOUNDARY ELEMENT METHOD\thanks{This work was partially supported by the National Science Foundation under award ACI-1149784.}} 
 
-\author{Simon K. Layton\thanks{Department of Mechanical Engineering, Boston University, Boston, MA 02215 (\email{slayton@gwu.edu}); currently at Nvidia, Corp., Santa Clara, CA.}
+\author{Simon K. Layton\thanks{Department of Mechanical Engineering, Boston University, Boston, MA 02215 (\email{slayton@bu.edu}); currently at Nvidia, Corp., Santa Clara, CA.}
 \and Lorena A. Barba\thanks{Department of Mechanical and Aerospace Engineering, The George Washington University, Washington DC, 20052 
-(\email{labarba@gwu.edu})}}
+(\email{labarba@gwu.edu}).}}
 
 
 
@@ -212,7 +212,7 @@ The boundary integral formulations all demand that we compute integrals of the t
 \begin{figure}[t]
 	\begin{centering}
 \includegraphics[natwidth=5.15in,natheight=2.6in,width=0.55\textwidth]{IntegrationDomain.pdf}
-	\caption{Depending on the distance between a source panel and target point, we use different numerical, analytical or semi-analytical integration methods, balancing computational efficiency and accuracy near singularities.}
+	\caption{Depending on the distance between a source panel and target point, we use different numerical, analytical or semi-analytical integration methods, balancing computational efficiency and accuracy near singularities. The threshold distance between far and near-singular regions is $2\sqrt{2 S_j}$, where $S_j$ is the surface area of the source panel.}
 	\label{fig:integration_domain}
 	\end{centering}
 \end{figure}
@@ -230,6 +230,7 @@ Applying Gauss quadrature to the integrals appearing in the coefficients of the 
 
 \noindent
 with $q_k$ the area-normalized Gauss quadrature weights and $S_j$ the surface area of panel $\Gamma_j$. To control the accuracy of the numerical integration, we vary the number of quadrature points, using for example $K< 4$ for targets that are far from the source panel and $K\sim 20$ for near-singular situations. 
+The near-singular region is within a distance of $2\sqrt{2 S_j}$, where $S_j$ is the surface area of the source panel. This distance delimiting near-singular and far regions was empirically determined.
 When the target point is on the source panel, the standard approach is to use analytical or semi-analytical methods for the singular and hyper-singular integrals over the panels.
 For the Laplace equation, we used a semi-analytical method. 
 It applies the technique first presented in the classic work of Hess and Smith \cite[p.~49, ff.]{HessSmith1967} for decomposing the integral into a sum of integrals over triangles formed by the projection of the target point on the panel plane, and the panel vertices. Using polar coordinates, the integration over the radial component can be done analytically and that over the angular component is done by quadrature. % Also in \cite{ZhuHuangSongWhite2001}
