@@ -230,7 +230,7 @@ Applying Gauss quadrature to the integrals appearing in the coefficients of the 
 
 \noindent
 with $q_k$ the area-normalized Gauss quadrature weights and $S_j$ the surface area of panel $\Gamma_j$. To control the accuracy of the numerical integration, we vary the number of quadrature points, using for example $K< 4$ for targets that are far from the source panel and $K\sim 20$ for near-singular situations. 
-The near-singular region is within a distance of $2\sqrt{2 S_j}$, where $S_j$ is the surface area of the source panel. This distance delimiting near-singular and far regions was empirically determined.
+The near-singular region is within a distance of $2\sqrt{2 S_j}$, a criterion that we settled on after  testing with several choices using a panel's characteristic length scale as factor.
 When the target point is on the source panel, the standard approach is to use analytical or semi-analytical methods for the singular and hyper-singular integrals over the panels.
 For the Laplace equation, we used a semi-analytical method. 
 It applies the technique first presented in the classic work of Hess and Smith \cite[p.~49, ff.]{HessSmith1967} for decomposing the integral into a sum of integrals over triangles formed by the projection of the target point on the panel plane, and the panel vertices. Using polar coordinates, the integration over the radial component can be done analytically and that over the angular component is done by quadrature. % Also in \cite{ZhuHuangSongWhite2001}
