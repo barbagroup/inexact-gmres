@@ -211,7 +211,7 @@ The boundary integral formulations all demand that we compute integrals of the t
 % As a better solution, but still a hack, I commented out the RequirePackage lines that loaded hyperref and graphicx using dvips in the class file, and loaded them in the preamble here. 
 \begin{figure}[t]
 	\begin{centering}
-\includegraphics[natwidth=5.15in,natheight=2.6in,width=0.55\textwidth]{IntegrationDomain.pdf}
+\includegraphics[natwidth=5.15in,natheight=2.6in,width=0.45\textwidth]{IntegrationDomain.pdf}
 	\caption{Depending on the distance between a source panel and target point, we use different numerical, analytical or semi-analytical integration methods, balancing computational efficiency and accuracy near singularities. The threshold distance between far and near-singular regions is $2\sqrt{2 S_j}$, where $S_j$ is the surface area of the source panel.}
 	\label{fig:integration_domain}
 	\end{centering}
@@ -278,7 +278,7 @@ At this point, a treecode algorithm evaluates the potential on target points, pe
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=0.6\textwidth]{redbloodcell-panel-fmm.pdf}
+	\includegraphics[width=0.5\textwidth]{redbloodcell-panel-fmm.pdf}
 	\caption{First step in viewing the influence of boundary elements as an $N$-body problem accelerated by the fast multipole method: Gauss quadrature points in a region of the surface triangulation are grouped together in a cluster, and their contribution to the potential at a remote target point (white circle) is considered via a series expansion at the cluster center.}
 	\label{fig:rbc_fmmbox}
 \end{center}
