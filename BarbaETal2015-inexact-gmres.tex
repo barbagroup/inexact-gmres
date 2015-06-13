@@ -381,7 +381,7 @@ To find out how much is the potential speed-up, we compared the time to solution
 \begin{figure}%[h]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceSpeedupRelaxation.pdf}
-	\caption{Speedup using a relaxation strategy for three different triangulations of a sphere, using 1st-kind and 2nd-kind integral formulations. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
+	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
 	\label{fig:relaxation_timing}
 \end{figure}
 
@@ -491,7 +491,7 @@ The final case looks at the situation where the application might demand large i
 \end{table}%
 
 \subsection{Inexact {\small GMRES} for solving the Stokes equation}
-Like before, we start with a grid-convergence study to build confidence that the Stokes solver is correct and converges to the right solution at the expected rate. As an application of the Stokes equation, we chose low-Reynolds-number flow, using a spherical geometry for the grid-convergence study. This classical problem of fluid mechanics has an analytical solution that gives the drag force on the sphere as $F_d = 6\pi\mu Ru_x$, where $\mu$ is the viscosity of the fluid, $R$ is the Reynolds number and $u_x$ is the free stream velocity, taken in the $x$-direction. We solve a first-kind integral equation for the traction force, $\vect{t}$, by imposing $\vect{u} = (1,0,0)^{T}$ at the center of every panel, and compute the drag force with
+Like before, we start with a grid-convergence study to build confidence that the Stokes solver is correct and converges to the right solution at the expected rate. As an application of the Stokes equation, we chose low-Reynolds-number flow, using a spherical geometry for the grid-convergence study. This classical problem of fluid mechanics has an analytical solution that gives the drag force on the sphere as $F_d = 6\pi\mu Ru_x$, where $\mu$ is the viscosity of the fluid, $R$ is the Reynolds number and $u_x$ is the freestream velocity, taken in the $x$-direction. We solve a first-kind integral equation for the traction force, $\vect{t}$, by imposing $\vect{u} = (1,0,0)^{T}$ at the center of every panel, and compute the drag force with
 
 \begin{equation}
 	\label{eqn:stokes_traction_drag}
