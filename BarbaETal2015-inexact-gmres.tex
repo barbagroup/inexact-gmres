@@ -318,7 +318,7 @@ In the fast multipole method, we have available error bounds for the approximati
 	\left | \phi(r, \theta, \phi) - \sum_{n=0}^{p}\sum_{m=-n}^{n}\frac{M^{m}_{n}}{r^{n+1}}\cdot Y^{m}_{n}(\theta, \phi) \right | \leq \frac{\sum_{i=1}^{N}q_{i}}{r-a}\left ( \frac{a}{r} \right )^{p+1},
 \end{equation}
 
-\noindent where $a$ is the size of the cluster and $r$ is the distance between the multipole center and the target. Similar bounds are available for the translation and evaluation operators \cite{greengard1987}. The following expression then applies for the number of terms needed for a given accuracy,
+\noindent where $a$ isthe  cluster radius and $r$ is the distance between the multipole center and the target. The above inequality is given in Ref. \cite[p.~55]{greengard1987} with label (3.37), and proved using the triangle inequality. This reference also gives similar bounds for the translation and evaluation operators. In the particular case that $r/a\leq 2$, the number of terms needed to obtain a given accuracy $\varepsilon$ is 
 
 \begin{equation}\label{eqn:fmm_p}
 	p \sim \lceil -\log_{2}(\varepsilon) \rceil.
