@@ -554,7 +554,7 @@ The figure also includes a plot of the residual history. We ran extensive tests 
 \label{tab:stokes_min_p}
 \end{table}%
 
-Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \gmres iterations for four, increasingly finer surface discretizations. For $N=8,192$ and above, speed-up is $3.5\times$ or more.
+Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \gmres iterations for four increasingly finer surface discretizations. For $N=8,192$ and above, speed-up is $3.5\times$ or more.
 
 
 \begin{figure}%[ht]
@@ -607,7 +607,7 @@ Table \ref{tab:rbc_richardson_values} presents the computed values of the drag f
 \end{equation}
 
 \noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.481$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
-Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with respect to the extrapolated value, as a function of the mesh size. The plot includes the error obtained with four meshes, with the extrapolated value obtained with the first three coarser meshes.
+Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with respect to the extrapolated value, as a function of the mesh size. The plot includes the error obtained with four meshes, with the extrapolated value obtained using the first three coarser meshes.
 
 \begin{table}[h]
 \footnotesize
@@ -672,7 +672,7 @@ Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed t
 \end{center}
 \end{figure}
 
-We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, and Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $4\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use the efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using four threads, like we do here), then the potential for a $7\times$ speed-up is real.
+We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, and Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $4\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use an efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using four threads, like we do here), then the potential for a $7\times$ speed-up is real.
 
 \begin{table}[h]
 \footnotesize
@@ -713,7 +713,7 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 \label{tab:single_cell_relaxation_results}
 \end{table}%
 
-\footnotetext[1]{Due to memory restrictions, the sparse-matrix representation of the near-field could not be used, resulting in a much slower {\ptop} evaluation.}
+\footnotetext[1]{Due to memory restrictions, a sparse-matrix representation of the near-field could not be used, resulting in a much slower {\ptop} evaluation.}
 
 
 \begin{table}[htdp]
@@ -784,7 +784,7 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 \section{Conclusion} 
 
 We have shown the first successful application of a relaxation strategy for fast-multipole-accelerated boundary element methods, based on the theory of inexact \gmres. Testing the relaxation strategy on Laplace problems, we confirmed that it converges to the right solution, it provides moderate speed-ups over using a fixed $p$, and it leads to initially bloated far-fields to obtain the minimum time to solution.
-Exploring the performance advantage of relaxing the value of $p$ as \gmres iterations advance, we concluded that problems requiring high accuracy and/or resulting in more ill-conditioned linear systems will experience the best speed-ups, which for Laplace problems can be in the order of $2-4\times$.
+Exploring the performance advantage of relaxing the value of $p$ as \gmres iterations advance, we concluded that problems requiring high accuracy and/or resulting in more ill-conditioned linear systems will experience the best speed-ups, which for Laplace problems can be in the order of $2\times$ to $4\times$.
 
 In the case of the Stokes equation, the speed-ups that can be obtained using a relaxation strategy are larger, due to the fact that Stokes problems require both more iterations to converge (and the relaxed solver spends more time at low $p$) and more work per iteration (equivalent to four Laplace evaluations). Relaxed \gmres iterations in this case reduced the time to solution by $3.5\times$ to $4.5\times$. We found that it's important for Stokes problems to also enforce a minimum value of $p$ to avoid accuracy or convergence degradation.
 
