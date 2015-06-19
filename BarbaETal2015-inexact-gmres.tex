@@ -219,7 +219,7 @@ The boundary integral formulations all demand that we compute integrals of the t
 %\clearpage % had to hack this in to get the graphic within the text margins when using the unmodified SIAM class file
 
 
-Applying Gauss quadrature to the integrals appearing in the coefficients of the boundary element discretization for Laplace's equation, \eqref{eqn:laplace_bem_G} and \eqref{eqn:laplace_bem_dGdn}, for example, gives
+Applying Gauss quadrature to the integrals appearing in the coefficients of the boundary element discretization of the Laplace equation, \eqref{eqn:laplace_bem_G} and \eqref{eqn:laplace_bem_dGdn}, for example, gives
 %
 \begin{eqnarray}
 	\label{eqn:gauss:1st-kind}
@@ -235,7 +235,7 @@ When the target point is on the source panel, the standard approach is to use an
 For the Laplace equation, we used a semi-analytical method. 
 It applies the technique first presented in the classic work of Hess and Smith \cite[p.~49, ff.]{HessSmith1967} for decomposing the integral into a sum of integrals over triangles formed by the projection of the target point on the panel plane, and the panel vertices. Using polar coordinates, the integration over the radial component can be done analytically and the integration over the angular component is done by quadrature. % Also in \cite{ZhuHuangSongWhite2001}
 Several analytic integration techniques are at our disposal for dealing with the singular integrals from boundary element methods. Explicit expressions for these integrals over flat triangular domains result in recursive formulae on the edges of the integration triangle. These are available for Laplace potentials \cite{Fata2009} and linear elastic surface potentials \cite{Fata2011}. 
-We obtained the analytic integrals for Stokes equation from Fata's formulas for linear elasticity, after setting the Poisson ratio to $1/2$. 
+We obtained the analytic integrals for the Stokes equation from Fata's formulas for linear elasticity, after setting the Poisson ratio to $1/2$. 
 
 \subsection{Krylov subspace methods}
 
@@ -274,7 +274,7 @@ The first step in the \fmm\ acceleration of \bem\ is to group the Gauss quadratu
 
 \noindent where $\vect{k}=\{k_1, k_2, k_3\}$ is a multi-index, $\vect{k}! = k_1!k_2!k_3!$, $\vect{y}^{\vect{k}} = y_1^{k_1}y_2^{k_2}y_3^{k_3}$, $D_{\vect{y}}^{\vect{k}} = D^{k_1}_{y_1}D^{k_2}_{y_2}D^{k_3}_{y_3}$ is the derivative operator and $p$ is the order of the expansion. The right-most terms are the multipoles, i.e., powers of distances with respect to the cluster center, and they can all be pre-calculated for a set of sources. Forming the clusters consists of recursively sub-dividing the spatial domain until a limit number of sources $\ncrit$ remains in each box, resulting in an octree structure. 
 The step of computing the multipole expansions for each source cluster at the deepest level of the tree is referred to as the particle-to-multipole operation, {\ptom}. These multipole expansions are then translated and added to represent larger clusters (at higher levels of the tree) in the multipole-to-multipole operation, {\mtom}. The process just described is called the \emph{upward sweep}.
-At this point, a treecode algorithm evaluates the potential on target points, performing  multipole-to-particle operations, {\mtop}---in the \bem, the multipoles represent clusters of quadrature points and the potential is evaluated on collocation points, as illustrated in Figure \ref{fig:rbc_fmmbox}. As implied in Equation\eqref{eqn:cartesian_multipole}, this is an approximation; and as implied in Figure \ref{fig:rbc_fmmbox}, the approximation is acceptable for remote target points only. The parameter that dictates whether we make the approximation is the \emph{multipole acceptance criterion}, \mac, denoted by $\theta$ and enforced as the maximum allowed ratio between cluster size and distance between targets and cluster center. When the \mac\ is not satisfied, sources and targets interact directly via \eqref{eqn:nbody} (called particle-to-particle operation, \ptop). The key to achieving the optimal $\bigO(N)$ scaling are local expansions, representing a group of target points; thus, the \fmm\ adds three operations: the multipole-to-local transformation (\mtol), the local-to-local translation (\ltol) and the local-to-particle evaluation (\ltop).
+At this point, a treecode algorithm evaluates the potential on target points, performing  multipole-to-particle operations, {\mtop}---in the \bem, the multipoles represent clusters of quadrature points and the potential is evaluated on collocation points, as illustrated in Figure \ref{fig:rbc_fmmbox}. As implied in Equation\eqref{eqn:cartesian_multipole}, this is an approximation; and as implied in Figure \ref{fig:rbc_fmmbox}, the approximation is acceptable for remote target points only. The parameter that dictates whether we make the approximation is the \emph{multipole acceptance criterion}, \mac, denoted by $\theta$ and enforced as the maximum allowed ratio between cluster size and distance between targets and cluster center. When the \mac\ is not satisfied, sources and targets interact directly via \eqref{eqn:nbody} (called particle-to-particle operation, \ptop). The key to achieving the optimal $\bigO(N)$ scaling are local expansions, representing a group of target points; thus, the \fmm\ adds three operations to the algorithm: the multipole-to-local transformation (\mtol), the local-to-local translation (\ltol) and the local-to-particle evaluation (\ltop).
 
 \begin{figure}
 \begin{center}
@@ -306,7 +306,7 @@ They found that if the system matrix is perturbed, so we are computing $(A+\Delt
 They define a relaxation strategy whereby, for a desired final tolerance $\eta$ in the solution of the system, the mat-vecs in each iteration are computed with a coefficient matrix perturbed with $\Delta A_k$, where if $r_k$ is the residual at step $k$,
 %
 \begin{equation}\label{eqn:matrix-perturbation}
-  \|\Delta A_k\| = \varepsilon_k\|A\|, \quad \varepsilon_k=\min\left( \frac{\eta}{\min(\|r_{k-1}\|,1)}, 1\right) 
+  \|\Delta A_k\| = \varepsilon_k\|A\|, \quad \varepsilon_k=\min\left( \frac{\eta}{\min(\|r_{k-1}\|,1)}, 1\right).
 \end{equation}
 
 \noindent The matrix perturbation is always larger than the target tolerance $\eta$, and $\varepsilon_k$ increases when $r_k$ decreases (without surpassing $1$). In other words, the accuracy of the system mat-vecs are \emph{relaxed} as iterations proceed. This relaxation strategy led to converged solutions with \gmres, \textsc{cg} and \textsc{bicgstab}, using a variety of test matrices---often, and remarkably, in about the same number of iterations as a non-relaxed solution. In sum, Krylov methods proved to be robust to inexact mat-vecs and only the first Krylov vectors need to be computed accurately.
@@ -318,7 +318,7 @@ In the fast multipole method, we have error bounds available for the approximati
 	\left | \phi(r, \theta, \phi) - \sum_{n=0}^{p}\sum_{m=-n}^{n}\frac{M^{m}_{n}}{r^{n+1}}\cdot Y^{m}_{n}(\theta, \phi) \right | \leq \frac{\sum_{i=1}^{N}q_{i}}{r-a}\left ( \frac{a}{r} \right )^{p+1},
 \end{equation}
 
-\noindent where $a$ isthe  cluster radius and $r$ is the distance between the multipole center and the target. The above inequality is given in Ref. \cite[p.~55]{greengard1987} with label (3.37), and proved using the triangle inequality. This reference also gives similar bounds for the translation and evaluation operators. In the particular case that $r/a\geq 2$ (the distance between a multipole center and target is twice the cluster radius), the number of terms needed to obtain a given accuracy $\varepsilon$ is 
+\noindent where $a$ isthe  cluster radius and $r$ is the distance between the multipole center and the target. The above inequality is given in Ref. \cite[p.~55]{greengard1987} with label (3.37), and proved using the triangle inequality. This reference also gives similar bounds for the translation and evaluation operators. In the particular case that $r/a\geq 2$ (the distance between a multipole center and target is at least twice the cluster radius), the number of terms needed to obtain a given accuracy $\varepsilon$ is 
 
 \begin{equation}\label{eqn:fmm_p}
 	p \sim \lceil -\log_{2}(\varepsilon) \rceil.
@@ -330,20 +330,20 @@ Although the \fmm error bounds are known to be rather loose, we use this approac
 
 %$ RESULTS
 \section{Results and discussion}
-We present numerical experiments with \bem\ solutions for Laplace equation and Stokes equation, including an application to Stokes flow around red blood cells. The \bem\ is accelerated with a fast multipole method using spherical expansions, implemented in an in-house code designed to use boundary elements (panels) as the sources and targets and written in multi-threaded \cpp. We ran all our tests on a lab workstation with quad-core Intel Core i7 \cpu s. Using a test with the Laplace kernel, we confirmed that our \fmm\ code scales as $\O{N}$ by timing several runs with increasing problem size; see Figure \ref{fig:fmm_scaling}.
-The experiments investigate the use of a Krylov relaxation strategy by reducing the order of multipole expansions, $p$, as the iterations progress to convergence, determining the speed-up provided by such a strategy for different scenarios and problem sizes.
+We present numerical experiments with \bem\ solutions for the Laplace and Stokes equations, including an application to Stokes flow around red blood cells. The \bem\ is accelerated with a fast multipole method using spherical expansions, implemented in an in-house code designed to use boundary elements (panels) as the sources and targets and written in multi-threaded \cpp. We ran all our tests on a lab workstation with quad-core Intel Core i7 \cpu s. Using a test with the Laplace kernel, we confirmed that our \fmm\ code scales as $\O{N}$ by timing several runs with increasing problem size; see Figure \ref{fig:fmm_scaling}.
+The subsequent experiments investigate the use of a Krylov relaxation strategy by reducing the order of multipole expansions, $p$, as the iterations progress to convergence, determining the speed-up provided by such a strategy for different scenarios and problem sizes.
 
 \begin{figure}[h]
 \begin{center}
 	\includegraphics[width=0.5 \textwidth]{FMMScaling.pdf}
-	\caption{Scaling of our in-house \fmm\ code with respect to problem size $N$, using a Laplace kernel with spherical expansions, $p=5$ and  $\ncrit = 126$. Test ran on a lab workstation using four \cpu\ threads.}
+	\caption{Scaling of our in-house \fmm\ code with respect to problem size $N$, using a Laplace kernel with spherical expansions, $p=5$ and  $\ncrit = 126$. The tests ran on a lab workstation using four \cpu\ threads.}
 	\label{fig:fmm_scaling}
 \end{center}
 \end{figure}
 
-\subsection{Inexact {\small GMRES} for the solution of Laplace's equation}
+\subsection{Inexact {\small GMRES} for the solution of the Laplace equation}
 \label{sec:inexactLaplace}
-To start, we studied grid-convergence comparing numerical results with the analytical solution using a sphere with constant potential and charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. To make surface triangulations of a sphere with increasing refinement, we started with an 8-triangle closed surface, then split recursively each triangle into four smaller ones. Figure \ref{fig:glob_spheres} shows two example discretizations. We solved the boundary-element problem by collocation in both the first-kind and second-kind integral formulations, using a standard right-preconditioned \gmres with fast-multipole-accelerated mat-vecs and the semi-analytical integrals for the singular terms. For the far-field approximations, we used spherical-harmonic expansions with the following parameters in the \fmm: $\theta_{\text{MAC}} = 0.5$, $p = 10$, and a tolerance of $10^{-6}$ in the iterative solver. 
+To start, we studied grid convergence comparing numerical results with the analytical solution using a sphere with constant potential and charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. To make surface triangulations of a sphere with increasing refinement, we started with an 8-triangle closed surface, then split recursively each triangle into four smaller ones. Figure \ref{fig:glob_spheres} shows two example discretizations. We solved the boundary-element problem by collocation in both the first-kind and second-kind integral formulations, using a standard right-preconditioned \gmres with fast-multipole-accelerated mat-vecs and the semi-analytical integrals for the singular terms. For the far-field approximations, we used spherical-harmonic expansions with the following parameters in the \fmm: $\theta_{\text{MAC}} = 0.5$, $p = 10$, and a tolerance of $10^{-6}$ in the iterative solver. 
 Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both first-kind and second-kind formulations of the boundary element method on a sphere. They display the expected orders of convergence for boundary element methods: slightly faster than $\O{1/\sqrt{N}}$ in the 1st-kind formulation and $\O{1/N}$ for the 2nd-kind formulation. This gives confidence in our \bem code, the singular/near-singular integral calculations, and the far-field approximation using the \fmm.
 
 
