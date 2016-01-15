@@ -1,0 +1,84 @@
+LaplaceBEM Convergence - 1st-kind:
+relative error: 3.948e-02
+relative error: 1.437e-02
+relative error: 5.573e-03
+relative error: 3.103e-03
+relative error: 2.450e-03
+LaplaceBEM Convergence - 2nd-kind:
+relative error: 1.675e-02
+relative error: 4.217e-03
+relative error: 1.027e-03
+relative error: 2.477e-04
+relative error: 6.392e-05
+LaplaceBEM Residual History and required-p:
+it: 001, res: 4.022e-05, fmm_req_p: 8
+it: 002, res: 2.412e-05, fmm_req_p: 2
+it: 003, res: 1.792e-05, fmm_req_p: 1
+it: 004, res: 1.620e-05, fmm_req_p: 1
+it: 005, res: 1.270e-05, fmm_req_p: 1
+LaplaceBEM speedup test - 1st-kind:
+recursions = 5 fixed-p 1st-kind
+	solve : 2.2942e-01s
+	solve : 2.2131e-01s
+	solve : 3.0303e-01s
+recursions = 5 relaxed 1st-kind
+	solve : 2.7803e-01s
+	solve : 2.9766e-01s
+	solve : 2.3118e-01s
+recursions = 6 fixed-p 1st-kind
+	solve : 4.1296e+00s
+	solve : 2.0347e+00s
+	solve : 2.1996e+00s
+recursions = 6 relaxed 1st-kind
+	solve : 1.3726e+00s
+	solve : 1.1337e+00s
+	solve : 1.2621e+00s
+recursions = 7 fixed-p 1st-kind
+	solve : 6.7167e+00s
+	solve : 7.3983e+00s
+	solve : 7.0183e+00s
+recursions = 7 relaxed 1st-kind
+	solve : 4.6525e+00s
+	solve : 5.1957e+00s
+	solve : 4.8581e+00s
+recursions = 8 fixed-p 1st-kind
+	solve : 4.2798e+01s
+	solve : 4.0982e+01s
+	solve : 4.1211e+01s
+recursions = 8 relaxed 1st-kind
+	solve : 2.5029e+01s
+	solve : 2.5561e+01s
+	solve : 2.4534e+01s
+LaplaceBEM speedup test - 2nd-kind:
+recursions = 5 fixed-p 2nd-kind
+	solve : 1.9438e-01s
+	solve : 1.1147e-01s
+	solve : 1.6180e-01s
+recursions = 5 relaxed 2nd-kind
+	solve : 2.5452e-01s
+	solve : 3.5903e-01s
+	solve : 2.8307e-01s
+recursions = 6 fixed-p 2nd-kind
+	solve : 1.1255e+00s
+	solve : 1.2114e+00s
+	solve : 1.0643e+00s
+recursions = 6 relaxed 2nd-kind
+	solve : 9.6945e-01s
+	solve : 1.1700e+00s
+	solve : 1.1004e+00s
+recursions = 7 fixed-p 2nd-kind
+	solve : 4.1646e+00s
+	solve : 3.9684e+00s
+	solve : 3.8912e+00s
+recursions = 7 relaxed 2nd-kind
+	solve : 3.7464e+00s
+	solve : 3.5795e+00s
+	solve : 3.4755e+00s
+recursions = 8 fixed-p 2nd-kind
+	solve : 1.6330e+01s
+	solve : 1.6392e+01s
+	solve : 1.7202e+01s
+recursions = 8 relaxed 2nd-kind
+	solve : 1.4351e+01s
+	solve : 1.4281e+01s
+	solve : 1.3957e+01s
