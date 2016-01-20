@@ -21,6 +21,7 @@ ax = fig.add_subplot(111)
 
 # plot log-log
 ax.loglog(N,t,color='k',marker='o', ms=5, mfc='w')
+ax.loglog(N,N/10000,color='k', ls=':', ms=5, mfc='w')
 loc = (3*N[0]+N[1])/4
 
 # text of plot
