@@ -28,7 +28,7 @@ for line in lines[a+1:b]:
 		except ValueError:
 			pass
 
-it1 = numpy.array(temp[::3], dtype=int)
+it1 = numpy.array(temp[::3], dtype=int) - 1   # count from zero
 r1 = numpy.array(temp[1::3], dtype=float)
 
 temp = []
@@ -39,7 +39,7 @@ for line in lines[b+1:c]:
 		except ValueError:
 			pass
 
-it2 = numpy.array(temp[::3], dtype=int)
+it2 = numpy.array(temp[::3], dtype=int) - 1    # count from zero
 r2 = numpy.array(temp[1::3], dtype=float)
 
 # set up plot
