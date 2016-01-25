@@ -1,11 +1,15 @@
-%% Manuscript for submission to SIAM 
-\documentclass[final,leqno,]{siamltex1213}
-% options that require additional .clo file:  
-% onetabnum: to number equations consecutively with a single digit, instead of using the section number
-% onetabnum: numbers tables consecutively throughout the paper
-% onefignum: numbers figures consecutively throughout the paper
+%% Manuscript for submission to Elsevier
+%% \documentclass[preprint,review,12pt]{elsarticle} 
+%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn 
+%% for a journal layout: 
+%% \documentclass[final,1p,times]{elsarticle} 
+%% \documentclass[final,1p,times,twocolumn]{elsarticle} 
+%% \documentclass[final,3p,times]{elsarticle} 
+%%\documentclass[final,3p,times,twocolumn]{elsarticle} 
+%% \documentclass[final,5p,times]{elsarticle} 
+\documentclass[final,3p,times]{elsarticle}
 
-\usepackage[text={6in,8in},centering]{geometry} % load first
+%\usepackage[text={6in,8in},centering]{geometry} % load first
 
 \usepackage{algorithm}
 \usepackage{algorithmicx}
@@ -19,16 +23,9 @@
 \usepackage{textcomp}
 \usepackage{xspace}
 
-%% The SIAM class file is loading these packages like this:
-%\RequirePackage[dvips]{graphics,graphicx}
-%\RequirePackage[colorlinks,pdfmark,dvips]{hyperref}
-
 %% I don't want to use dvips so let's load them again
 \usepackage{graphicx}
 \usepackage[pdftex]{hyperref}
-
-
-\graphicspath{{figs/}} %  PATH to figure files-- change to ./ for submission
 
 % CUSTOM COMMAND DEFINITIONS
 \newcommand{\R}{\mathbb{R}}
@@ -94,21 +91,54 @@
 \newcommand{\dyad}[2]{#1 \otimes #2}
 
 
+\graphicspath{{figs/}} %  PATH to figure files-- change to ./ for submission
 
 
-
-
-
-\title{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES WITH FAST-MULTIPOLE BOUNDARY ELEMENT METHOD\thanks{This work was partially supported by the National Science Foundation under award ACI-1149784.}} 
-
-\author{Simon K. Layton\thanks{Department of Mechanical Engineering, Boston University, Boston, MA 02215 (\email{slayton@bu.edu}); currently at Nvidia, Corp., Santa Clara, CA.}
-\and Lorena A. Barba\thanks{Department of Mechanical and Aerospace Engineering, The George Washington University, Washington DC, 20052 
-(\email{labarba@gwu.edu}).}}
-
-
+\journal{Computer Methods in Applied Mechanics and Engineering}
 
 \begin{document}
-\maketitle
+
+\begin{frontmatter}
+
+%% Title, authors and addresses
+
+%% use the tnoteref command within \title for footnotes;
+%% use the tnotetext command for the associated footnote;
+%% use the fnref command within \author or \address for footnotes;
+%% use the fntext command for the associated footnote;
+%% use the corref command within \author for corresponding author footnotes;
+%% use the cortext command for the associated footnote;
+%% use the ead command for the email address,
+%% and the form \ead[url] for the home page:
+%%
+%% \title{Title\tnoteref{label1}}
+%% \tnotetext[label1]{}
+%% \author{Name\corref{cor1}\fnref{label2}}
+%% \ead{email address}
+%% \ead[url]{home page}
+%% \fntext[label2]{}
+%% \cortext[cor1]{}
+%% \address{Address\fnref{label3}}
+%% \fntext[label3]{}
+
+\title{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES WITH FAST-MULTIPOLE BOUNDARY ELEMENT METHOD\tnoteref{t1}}
+\tnotetext[t1]{This work was partially supported by the National Science Foundation under award ACI-1149784.}
+
+\author[bu,nvidia]{Simon K. Layton\fnref{fn1}}
+\ead{slayton@bu.edu}
+
+\author[gwu]{Tingyu Wang}
+\ead{twang66@gwu.edu}
+
+\author[gwu]{Lorena A. Barba}
+\ead{labarba@gwu.edu}
+
+\fntext[fn1]{Currently at Nvidia, Corp.}
+
+\address[bu]{Department of Mechanical Engineering, Boston University, Boston, MA, 02215}
+\address[nvidia]{Nvidia, Corp., Santa Clara, CA}
+\address[gwu]{Department of Mechanical and Aerospace Engineering, The George Washington University, Washington DC, 20052}
+
 %\slugger{sisc}{xxxx}{xx}{x}{x--x}
 %slugger should be set to mms, siap, sicomp, sicon, sidma, sima, simax, sinum, siopt, sisc, or sirev
 
@@ -116,14 +146,19 @@
 Boundary element methods produce dense linear systems that can be accelerated via multipole expansions. Solved with Krylov methods, this implies computing the matrix-vector products within each iteration with some error, at an accuracy controlled by the order of the expansion, $p$. We take advantage of a unique property of Krylov iterations that allow lower accuracy of the matrix-vector products as convergence proceeds, and propose a relaxation strategy based on progressively decreasing $p$. Via extensive numerical tests, we show that the relaxed Krylov iterations converge with speed-ups of between $2\times$ and $4\times$ for Laplace problems and between $3.5\times$ and $4.5\times$ for Stokes problems. We include an application to Stokes flow around red blood cells, computing with up to 64 cells and problem size up to 131k boundary elements and nearly 400k unknowns. The study was done with an in-house multi-threaded C++ code, on a quad-core CPU. 
 \end{abstract}
 
-\begin{keywords}Laplace equation, Stokes equation, boundary integral equation, boundary element method, fast multipole method, iterative solvers, Krylov methods, Stokes flow\end{keywords}
+\begin{keyword}
+Laplace equation \sep Stokes equation \sep boundary integral equation \sep boundary element method \sep fast multipole method \sep iterative solvers \sep Krylov methods \sep Stokes flow
 
-\begin{AMS}35Q35, 35Q99, 45B05, 76D07, 76Z99\end{AMS}
+\end{keyword}
+
+\end{frontmatter}
+
+%\begin{AMS}35Q35, 35Q99, 45B05, 76D07, 76Z99\end{AMS}
 
 
-\pagestyle{myheadings}
-\thispagestyle{plain}
-\markboth{S. K. Layton and L. A. Barba}{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES}
+%\pagestyle{myheadings}
+%\thispagestyle{plain}
+%\markboth{S. K. Layton and L. A. Barba}{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES}
 
 \section{Introduction}
 
@@ -695,7 +730,7 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 \end{table}%
 
 
-\begin{table}[htdp]
+\begin{table}[htp]
 \footnotesize
 \begin{center}
 \begin{tabular}{c|c|c|c|c|c|c}
@@ -716,7 +751,7 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 \footnotetext[1]{Due to memory restrictions, a sparse-matrix representation of the near-field could not be used, resulting in a much slower {\ptop} evaluation.}
 
 
-\begin{table}[htdp]
+\begin{table}[htp]
 \footnotesize
 \begin{center}
 \begin{tabular}{c|c|c|cc|cc|c}
@@ -735,7 +770,7 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup 
 \end{table}
 
 
-\begin{table}[htdp]
+\begin{table}[htp]
 \footnotesize
 \begin{center}
 \begin{tabular}{c|c|c|cc|cc|c}
@@ -753,7 +788,7 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 \end{table}
 
 
-\begin{table}[htdp]
+\begin{table}[htp]
 \footnotesize
 \begin{center}
 \begin{tabular}{c|c|c|cc|cc|c}
@@ -792,7 +827,7 @@ Using the relaxation strategy, we completed various tests for Stokes flow around
 
 Relaxing the truncation order $p$ in the multipole expansions as Krylov iterations progress is one of those seemingly simple ideas that strike one as obvious a posteriori. Yet, as far as we know, it has not been tried before, nor has it been implemented in a \bem. Given this method's wide popularity in computational engineering, we look forward to many applications benefitting from healthy speed-ups from applying relaxed-$p$ \fmm. We  showed that Stokes problems, in particular, can expect $4\times$ speed-ups in large problems still fitting on one workstation. Linear elasticity problems should experience similar speed-ups (although we didn't try them). This is pure algorithmic speed-up that should multiply with any hardware speed-ups obtained, for example, by moving computational kernels to \gpu s.
 
-\Appendix
+\appendix
 \section{Algorithm listings}\label{sec:algorithms}
  
  \begin{algorithm}
@@ -845,7 +880,7 @@ Dr. Cris Cecka (Harvard University, currently at Nvidia Corp.) contributed great
 The authors also wish to acknowledge valuable interactions with Dr. Christopher Cooper (Boston University, currently at Universidad T{\'e}cnica Federico Santa Mar{\'i}a) that helped with the implementation of the boundary element method.
 
 %% Bibliography
-\bibliographystyle{siam}
+\bibliographystyle{elsarticle-num}
 \bibliography{bem,cfd,CompBio,FastMethods,InexactMatVec,scicomp}
 
 \end{document}
