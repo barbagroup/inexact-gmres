@@ -15,10 +15,14 @@ for i,line in enumerate(lines):
     if "LaplaceBEM speedup test - 1st-kind" in line:
         break
 
+for j,line in enumerate(lines):
+	if "LaplaceBEM speedup test with an increasing p_intial" in line:
+		break
+
 # initialize a list of temporary parsing result
 temp = []
 
-for line in lines[i+1:]:
+for line in lines[i+1:j]:
     # remove string "s" (seconds) for parsing
     for elem in line.replace("s","").split():
         try:
@@ -58,9 +62,9 @@ ax.set_ylabel('Speedup', fontsize=10)
 ax.set_xlabel('N', fontsize=10)
 ax.set_xticks(ind+width)
 ax.set_xticklabels( ('8192','32768','131072') )
-ax.legend( (bar1[0], bar2[0]), ('1st-kind', '2nd-kind'), loc=4)
+ax.legend( (bar1[0], bar2[0]), ('1st-kind', '2nd-kind'), loc=4, fontsize='small')
 fig.subplots_adjust(left=0.185, bottom=0.21, right=0.965, top=0.95)
 canvas = FigureCanvasPdf(fig)
 
 # plot to pdf
-canvas.print_figure('LaplaceSpeedup.pdf',dpi=80)
+canvas.print_figure('LaplaceSpeedupRelaxation.pdf',dpi=80)

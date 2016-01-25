@@ -35,7 +35,7 @@ printf "relaxed-p residual history\n" >> $OUT
 eval $DIR$kernel -lazy_eval -recursions 6 -p 16 -ncrit 150 | grep -i fmm_req_p >> $OUT
 printf ">>>StokesBEM on a sphere: Residual history test completed!\n"
 
-# Fig - 3.11 Speedup: p = 16, recursions = {5,6,7,8}, 1st-kind:
+# Fig - 3.11 Speedup: p = 16, recursions = {5,6,7}, 1st-kind:
 printf "StokesBEM on a sphere: Speedup\n" >> $OUT
 for i in {5..7}
 do
@@ -50,3 +50,8 @@ do
     done
 done
 printf ">>>StokesBEM on a sphere: Speedup test completed!\n"
+
+# Fig - 3.10 time breakdown:
+printf "StokesBEM on a sphere: Time breakdown\n" >> $OUT
+eval $DIR$kernel -lazy_eval -p 16 -recursions 6 -ncrit 150 | grep -i "P2P" >> $OUT
+printf ">>>StokesBEM on a sphere: Time breakdown test completed!\n"
