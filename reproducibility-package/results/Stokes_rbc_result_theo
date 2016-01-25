@@ -1,0 +1,47 @@
+StokesBEM on one rbc - # of iterations:
+problem size 3 
+Final residual: 9.8360e-06, after 18 iterations
+problem size 4 
+Final residual: 7.9062e-06, after 28 iterations
+problem size 5 
+Final residual: 9.3194e-06, after 34 iterations
+problem size 6 
+Final residual: 9.1713e-06, after 39 iterations
+problem size 7 
+Final residual: 9.7613e-06, after 35 iterations
+problem size 8 
+Final residual: 9.9221e-06, after 31 iterations
+StokesBEM on multiples rbcs - # of iterations:
+2048 panels per cell
+1 cells 
+Final residual: 9.7320e-06, after 34 iterations
+2 cells 
+Final residual: 8.9094e-06, after 45 iterations
+4 cells 
+Final residual: 9.8864e-06, after 51 iterations
+8 cells 
+Final residual: 8.9955e-06, after 60 iterations
+16 cells 
+Final residual: 9.8756e-06, after 67 iterations
+32 cells 
+Final residual: 9.7937e-06, after 72 iterations
+64 cells 
+Final residual: 9.8898e-06, after 81 iterations
+8192 panels per cell
+1 cells
+Final residual: 9.8154e-06, after 39 iterations
+2 cells 
+Final residual: 9.3556e-06, after 48 iterations
+4 cells 
+Final residual: 9.5136e-06, after 54 iterations
+8 cells 
+Final residual: 9.4970e-06, after 61 iterations
+16 cells
+Final residual: 9.7843e-06, after 68 iterations
+32768 panels per cell
+1 cells
+Final residual: 9.7077e-06, after 35 iterations
+2 cells
+Final residual: 9.4371e-06, after 45 iterations
+4 cells
+Final residual: 9.8530e-06, after 50 iterations
