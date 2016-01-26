@@ -56,7 +56,7 @@ ax.text(tex_loc[0], tex_loc[1]/5.,r'$O(1/N)$',fontsize=8,rotation=tex_angle,rota
 # axis labels
 ax.set_ylabel('Relative Error', fontsize=10)
 ax.set_xlabel('N', fontsize=10)
-fig.subplots_adjust(left=0.185, bottom=0.21, right=0.965, top=0.95)
+fig.subplots_adjust(left=0.195, bottom=0.21, right=0.955, top=0.95)
 canvas = FigureCanvasPdf(fig)
 
 # plot to pdf

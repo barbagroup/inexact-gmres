@@ -42,7 +42,7 @@ ax.text(tex_loc[0], tex_loc[1]/3.5,r'$O(1/\sqrt{N})$',fontsize=8,rotation=tex_an
 # axis labels
 ax.set_ylabel('Relative Error', fontsize=10)
 ax.set_xlabel('N', fontsize=10)
-fig.subplots_adjust(left=0.195, bottom=0.21, right=0.945, top=0.95)
+fig.subplots_adjust(left=0.195, bottom=0.21, right=0.955, top=0.95)
 canvas = FigureCanvasPdf(fig)
 
 # plot to pdf

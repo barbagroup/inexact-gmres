@@ -50,7 +50,7 @@ ax.semilogx(N,speedup,color='k',marker='o', ls='-', mfc='w', ms=5, label='')
 # axis labels
 ax.set_ylabel('Speedup', fontsize=10)
 ax.set_xlabel('N', fontsize=10)
-fig.subplots_adjust(left=0.185, bottom=0.21, right=0.965, top=0.95)
+fig.subplots_adjust(left=0.195, bottom=0.21, right=0.955, top=0.95)
 canvas = FigureCanvasPdf(fig)
 
 # plot to pdf
