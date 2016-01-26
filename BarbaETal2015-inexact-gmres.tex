@@ -371,7 +371,7 @@ The subsequent experiments investigate the use of a Krylov relaxation strategy b
 \begin{figure}[h]
 \begin{center}
 	\includegraphics[width=0.5 \textwidth]{FMMScaling.pdf}
-	\caption{Scaling of our in-house \fmm\ code with respect to problem size $N$, using a Laplace kernel with spherical expansions, $p=5$ and  $\ncrit = 126$. The tests ran on a lab workstation using four \cpu\ threads.}
+	\caption{Scaling of our in-house \fmm\ code with respect to problem size $N$, using a Laplace kernel with spherical expansions, $p=5$ and  $\ncrit = 126$. The tests ran on a lab workstation using six \cpu\ threads.}
 	\label{fig:fmm_scaling}
 \end{center}
 \end{figure}
@@ -707,7 +707,7 @@ Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed t
 \end{center}
 \end{figure}
 
-We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, and Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $4\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use an efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using four threads, like we do here), then the potential for a $7\times$ speed-up is real.
+We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, and Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $4\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use an efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using six threads, like we do here), then the potential for a $7\times$ speed-up is real.
 
 \begin{table}[h]
 \footnotesize
@@ -720,7 +720,7 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
  $p_{\text{min}}$ &  $5$ \\
  solver tolerance & $10^{-5}$ \\
  Near-field & Sparse matrix \\
- Threads & $4$ \\
+ Threads & $6$ \\
  Solver & {\gmres} \\ 
  Preconditioner & None
 \end{tabular}
