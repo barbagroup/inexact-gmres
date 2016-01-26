@@ -632,7 +632,7 @@ A grid-convergence study using the geometry of a red blood cell requires that we
 If the value $f_1$ corresponds to that obtained using the coarsest mesh and $f_2$ and $f_3$ to those using consecutively refined ones, then we can obtain the extrapolated value approximating the exact solution with the following formula:
 
 \begin{equation}
-	\bar{f} = \frac{f_1f_3-f_2^{2}}{f-1 -2f_2+f_3}
+	\bar{f} = \frac{f_1f_3-f_2^{2}}{f_1 -2f_2+f_3}
 \end{equation}
 
 Table \ref{tab:rbc_richardson_values} presents the computed values of the drag force obtained with three different meshes, of sizes $N=512$, $2048$ and $8192$. We can also obtain the \emph{observed order of convergence}, $p$, as follows
@@ -651,10 +651,10 @@ Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with res
 	$N$ & $f_x$ \\
 	\hline
 	& \\
-	$512$ & $-0.059$ \\
-	$2048$ & $-0.071$ \\ 
-	$8192$ & $-0.077$ \\
-%	$32768$ & $-0.080$
+	$512$ & $-0.0571$ \\
+	$2048$ & $-0.0703$ \\ 
+	$8192$ & $-0.0768$ \\
+%	$32768$ & $-0.0799$
 \end{tabular}
 \end{center}
 \caption{Surface mesh sizes and calculated drag force for the convergence study using a red blood cell in uniform Stokes flow.}
