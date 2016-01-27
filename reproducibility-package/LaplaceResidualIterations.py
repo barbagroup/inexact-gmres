@@ -31,7 +31,7 @@ r = numpy.array(temp[1::3], dtype=float)
 p = numpy.array(temp[2::3], dtype=int)
 
 it = numpy.size(p)
-ind = numpy.arange(it, dtype=int)
+ind = numpy.arange(it, dtype=int) + 1
 
 # set up plot
 fig = pyplot.figure(figsize=(3.7,2), dpi=80)
@@ -39,7 +39,7 @@ ax = fig.add_subplot(111)
 
 # plot log-log
 ax.semilogy(ind,r,color='k',marker='', ls='-', mfc='w', ms=5)
-ax.set_xticks(ind)
+ax.set_xticks(ind[::2])
 
 ax2 = ax.twinx()
 ax2.plot(ind,p,color='k',marker='o',ls=':', mfc='w', ms=5)
