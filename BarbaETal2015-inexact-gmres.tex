@@ -143,7 +143,7 @@
 %slugger should be set to mms, siap, sicomp, sicon, sidma, sima, simax, sinum, siopt, sisc, or sirev
 
 \begin{abstract}
-Boundary element methods produce dense linear systems that can be accelerated via multipole expansions. Solved with Krylov methods, this implies computing the matrix-vector products within each iteration with some error, at an accuracy controlled by the order of the expansion, $p$. We take advantage of a unique property of Krylov iterations that allow lower accuracy of the matrix-vector products as convergence proceeds, and propose a relaxation strategy based on progressively decreasing $p$. Via extensive numerical tests, we show that the relaxed Krylov iterations converge with speed-ups of between $2\times$ and $4\times$ for Laplace problems and between $3.5\times$ and $4.5\times$ for Stokes problems. We include an application to Stokes flow around red blood cells, computing with up to 64 cells and problem size up to 131k boundary elements and nearly 400k unknowns. The study was done with an in-house multi-threaded C++ code, on a quad-core CPU. 
+Boundary element methods produce dense linear systems that can be accelerated via multipole expansions. Solved with Krylov methods, this implies computing the matrix-vector products within each iteration with some error, at an accuracy controlled by the order of the expansion, $p$. We take advantage of a unique property of Krylov iterations that allow lower accuracy of the matrix-vector products as convergence proceeds, and propose a relaxation strategy based on progressively decreasing $p$. Via extensive numerical tests, we show that the relaxed Krylov iterations converge with speed-ups of between $2\times$ and $4\times$ for Laplace problems and between $3.5\times$ and $4.5\times$ for Stokes problems. We include an application to Stokes flow around red blood cells, computing with up to 64 cells and problem size up to 131k boundary elements and nearly 400k unknowns. The study was done with an in-house multi-threaded C++ code, on a hexa-core CPU. 
 \end{abstract}
 
 \begin{keyword}
@@ -365,7 +365,7 @@ Although the \fmm error bounds are known to be rather loose, we use this approac
 
 %$ RESULTS
 \section{Results and discussion}
-We present numerical experiments with \bem\ solutions for the Laplace and Stokes equations, including an application to Stokes flow around red blood cells. The \bem\ is accelerated with a fast multipole method using spherical expansions, implemented in an in-house code designed to use boundary elements (panels) as the sources and targets and written in multi-threaded \cpp. We ran all our tests on a lab workstation with quad-core Intel Core i7 \cpu s. Using a test with the Laplace kernel, we confirmed that our \fmm\ code scales as $\O{N}$ by timing several runs with increasing problem size; see Figure \ref{fig:fmm_scaling}.
+We present numerical experiments with \bem\ solutions for the Laplace and Stokes equations, including an application to Stokes flow around red blood cells. The \bem\ is accelerated with a fast multipole method using spherical expansions, implemented in an in-house code designed to use boundary elements (panels) as the sources and targets and written in multi-threaded \cpp. We ran all our tests on a lab workstation with hexa-core Intel Core i7 \cpu s. Using a test with the Laplace kernel, we confirmed that our \fmm\ code scales as $\O{N}$ by timing several runs with increasing problem size; see Figure \ref{fig:fmm_scaling}.
 The subsequent experiments investigate the use of a Krylov relaxation strategy by reducing the order of multipole expansions, $p$, as the iterations progress to convergence, determining the speed-up provided by such a strategy for different scenarios and problem sizes.
 
 \begin{figure}[h]
@@ -401,7 +401,7 @@ Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both fir
 \end{center}
 \end{figure}
 
-Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and  what value of $p$ is required in the \fmm-accelerated mat-vecs to continue convergence. We discretized a sphere with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-5}$ with an initial value of $p$ set to 8. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 3 is sufficient by the seventh iteration. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale from $\bigO(p^{4})$ for spherical harmonics to $\bigO(p^{6})$ for Cartesian expansions.
+Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and  what value of $p$ is required in the \fmm-accelerated mat-vecs to continue convergence. We discretized a sphere with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-5}$ with an initial value of $p$ set to 8. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 1 is sufficient by the third iteration. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale from $\bigO(p^{4})$ for spherical harmonics to $\bigO(p^{6})$ for Cartesian expansions.
 But we note that only the far-field evaluation can be sped-up with the relaxation strategy, which means that the correct balance between near field and far field in the \fmm could change as we reset $p$ in the later iterations.
 
 \begin{figure}%[ht]
@@ -411,7 +411,7 @@ But we note that only the far-field evaluation can be sped-up with the relaxatio
 	\label{fig:residualp}
 \end{figure}
 
-To find out the potential speed-up, we compared the time to solution for different cases with and without the relaxation strategy. Using three surface discretizations, we solved the boundary-element problem with 1st- and 2nd-kind formulations to a solver tolerance of $10^{-5}$, using a multi-threaded evaluator on 4 \cpu\ cores. In each case, we were careful to set the value of $\ncrit$ to minimize the time to solution of the particular test case. Figure \ref{fig:relaxation_timing} shows the speed-up in the time spent solving the linear system of equations to the specified tolerance. The detailed results are given in the subsequent Tables.
+To find out the potential speed-up, we compared the time to solution for different cases with and without the relaxation strategy. Using three surface discretizations, we solved the boundary-element problem with 1st- and 2nd-kind formulations to a solver tolerance of $10^{-5}$, using a multi-threaded evaluator on 6 \cpu\ cores. In each case, we were careful to set the value of $\ncrit$ to minimize the time to solution of the particular test case. Figure \ref{fig:relaxation_timing} shows the speed-up in the time spent solving the linear system of equations to the specified tolerance. The detailed results are given in the subsequent Tables.
 
 
 \begin{figure}%[h]
@@ -430,10 +430,10 @@ To find out the potential speed-up, we compared the time to solution for differe
   N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up \\
  \hline
    & & & & & \\
-  2048 & 400 & 0.27 & 200 & 0.40 & 0.675 \\
-  8192 & 400 & 2.58 & 200 & 1.7 & 1.52 \\
-  32768  & 400 & 7.1 & 200 & 5.07 & 1.40 \\
-  131072  & 400 & 30.1 & 200 & 20.72 & 1.45 \\
+  2048 & 400 & 0.25 & 150 & 0.27 & 0.93 \\
+  8192 & 400 & 2.79 & 150 & 1.26 & 2.22 \\
+  32768  & 400 & 7.04 & 150 & 4.90 & 1.44 \\
+  131072  & 400 & 41.66 & 150 & 25.04 & 1.66 \\
  
 \end{tabular}
 \end{center}
@@ -449,10 +449,10 @@ To find out the potential speed-up, we compared the time to solution for differe
   N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up \\
  \hline
    & & & & & \\
-  2048 & 400 & 0.13 & 200 & 0.64 & 0.20 \\
-  8192 & 400 & 1.49 & 200 & 1.19 & 1.25 \\
-  32768 & 400 & 6.77 & 200 & 5.92 & 1.14 \\
-  131072 & 400 & 30.01 & 200 & 24.2 & 1.24 \\
+  2048 & 400 & 0.16 & 150 & 0.30 & 0.52 \\
+  8192 & 400 & 1.13 & 150 & 1.08 & 1.05 \\
+  32768 & 400 & 4.01 & 150 & 3.60 & 1.11 \\
+  131072 & 400 & 16.64 & 150 & 14.20 & 1.17 \\
  
 \end{tabular}
 \end{center}
