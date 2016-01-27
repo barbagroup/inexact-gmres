@@ -417,7 +417,7 @@ To find out the potential speed-up, we compared the time to solution for differe
 \begin{figure}%[h]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceSpeedupRelaxation.pdf}
-	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
+	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations. (Multi-threaded evaluator running on 6 \cpu\ cores.)}
 	\label{fig:relaxation_timing}
 \end{figure}
 
@@ -467,7 +467,7 @@ It's clear that greater benefits from the relaxation strategy should derive from
 \begin{figure}%[ht]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceRelaxationP.pdf}
-	\caption{Timings for solving a 1st-kind Laplace integral formulation on a sphere discretized with $32,768$ panels, using a relaxed \gmres with different initial values of $p$, compared with a fixed-$p$ solver. The iteration count was capped at 10 for all cases. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
+	\caption{Timings for solving a 1st-kind Laplace integral formulation on a sphere discretized with $32,768$ panels, using a relaxed \gmres with different initial values of $p$, compared with a fixed-$p$ solver. The iteration count was capped at 10 for all cases. (Multi-threaded evaluator running on 6 \cpu\ cores.)}
 	\label{fig:laplace_p_speedup}
 \end{figure}
 
@@ -481,15 +481,15 @@ Figure \ref{fig:laplace_p_speedup} shows the timings obtained in a situation whe
   $p$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup \\
    \hline
    & & & & & \\
-  5 & 100 & 4.21 & 100 & 6.34 & 1.51 \\
-  8 & 100 & 6.24 & 400 & 12.4 & 1.99 \\
-  10 & 150 & 8.76 & 400 & 18.5 & 2.11 \\
-  12 & 150 & 13.2  & 600 & 25.3 & 1.92 \\
-  15 & 150 & 19.3 & 600 & 38.3 & 1.98 \\
+  5 & 100 & 3.94 & 100 & 7.53 & 1.91 \\
+  8 & 100 & 6.20 & 400 & 12.38 & 2.00 \\
+  10 & 150 & 9.08 & 400 & 19.96 & 2.20 \\
+  12 & 150 & 12.70  & 600 & 25.41 & 2.00 \\
+  15 & 150 & 22.05 & 600 & 37.77 & 1.71 \\
  
 \end{tabular}
 \end{center}
-\caption{Speed-up when using a relaxation strategy on a Laplace 1st-kind integral solver, compared with a non-relaxed solver, with increasing value of the initial $p$ (representing increased accuracy demands of the application), for a sphere discretized with $32,768$ panels. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
+\caption{Speed-up when using a relaxation strategy on a Laplace 1st-kind integral solver, compared with a non-relaxed solver, with increasing value of the initial $p$ (representing increased accuracy demands of the application), for a sphere discretized with $32,768$ panels. (Multi-threaded evaluator running on 6 \cpu\ cores.)}
 \label{tab:laplace_1st_p_relaxation}
 \end{table}%
 
@@ -500,7 +500,7 @@ The final case looks at the situation where the application might demand large i
 \begin{figure}%[ht]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceRelationIterations.pdf}
-	\caption{Speed-ups for solving a 1st-kind Laplace integral problem on a sphere discretized with $32,768$ panels, as the \gmres iteration count increases; $p=10$ for all cases. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
+	\caption{Speed-ups for solving a 1st-kind Laplace integral problem on a sphere discretized with $32,768$ panels, as the \gmres iteration count increases; $p=10$ for all cases. (Multi-threaded evaluator running on 6 \cpu\ cores.)}
 	\label{fig:laplace_iterations_speedup}
 \end{figure}
 
