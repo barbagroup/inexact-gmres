@@ -36,10 +36,14 @@ del temp[::4]
 # make an average for each case
 time = numpy.mean(numpy.array(temp).reshape(-1,3), axis=1)
 
+print(time) # values in table
+
 # calculate the speedups
 speedup = time[::2] / time[1::2]
 speedup_1st = speedup[:len(speedup)/2]
 speedup_2nd = speedup[len(speedup)/2:]
+
+print(speedup_1st, speedup_2nd) # values in table
 
 # set up plot
 ind = numpy.arange(len(speedup)/2)
