@@ -534,6 +534,7 @@ Like in \S\ref{sec:inexactLaplace}, we start with a grid-convergence study to bu
 	F_d = \int_\Gamma t_x\;\di{\Gamma'} = \sum_{j=1}^{N} t_{x_j}\cdot A_j
 \end{equation}
 
+%% need to change why we choose p=16 in the third sentence "We first"
 For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver. We first increased the value of $p$ until the solution stopped improving, and settled for $p=16$ in this case, using a $10^{-5}$ tolerance in the iterative solver.
 Figure \ref{fig:stokes_convergence} shows that we observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations.
 
@@ -557,6 +558,7 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 \end{center}
 \end{figure}
 
+% what does "the figure also includes a plot the residual history" mean?
 Figure \ref{fig:stokes_relaxation_breakdown} illustrates clearly how we need to adjust the balance between near field and far field when using relaxation strategies. Because most of the time is spent computing at the low values of $p$, we need to start with a bloated far field. The bar plot shows the breakdown of time spent in the {\ptop} and {\mtol} kernels for each iteration: although the first iteration is unbalanced, with far field taking about 8 times as much \cpu\ time as near field, later iterations are close to balanced and the total time to solution is optimal. 
 The figure also includes a plot of the residual history. We ran extensive tests on the minimum value of $p$ allowed in the relaxed solver, without degrading convergence and accuracy. Table \ref{tab:stokes_min_p} presents some of the data from these tests: for finer surface discretizations, the error degrades when the relaxed value of $p$ is allowed to drop below 3 or 4. To be conservative and avoid any degradation in accuracy, we used a $\pmin=5$ for all further cases with the Stokes equation.
 
@@ -589,7 +591,7 @@ The figure also includes a plot of the residual history. We ran extensive tests 
 \label{tab:stokes_min_p}
 \end{table}%
 
-Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \gmres iterations for four increasingly finer surface discretizations. For $N=8,192$ and above, speed-up is $3.5\times$ or more.
+Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \gmres iterations for three increasingly finer surface discretizations. For $N=8,192$, speed-up is more than $3.0\times$.
 
 
 \begin{figure}%[ht]
@@ -617,8 +619,7 @@ To create a surface discretization for a red blood cell, we start with a sphere 
 \noindent where $x' = x\cdot r,\; y' = y\cdot r,\; \rho = \sqrt{x'^{2}+y'^{2}}$, and the coefficients are: $r=3.91\mu$m,  $C_0= 0.81\mu$m, $C_2= 7.83\mu$m and $C_4=-4.39\mu$m.
 Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.
 
-% This figure behaved weird when using the unmodified SIAM class file, and the images appeared displaced upwards; needed to hack it with \vspace{1cm} before each \subfloat
-% It now works well with the RequirePackage lines commented out on the .cls file !!
+
 \begin{figure}%[ht]
 \begin{center}
 	\subfloat[512 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
@@ -641,7 +642,7 @@ Table \ref{tab:rbc_richardson_values} presents the computed values of the drag f
 	p = \frac{\ln{\left(\frac{f_2-f_1}{f_3-f_2}\right)}}{\ln{c}},
 \end{equation}
 
-\noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.481$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
+\noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.521$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
 Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with respect to the extrapolated value, as a function of the mesh size. The plot includes the error obtained with four meshes, with the extrapolated value obtained using the first three coarser meshes.
 
 \begin{table}[h]
@@ -651,10 +652,10 @@ Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with res
 	$N$ & $f_x$ \\
 	\hline
 	& \\
-	$512$ & $-0.0571$ \\
-	$2048$ & $-0.0703$ \\ 
-	$8192$ & $-0.0768$ \\
-%	$32768$ & $-0.0799$
+	$512$ & $-0.057$ \\
+	$2048$ & $-0.070$ \\ 
+	$8192$ & $-0.077$ \\
+%	$32768$ & $-0.080$
 \end{tabular}
 \end{center}
 \caption{Surface mesh sizes and calculated drag force for the convergence study using a red blood cell in uniform Stokes flow.}
@@ -672,7 +673,7 @@ Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with res
 
 
 The calculations with increasingly finer surface meshes take more time to complete not only because the number of unknowns is larger, but also because they may require a greater number of iterations to converge to a desired residual.
-Figure \ref{fig:single_cell_iterations} shows that the number of iterations needed as the surface mesh varies from size $N=128$ to $8,192$ increases from 19 to 37. For further refined meshes, the number of iterations remains about the same. This is an indication that the surface mesh is sufficiently refined with $8,192$ panels for one red blood cell.
+Figure \ref{fig:single_cell_iterations} shows that the number of iterations needed as the surface mesh varies from size $N=128$ to $8,192$ increases from 18 to 39. For further refined meshes, the number of iterations remains about the same. This is an indication that the surface mesh is sufficiently refined with $8,192$ panels for one red blood cell.
 
 \begin{figure}
 \begin{center}
@@ -685,8 +686,7 @@ Figure \ref{fig:single_cell_iterations} shows that the number of iterations need
 
 For the next tests, we used several red blood cells in a sparse spatial arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem. We set up a collection of red blood cells by making copies of a discretized cell, then randomly rotating each one, and shifting it spatially in each  coordinate direction by a positive random amount that ensures they do not overlap. The resulting arrangement may look like that shown in Figure \ref{fig:multiple_cells}.
 
-% This figure behaved weird with the unmodified SIAM class file, and the images appeared displaced upwards, needing to hacked it with \vspace{1.2cm} before \includegraphics
-% Now it works well with the modified SIAM class file
+
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[natwidth=6in,natheight=2.88in,width=0.75\textwidth]{4Cells_arrow.pdf}
@@ -738,10 +738,10 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
  & & \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} \\
  N & \# unknowns & $\ncrit$ & $t_{\text{solve}}$ & $\ncrit$ & $t_{\text{solve}}$ & Speedup \\\hline
  & & & & & \\
- 2048 & 6144 & 200 & 44.5 & 100 & 11.0 & 4.05 \\
- 8192 & 24576 & 400 & 177 & 150 & 52.4 & 3.37 \\
- 32768 & 98304 & 400 & 848 & 150 & 223 & 3.80 \\
- 131072 & 393216 & 600 & 6386\footnotemark[1] & 150 & 874 & 7.31\footnotemark[1] \\	
+ 2048 & 6144 & 400 & 48.18 & 150 & 14.61 & 3.30 \\
+ 8192 & 24576 & 400 & 234.44 & 100 & 69.03 & 3.40 \\
+ 32768 & 98304 & 400 & 978.80 & 100 & 276.52 & 3.54 \\
+ 131072 & 393216 & 200 & 5122.43\footnotemark[1] & 100 & 1044.77 & 4.90\footnotemark[1] \\	
 \end{tabular}
 \end{center}
 \caption{Timings and speed-up of the relaxation strategy on a single red blood cell in uniform Stokes flow, with the test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
@@ -759,9 +759,9 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 & & & \multicolumn{2}{c}{Non-relaxed} & \multicolumn{2}{c}{Relaxed}\\
 N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup \\ \hline
 & & & & & & &  \\
-2048 & 6144 & 1 & 200 & 44.5 & 100 & 11.0 & 4.05 \\ 
-8192 & 24576 & 4 & 200 & 236 & 150 & 59.8 & 3.95 \\ 
-32768 & 98304 & 16 & 400 & 1261 & 150 & 331 & 3.81 \\
+2048 & 6144 & 1 & 400 & 48.18 & 150 & 14.61 & 3.30 \\ 
+8192 & 24576 & 4 & 400 & 267.64 & 100 & 87.20 & 3.07 \\ 
+32768 & 98304 & 16 & 400 & 1358.07 & 100 & 444.55 & 3.05 \\
 131072 & 393216 & 64 & 300 & 9982\footnotemark[1] & 100 & 1606 & 6.22\footnotemark[1] \\
 \end{tabular}
 \end{center}
@@ -778,8 +778,8 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup 
 & & &  \multicolumn{2}{c}{Non-relaxed} & \multicolumn{2}{c}{Relaxed}\\
 N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup \\ \hline
 & & & & & & &  \\
-8192 & 24576 & 1 & 400 & 177 & 150 & 52.4 & 3.37 \\ 
-32768 & 98304 & 4 & 400 & 1375 & 150 & 315 & 4.37 \\
+8192 & 24576 & 1 & 400 & 234.44 & 100 & 69.03 & 3.40 \\ 
+32768 & 98304 & 4 & 400 & 1494.37 & 100 & 371.06 & 4.03 \\
 131072 & 393216 & 16 & 300 & 15980\footnotemark[1] & 100 & 1692 & 9.44\footnotemark[1] \\
 \end{tabular}
 \end{center}
@@ -796,7 +796,7 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 & & & \multicolumn{2}{c}{Non-relaxed} & \multicolumn{2}{c}{Relaxed}\\
 N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup \\ \hline
 & & & & & & &  \\
-32768 & 98304 & 1 & 400 & 848 & 150 & 223 & 3.80 \\
+32768 & 98304 & 1 & 400 & 978.80 & 100 & 276.52 & 3.54 \\
 131072 & 393216 & 4 & 300 & 9629\footnotemark[1] & 100 & 1247 & 7.72\footnotemark[1] \\	
 \end{tabular}
 \end{center}
