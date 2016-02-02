@@ -1,0 +1,6 @@
+* add the reason for not using preconditioner at the beginning of result section
+* delete LaplaceBEM speed-up vs # iter plot, speed-up vs p_init plot, add speed-up tolerance plot for LaplaceBEM and StokesBEM, and write a paragraph to describe the plot
+* fix bibtex
+* check any other red comments on my notes
+* check if I missed any parameters
+* check abstract & conclusion after final review
