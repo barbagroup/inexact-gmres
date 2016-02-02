@@ -460,7 +460,7 @@ To find out the potential speed-up, we compared the time to solution for differe
 \label{tab:laplace_2nd_relaxation}
 \end{table}%
 
-The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation} show a speed-up for the three larger grids---also shown in Figure \ref{fig:relaxation_timing}---of about $1.4\times$ for the 1st-kind integral formulation and $1.2\times$ for the 2nd-kind formulation. These are moderate speedups, but these tests reveal that one has to give up on the idea of partitioning the domain between a near-field and a far-field in a way that balances the time spent computing each one---an accepted idea in \fmm applications. When relaxing the accuracy of the \gmres iterations, the time taken to compute the far field decreases significantly. This means that to minimize time-to-solution when using relaxed \gmres, the near and far fields should not be balanced, but rather the far field should be bloated. As a result, the first few iterations are completely dominated by the time to compute the far field, but this is offset by the benefit of much cheaper iterations from then on. This is a simple but unexpected and counter-intuitive algorithmic consequence of using inexact \gmres with \fmm.
+The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation} show a speed-up for the three larger grids---also shown in Figure \ref{fig:relaxation_timing}---of about $1.5\times$ for the 1st-kind integral formulation and $1.1\times$ for the 2nd-kind formulation. These are moderate speedups, but these tests reveal that one has to give up on the idea of partitioning the domain between a near-field and a far-field in a way that balances the time spent computing each one---an accepted idea in \fmm applications. When relaxing the accuracy of the \gmres iterations, the time taken to compute the far field decreases significantly. This means that to minimize time-to-solution when using relaxed \gmres, the near and far fields should not be balanced, but rather the far field should be bloated. As a result, the first few iterations are completely dominated by the time to compute the far field, but this is offset by the benefit of much cheaper iterations from then on. This is a simple but unexpected and counter-intuitive algorithmic consequence of using inexact \gmres with \fmm.
 
 It's clear that greater benefits from the relaxation strategy should derive from two situations: (a) where higher accuracy is needed (necessitating an initially higher $p$) , and (b) where the linear system demands a greater number of iterations to reach a set tolerance (resulting in more computations done at low $p$). To demonstrate this, we now present two tests that force these situations. 
 
@@ -580,16 +580,18 @@ The figure also includes a plot of the residual history. We ran extensive tests 
   & \multicolumn{2}{c|}{2048 panels} & \multicolumn{2}{c|}{8192 panels} & \multicolumn{2}{c}{32768 panels} \\
  $\pmin$ & Error & $it$ & Error & $it$ & Error & $it$ \\ \hline
   & & & & & & \\
- 5 & $4.70\times 10^{-2}$ & 22 & $2.44\times 10^{-2}$ & 28 & $1.34\times 10^{-2}$ & 28 \\
- 4 & $4.49\times 10^{-2}$ & 23 & $2.51\times 10^{-2}$ & 29 & $1.25\times 10^{-2}$ & 29 \\
- 3 & $4.64\times 10^{-2}$ & 22 & $2.78\times 10^{-2}$ & 29 & $1.39\times 10^{-2}$ & 29 \\
- 2 & $4.95\times 10^{-2}$ & 25 & $2.62\times 10^{-2}$ & 33 & $3.18\times 10^{-2}$ & 39 \\
- 1 & $4.96\times 10^{-2}$ & 25 & $2.99\times 10^{-2}$ & 51 & $4.77\times 10^{-2}$ & 53 
+ 5 & $4.61\times 10^{-2}$ & 24 & $2.48\times 10^{-2}$ & 29 & $1.34\times 10^{-2}$ & 28 \\
+ 4 & $4.56\times 10^{-2}$ & 25 & $2.50\times 10^{-2}$ & 29 & $1.17\times 10^{-2}$ & 28 \\
+ 3 & $4.58\times 10^{-2}$ & 23 & $3.57\times 10^{-2}$ & 30 & $1.74\times 10^{-2}$ & 30 \\
+ 2 & $4.41\times 10^{-2}$ & 25 & $1.45\times 10^{-1}$ & 39 & $2.04\times 10^{-2}$ & 39 \\
+ 1 & $4.35\times 10^{-2}$ & 28 & $3.42\times 10^{-2}$ & 100\footnotemark[1] & $3.03\times 10^{-2}$ & 100\footnotemark[1] 
 \end{tabular}
 \end{center}
 \caption{Effect of $p_{\text{min}}$ on accuracy and convergence for Stokes flow around a sphere for differing values of $N$. Error is on the total drag force in the $x$-direction, $F_x$.}
 \label{tab:stokes_min_p}
 \end{table}%
+
+\footnotetext[1]{When $p_{\text{min}}$ is set to 1, solution does not converge within 100 iterations for the two finer meshes.}
 
 Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \gmres iterations for three increasingly finer surface discretizations. For $N=8,192$, speed-up is more than $3.0\times$.
 
