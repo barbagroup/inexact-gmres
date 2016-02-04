@@ -143,7 +143,7 @@
 %slugger should be set to mms, siap, sicomp, sicon, sidma, sima, simax, sinum, siopt, sisc, or sirev
 
 \begin{abstract}
-Boundary element methods produce dense linear systems that can be accelerated via multipole expansions. Solved with Krylov methods, this implies computing the matrix-vector products within each iteration with some error, at an accuracy controlled by the order of the expansion, $p$. We take advantage of a unique property of Krylov iterations that allow lower accuracy of the matrix-vector products as convergence proceeds, and propose a relaxation strategy based on progressively decreasing $p$. Via extensive numerical tests, we show that the relaxed Krylov iterations converge with speed-ups of between $2\times$ and $4\times$ for Laplace problems and between $3.5\times$ and $4.5\times$ for Stokes problems. We include an application to Stokes flow around red blood cells, computing with up to 64 cells and problem size up to 131k boundary elements and nearly 400k unknowns. The study was done with an in-house multi-threaded C++ code, on a hexa-core CPU. 
+Boundary element methods produce dense linear systems that can be accelerated via multipole expansions. Solved with Krylov methods, this implies computing the matrix-vector products within each iteration with some error, at an accuracy controlled by the order of the expansion, $p$. We take advantage of a unique property of Krylov iterations that allow lower accuracy of the matrix-vector products as convergence proceeds, and propose a relaxation strategy based on progressively decreasing $p$. Via extensive numerical tests, we show that the relaxed Krylov iterations converge with speed-ups of between $1.5\times$ and $2.2\times$ for Laplace problems and between $3.0\times$ and $5.0\times$ for Stokes problems. We include an application to Stokes flow around red blood cells, computing with up to 64 cells and problem size up to 131k boundary elements and nearly 400k unknowns. The study was done with an in-house multi-threaded C++ code, on a hexa-core CPU. 
 \end{abstract}
 
 \begin{keyword}
@@ -534,7 +534,7 @@ Like in \S\ref{sec:inexactLaplace}, we start with a grid-convergence study to bu
 \end{equation}
 
 %% need to change why we choose p=16 in the third sentence "We first"
-For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver. We first increased the value of $p$ until the solution stopped improving, and settled for $p=16$ in this case, using a $10^{-5}$ tolerance in the iterative solver.
+For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver. Based on the inexact Krylov method \cite{bouras2000relaxation,bourasfraysse2005}, we choose an initial $p$ of 16 to compute the first Krylov vectors with full accuracy, and use a $10^{-5}$ tolerance in the iterative solver.
 Figure \ref{fig:stokes_convergence} shows that we observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations.
 
 \begin{figure}%[ht]
@@ -643,7 +643,7 @@ Table \ref{tab:rbc_richardson_values} presents the computed values of the drag f
 	p = \frac{\ln{\left(\frac{f_2-f_1}{f_3-f_2}\right)}}{\ln{c}},
 \end{equation}
 
-\noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.521$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
+\noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.52$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
 Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with respect to the extrapolated value, as a function of the mesh size. The plot includes the error obtained with four meshes, with the extrapolated value obtained using the first three coarser meshes.
 
 \begin{table}[h]
@@ -820,11 +820,11 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 \section{Conclusion} 
 
 We have shown the first successful application of a relaxation strategy for fast-multipole-accelerated boundary element methods, based on the theory of inexact \gmres. Testing the relaxation strategy on Laplace problems, we confirmed that it converges to the right solution, it provides moderate speed-ups over using a fixed $p$, and it leads to initially bloated far-fields to obtain the minimum time to solution.
-Exploring the performance advantage of relaxing the value of $p$ as \gmres iterations advance, we concluded that problems requiring high accuracy and/or resulting in more ill-conditioned linear systems will experience the best speed-ups, which for Laplace problems can be in the order of $2\times$ to $4\times$.
+Exploring the performance advantage of relaxing the value of $p$ as \gmres iterations advance, we concluded that problems requiring high accuracy and/or resulting in more ill-conditioned linear systems will experience the best speed-ups, which for Laplace problems can be in the order of $1.5\times$ to $2.2\times$.
 
-In the case of the Stokes equation, the speed-ups that can be obtained using a relaxation strategy are larger, due to the fact that Stokes problems require both more iterations to converge (and the relaxed solver spends more time at low $p$) and more work per iteration (equivalent to four Laplace evaluations). Relaxed \gmres iterations in this case reduced the time to solution by $3.5\times$ to $4.5\times$. We found that it's important for Stokes problems to also enforce a minimum value of $p$ to avoid accuracy or convergence degradation.
+In the case of the Stokes equation, the speed-ups that can be obtained using a relaxation strategy are larger, due to the fact that Stokes problems require both more iterations to converge (and the relaxed solver spends more time at low $p$) and more work per iteration (equivalent to four Laplace evaluations). Relaxed \gmres iterations in this case reduced the time to solution by $3.0\times$. We found that it's important for Stokes problems to also enforce a minimum value of $p$ to avoid accuracy or convergence degradation.
 
-Using the relaxation strategy, we completed various tests for Stokes flow around red blood cells, with up to 64 cells. We studied numerical convergence in this situation using Richardson extrapolation and obtained an observed order of convergence of $0.48$, close to the expected value of $1/2$. The speed-ups resulting from the relaxation strategy in these tests were in most cases close to $4\times$.
+Using the relaxation strategy, we completed various tests for Stokes flow around red blood cells, with up to 64 cells. We studied numerical convergence in this situation using Richardson extrapolation and obtained an observed order of convergence of $0.52$, close to the expected value of $1/2$. The speed-ups resulting from the relaxation strategy in these tests were in most cases close to $4\times$.
 
 Relaxing the truncation order $p$ in the multipole expansions as Krylov iterations progress is one of those seemingly simple ideas that strike one as obvious a posteriori. Yet, as far as we know, it has not been tried before, nor has it been implemented in a \bem. Given this method's wide popularity in computational engineering, we look forward to many applications benefitting from healthy speed-ups from applying relaxed-$p$ \fmm. We  showed that Stokes problems, in particular, can expect $4\times$ speed-ups in large problems still fitting on one workstation. Linear elasticity problems should experience similar speed-ups (although we didn't try them). This is pure algorithmic speed-up that should multiply with any hardware speed-ups obtained, for example, by moving computational kernels to \gpu s.
 
@@ -874,11 +874,14 @@ Relaxing the truncation order $p$ in the multipole expansions as Krylov iteratio
 	\end{algorithmic}
 \end{algorithm}
 
- \clearpage
+\clearpage
 %% Acnowledgements
-\textbf{Acknowledgements.}
+%%\textbf{Acknowledgements.}
+\section*{Acknowledgements}
 Dr. Cris Cecka (Harvard University, currently at Nvidia Corp.) contributed greatly to the code used in this research, particularly writing the octree and base evaluator. He later continued developing his fast-multipole framework, which evolved into his FMMTL project; see \href{https://github.com/ccecka/fmmtl}{https://github.com/ccecka/fmmtl}.
 The authors also wish to acknowledge valuable interactions with Dr. Christopher Cooper (Boston University, currently at Universidad T{\'e}cnica Federico Santa Mar{\'i}a) that helped with the implementation of the boundary element method.
+
+
 
 %% Bibliography
 \bibliographystyle{elsarticle-num}
