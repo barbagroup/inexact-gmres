@@ -1,99 +1,115 @@
 \begin{thebibliography}{10}
-
-\bibitem{Appel1985}
-{\sc Andrew~W. Appel}, {\em An efficient program for many-body simulation},
-  SIAM J. Sci.\ Stat.\ Comput., 6 (1985), pp.~85--103.
-
-\bibitem{BarnesHut1986}
-{\sc J.~Barnes and P.~Hut}, {\em A hierarchical {$O(N \log N)$}
-  force-calculation algorithm}, Nature, 324 (1986), pp.~446--449.
-
-\bibitem{bouras2000relaxation}
-{\sc Amina Bouras and Val{\'e}rie Frayss{\'e}}, {\em A relaxation strategy for
-  inexact matrix-vector products for {Krylov} methods}, CERFACS TR0PA000015,
-  European Centre for Research and Advanced Training in Scientific Computation,
-   (2000).
-
-\bibitem{bourasfraysse2005}
-{\sc A~Bouras and V~Frayss{\'e}}, {\em Inexact matrix-vector products in
-  {Krylov} methods for solving linear systems: A relaxation strategy}, SIAM J.
-  Matrix Analysis Applications, 26 (2005), pp.~660--678.
-
-\bibitem{BrebbiaDominguez1992}
-{\sc C~Brebbia and J~Dominguez}, {\em Boundary Elements: An Introductory
-  Course}, WIT Press, 2nd~ed., 1992.
-
-\bibitem{EvansFung1972}
-{\sc Evan Evans and Yuan-Cheng Fung}, {\em Improved measurements of the
-  erythrocyte geometry}, Microvascular research, 4 (1972), pp.~335--347.
-
-\bibitem{Fata2009}
-{\sc S.~N. Fata}, {\em Explicit expressions for {3D} boundary integrals in
-  potential theory}, Int.\ J. Num.\ Meth.\ Engineering, 78 (2009), pp.~32--47.
-
-\bibitem{Fata2011}
-\leavevmode\vrule height 2pt depth -1.6pt width 23pt, {\em Explicit expressions
-  for three-dimensional boundary integrals in linear elasticity}, J.\ Comp.\
-  App.\ Mathematics, 235 (2011), pp.~4480--4495.
-
-\bibitem{FedosovETal2011}
-{\sc D.~A. Fedosov, B.~Caswell, S.~Suresh, and G.~E. Karniadakis}, {\em
-  Quantifying the biophysical characteristics of
-  {Plasmodium}-falciparum-parasitized red blood cells in microcirculation},
-  Proc. Natl. Acad. Sci., 108 (2011), pp.~35--39.
-
-\bibitem{Freund2014}
-{\sc Jonathan~B Freund}, {\em Numerical simulation of flowing blood cells},
-  Ann.\ Rev.\ Fluid Mech., 46 (2014), pp.~67--95.
-
-\bibitem{greengard1987}
-{\sc L~Greengard}, {\em The rapid evaluation of potential fields in particle
-  systems}, The MIT Press, 1987.
-
-\bibitem{GreengardRokhlin1987}
-{\sc L.~Greengard and V.~Rokhlin}, {\em A fast algorithm for particle
-  simulations}, J. Comput.\ Phys., 73 (1987), pp.~325--348.
-
-\bibitem{HessSmith1967}
-{\sc John~L Hess and AMO Smith}, {\em Calculation of potential flow about
-  arbitrary bodies}, Progress in Aerospace Sciences, 8 (1967), pp.~1--138.
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
 
 \bibitem{Liu2006}
-{\sc YJ~Liu and N~Nishimura}, {\em The fast multipole boundary element method
-  for potential problems: a tutorial}, Engineering Analysis with Boundary
-  Elements, 30 (2006), pp.~371--381.
+Y.~Liu, N.~Nishimura, The fast multipole boundary element method for potential
+  problems: a tutorial, Engineering Analysis with Boundary Elements 30~(5)
+  (2006) 371--381.
+\newblock \href {http://dx.doi.org/10.1016/j.enganabound.2005.11.006}
+  {\path{doi:10.1016/j.enganabound.2005.11.006}}.
 
-\bibitem{roache1998}
-{\sc Patrick~J Roache}, {\em Verification and validation in computational
-  science and engineering}, Hermosa Albuquerque, 1998.
-
-\bibitem{SaadSchultz1986}
-{\sc Y.~Saad and M.~Schultz}, {\em {GMRES}: A generalized minimal residual
-  algorithm for solving nonsymmetric linear systems}, SIAM J. Sci.\ Stat.\
-  Comput., 7 (1986), pp.~856--869.
-
-\bibitem{simonciniszyld2003}
-{\sc V.~Simoncini and D.~Szyld}, {\em Theory of inexact {Krylov} subspace
-  methods and applications to scientific computing}, SIAM J. Sci. Comput., 25
-  (2003), pp.~454--477.
-
-\bibitem{vandeneshofsleijpen2004}
-{\sc J~Van~den Eshof and G~Sleijpen}, {\em Inexact {Krylov} subspace methods
-  for linear systems}, SIAM J. Matrix Analysis Applications, 26 (2004),
-  pp.~125--153.
+\bibitem{YokotaETal2011a}
+R.~Yokota, J.~P. Bardhan, M.~G. Knepley, L.~A. Barba, T.~Hamada, Biomolecular
+  electrostatics using a fast multipole {BEM on up to 512 GPUs} and a billion
+  unknowns, Comput.\ Phys.\ Comm. 182~(6) (2011) 1271--1283.
+\newblock \href {http://dx.doi.org/10.1016/j.cpc.2011.02.013}
+  {\path{doi:10.1016/j.cpc.2011.02.013}}.
 
 \bibitem{YokotaBarba2011a}
-{\sc R.~Yokota and L.~A. Barba}, {\em A tuned and scalable fast multipole
-  method as a preeminent algorithm for exascale systems}, Int.\ J.\ High-perf.\
-  Comput.\ Applic.,  (2012).
-\newblock Published online 24 Jan.\ 2012
+R.~Yokota, L.~A. Barba, A tuned and scalable fast multipole method as a
+  preeminent algorithm for exascale systems, Int.\ J.\ High-perf.\ Comput.\
+  Applic.Published online 24 Jan.\ 2012
   \href{http://doi.org/fzgqgm}{doi:10.1177/1094342011429952} preprint on
   \href{http://arxiv.org/abs/1106.2176}{http://arxiv.org/abs/1106.2176}.
 
-\bibitem{YokotaETal2011a}
-{\sc Rio Yokota, Jaydeep~P. Bardhan, Matthew~G. Knepley, L.~A. Barba, and
-  Tsuyoshi Hamada}, {\em Biomolecular electrostatics using a fast multipole
-  {BEM on up to 512 GPUs} and a billion unknowns}, Comput.\ Phys.\ Comm., 182
-  (2011), pp.~1271--1283.
+\bibitem{BrebbiaDominguez1992}
+C.~Brebbia, I.~Dominguez, Boundary Elements An Introductory Course, 2nd
+  Edition, WIT Press, 1992.
+
+\bibitem{HessSmith1967}
+J.~L. Hess, A.~Smith, Calculation of potential flow about arbitrary bodies,
+  Progress in Aerospace Sciences 8 (1967) 1--138.
+
+\bibitem{Fata2009}
+S.~N. Fata, Explicit expressions for {3D} boundary integrals in potential
+  theory, Int.\ J. Num.\ Meth.\ Engineering 78 (2009) 32--47.
+
+\bibitem{Fata2011}
+S.~N. Fata, Explicit expressions for three-dimensional boundary integrals in
+  linear elasticity, J.\ Comp.\ App.\ Mathematics 235 (2011) 4480--4495.
+
+\bibitem{SaadSchultz1986}
+Y.~Saad, M.~Schultz, {GMRES}: A generalized minimal residual algorithm for
+  solving nonsymmetric linear systems, SIAM J. Sci.\ Stat.\ Comput. 7 (1986)
+  856--869.
+
+\bibitem{Appel1985}
+A.~W. Appel, An efficient program for many-body simulation, SIAM J. Sci.\
+  Stat.\ Comput. 6~(1) (1985) 85--103.
+\newblock \href {http://dx.doi.org/10.1137/0906008}
+  {\path{doi:10.1137/0906008}}.
+
+\bibitem{BarnesHut1986}
+J.~Barnes, P.~Hut, A hierarchical {$O(N \log N)$} force-calculation algorithm,
+  Nature 324 (1986) 446--449.
+\newblock \href {http://dx.doi.org/10.1038/324446a0}
+  {\path{doi:10.1038/324446a0}}.
+
+\bibitem{GreengardRokhlin1987}
+L.~Greengard, V.~Rokhlin, A fast algorithm for particle simulations, J.
+  Comput.\ Phys. 73~(2) (1987) 325--348.
+\newblock \href {http://dx.doi.org/10.1016/0021-9991}
+  {\path{doi:10.1016/0021-9991}}.
+
+\bibitem{bouras2000relaxation}
+A.~Bouras, V.~Frayss{\'e}, A relaxation strategy for inexact matrix-vector
+  products for {Krylov} methods, CERFACS TR0PA000015, European Centre for
+  Research and Advanced Training in Scientific Computation.
+
+\bibitem{bourasfraysse2005}
+A.~Bouras, V.~Frayss{\'e}, Inexact matrix-vector products in {Krylov} methods
+  for solving linear systems: A relaxation strategy, SIAM J. Matrix Analysis
+  Applications 26~(3) (2005) 660--678.
+
+\bibitem{simonciniszyld2003}
+V.~Simoncini, D.~Szyld, Theory of inexact {Krylov} subspace methods and
+  applications to scientific computing, SIAM J. Sci. Comput. 25~(2) (2003)
+  454--477.
+
+\bibitem{vandeneshofsleijpen2004}
+J.~Van~den Eshof, G.~Sleijpen, Inexact {Krylov} subspace methods for linear
+  systems, SIAM J. Matrix Analysis Applications 26~(1) (2004) 125--153.
+
+\bibitem{greengard1987}
+L.~Greengard, The rapid evaluation of potential fields in particle systems, The
+  MIT Press, 1987.
+
+\bibitem{FedosovETal2011}
+D.~A. Fedosov, B.~Caswell, S.~Suresh, G.~E. Karniadakis,
+  \href{http://www.pnas.org/content/108/1/35.abstract}{Quantifying the
+  biophysical characteristics of {Plasmodium}-falciparum-parasitized red blood
+  cells in microcirculation}, Proc. Natl. Acad. Sci. 108~(1) (2011) 35--39.
+\newblock \href
+  {http://arxiv.org/abs/http://www.pnas.org/content/108/1/35.full.pdf}
+  {\path{arXiv:http://www.pnas.org/content/108/1/35.full.pdf}}, \href
+  {http://dx.doi.org/10.1073/pnas.1009492108}
+  {\path{doi:10.1073/pnas.1009492108}}.
+\newline\urlprefix\url{http://www.pnas.org/content/108/1/35.abstract}
+
+\bibitem{Freund2014}
+J.~B. Freund, Numerical simulation of flowing blood cells, Ann.\ Rev.\ Fluid
+  Mech. 46 (2014) 67--95.
+
+\bibitem{EvansFung1972}
+E.~Evans, Y.-C. Fung, Improved measurements of the erythrocyte geometry,
+  Microvascular research 4~(4) (1972) 335--347.
+
+\bibitem{roache1998}
+P.~J. Roache, Verification and validation in computational science and
+  engineering, Hermosa Albuquerque, 1998.
 
 \end{thebibliography}
