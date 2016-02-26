@@ -814,7 +814,9 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 \end{center}
 \end{figure}
 
+\subsection{Reproducibility}
 
+Our inexact \gmres code is open-source and available on Github. Knowing the increasing importance of computational reproducibility, we provided the ``\textit{reproducibility package}" --- containing the running and post-processing scripts --- to generate the figures in this result section. To save readers from potential headaches of dependency mismatches, we also prepared a Dockerfile to setup up the software environment (a Docker container), under which the ``\textit{reproducibility package}" can be used to run all the tests.
 
 
 \section{Conclusion} 
