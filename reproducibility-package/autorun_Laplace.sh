@@ -97,12 +97,12 @@ read tol_set[{1..7}] <<< $(echo 1e-5 1e-6 1e-7 1e-8 1e-9 1e-10 1e-11)
 
 for i in {1..7}
 do
-	printf "tol={tol_set[$i]}, fixed-p:\n" >> $OUT
+	printf "tol=${tol_set[$i]}, fixed-p:\n" >> $OUT
 	for j in {1..3}
 	do eval $DIR$kernel -p 10 -recursions 6 -ncrit ${ncrit_f_set[$i]} -fixed_p -solver_tol ${tol_set[$i]} | grep -i "solve " >> $OUT
 	done
 
-	printf "tol={tol_set[$i]}, relaxed-p:\n" >> OUT
+	printf "tol=${tol_set[$i]}, relaxed-p:\n" >> $OUT
 	for j in {1..3}
 	do eval $DIR$kernel -p 10 -recursions 6 -ncrit ${ncrit_r_set[$i]} -solver_tol ${tol_set[$i]} | grep -i "solve " >> $OUT
 	done

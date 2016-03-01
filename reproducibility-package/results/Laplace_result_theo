@@ -94,98 +94,99 @@ recursions = 8 relaxed 2nd-kind
 	solve : 1.3957e+01s
 LaplaceBEM speedup test with an increasing p_intial:
 p=5, fixed-p 1st-kind:
-P2P: 0.1617s, M2L (39128): 0.2571s
-P2P: 0.1627s, M2L (39128): 0.2726s
-P2P: 0.1622s, M2L (39128): 0.2723s
-P2P: 0.1618s, M2L (39128): 0.2717s
-P2P: 0.1618s, M2L (39128): 0.2729s
-P2P: 0.1617s, M2L (39128): 0.2724s
-P2P: 0.1617s, M2L (39128): 0.2724s
-P2P: 0.1615s, M2L (39128): 0.273s
-P2P: 0.1618s, M2L (39128): 0.2729s
-P2P: 0.1618s, M2L (39128): 0.2743s
-P2P: 0.1617s, M2L (39128): 0.3233s
-P2P: 0.1814s, M2L (39128): 0.3639s
-P2P: 0.162s, M2L (39128): 0.2543s
-P2P: 0.184s, M2L (39128): 0.2804s
-P2P: 0.162s, M2L (39128): 0.2706s
-P2P: 0.1616s, M2L (39128): 0.2717s
-P2P: 0.1932s, M2L (39128): 0.362s
-P2P: 0.1825s, M2L (39128): 0.3627s
-P2P: 0.1822s, M2L (39128): 0.2869s
-P2P: 0.185s, M2L (39128): 0.3621s
-P2P: 0.1858s, M2L (39128): 0.3639s
-P2P: 0.1824s, M2L (39128): 0.362s
-P2P: 0.1831s, M2L (39128): 0.2858s
-P2P: 0.1863s, M2L (39128): 0.3621s
-P2P: 0.1619s, M2L (39128): 0.2975s
-P2P: 0.1625s, M2L (39128): 0.363s
-P2P: 0.1961s, M2L (39128): 0.3629s
-P2P: 0.2015s, M2L (39128): 0.3625s
-P2P: 0.1906s, M2L (39128): 0.3628s
-P2P: 0.1908s, M2L (39128): 0.3626s
-P2P: 0.1935s, M2L (39128): 0.3625s
-P2P: 0.193s, M2L (39128): 0.3625s
-P2P: 0.2031s, M2L (39128): 0.3638s
-P2P: 0.1981s, M2L (39128): 0.3175s
-P2P: 0.1896s, M2L (39128): 0.3633s
-P2P: 0.1909s, M2L (39128): 0.3628s
+	solve : 7.6792e+00s
+	solve : 7.4993e+00s
+	solve : 7.6562e+00s
 p=5, relaxed-p 1st-kind:
-P2P: 0.1617s, M2L (39128): 0.2691s
-P2P: 0.1626s, M2L (39128): 0.2755s
-P2P: 0.1863s, M2L (39128): 0.3631s
-P2P: 0.1972s, M2L (39128): 0.1855s
-P2P: 0.1995s, M2L (39128): 0.1859s
-P2P: 0.2022s, M2L (39128): 0.1849s
-P2P: 0.1945s, M2L (39128): 0.1162s
-P2P: 0.2232s, M2L (39128): 0.1121s
-P2P: 0.2267s, M2L (39128): 0.1132s
-P2P: 0.2175s, M2L (39128): 0.1059s
-P2P: 0.2225s, M2L (39128): 0.06858s
-P2P: 0.2282s, M2L (39128): 0.07254s
-P2P: 0.1617s, M2L (39128): 0.3146s
-P2P: 0.172s, M2L (39128): 0.3658s
-P2P: 0.1995s, M2L (39128): 0.285s
-P2P: 0.188s, M2L (39128): 0.1908s
-P2P: 0.1756s, M2L (39128): 0.1641s
-P2P: 0.1728s, M2L (39128): 0.1687s
-P2P: 0.1711s, M2L (39128): 0.08876s
-P2P: 0.1771s, M2L (39128): 0.1029s
-P2P: 0.2189s, M2L (39128): 0.11s
-P2P: 0.2203s, M2L (39128): 0.09033s
-P2P: 0.2014s, M2L (39128): 0.07192s
-P2P: 0.2302s, M2L (39128): 0.07348s
-P2P: 0.1616s, M2L (39128): 0.2545s
-P2P: 0.1767s, M2L (39128): 0.2627s
-P2P: 0.1896s, M2L (39128): 0.2603s
-P2P: 0.1995s, M2L (39128): 0.1706s
-P2P: 0.2046s, M2L (39128): 0.1717s
-P2P: 0.2043s, M2L (39128): 0.1711s
-P2P: 0.1961s, M2L (39128): 0.08552s
-P2P: 0.1864s, M2L (39128): 0.0878s
-P2P: 0.2016s, M2L (39128): 0.08586s
-P2P: 0.1958s, M2L (39128): 0.08711s
-P2P: 0.2023s, M2L (39128): 0.05136s
-P2P: 0.2003s, M2L (39128): 0.05078s
+	solve : 4.7439e+00s
+	solve : 4.8529e+00s
+	solve : 5.9246e+00s
 p=8, fixed-p 1st-kind:
-P2P: 0.4888s, M2L (10712): 0.4139s
-P2P: 0.5173s, M2L (10712): 0.4483s
-P2P: 0.5312s, M2L (10712): 0.4478s
-P2P: 0.5274s, M2L (10712): 0.4541s
-P2P: 0.53s, M2L (10712): 0.4545s
-P2P: 0.5471s, M2L (10712): 0.4547s
-P2P: 0.523s, M2L (10712): 0.4544s
-P2P: 0.4937s, M2L (10712): 0.4074s
-P2P: 0.5584s, M2L (10712): 0.4543s
-P2P: 0.5906s, M2L (10712): 0.4525s
-P2P: 0.5651s, M2L (10712): 0.374s
-P2P: 0.5635s, M2L (10712): 0.4522s
-P2P: 0.5441s, M2L (10712): 0.4524s
-P2P: 0.5738s, M2L (10712): 0.4527s
-P2P: 0.4885s, M2L (10712): 0.3355s
-P2P: 0.5174s, M2L (10712): 0.4536s
-P2P: 0.5404s, M2L (10712): 0.4541s
-P2P: 0.5552s, M2L (10712): 0.4472s
-P2P: 0.5467s, M2L (10712): 0.454s
-P2P: 0.5561s, M2L (10712): 0.4558s
-P2P: 0.5984s, M2L (10712): 0.4541s
+	solve : 1.3149e+01s
+	solve : 1.3658e+01s
+	solve : 1.3069e+01s
+p=8, relaxed-p 1st-kind:
+	solve : 7.2632e+00s
+	solve : 7.5739e+00s
+	solve : 7.0637e+00s
+p=10, fixed-p 1st-kind:
+	solve : 1.9806e+01s
+	solve : 2.0578e+01s
+	solve : 2.0144e+01s
+p=10, relaxed-p 1st-kind:
+	solve : 9.6791e+00s
+	solve : 1.0173e+01s
+	solve : 9.2892e+00s
+p=12, fixed-p 1st-kind:
+	solve : 2.5124e+01s
+	solve : 2.4971e+01s
+	solve : 2.4848e+01s
+p=12, relaxed-p 1st-kind:
+	solve : 1.3561e+01s
+	solve : 1.3990e+01s
+	solve : 1.3673e+01s
+p=15, fixed-p 1st-kind:
+	solve : 3.8191e+01s
+	solve : 3.6733e+01s
+	solve : 3.6683e+01s
+p=15, relaxed-p 1st-kind:
+	solve : 2.3925e+01s
+	solve : 2.2059e+01s
+	solve : 2.3076e+01s
+LaplaceBEM speedup test with various tolerances:
+tol=1e-5, fixed-p:
+	solve : 2.7471e+00s
+	solve : 3.0509e+00s
+	solve : 2.8254e+00s
+tol=1e-5, relaxed-p:
+	solve : 1.5185e+00s
+	solve : 1.8673e+00s
+	solve : 1.6504e+00s
+tol=1e-6, fixed-p:
+	solve : 4.4559e+00s
+	solve : 4.5356e+00s
+	solve : 4.7808e+00s
+tol=1e-6, relaxed-p:
+	solve : 2.6001e+00s
+	solve : 2.4735e+00s
+	solve : 2.7787e+00s
+tol=1e-7, fixed-p:
+	solve : 7.3871e+00s
+	solve : 6.7984e+00s
+	solve : 7.2569e+00s
+tol=1e-7, relaxed-p:
+	solve : 3.8016e+00s
+	solve : 4.0750e+00s
+	solve : 3.9635e+00s
+tol=1e-8, fixed-p:
+	solve : 8.7471e+00s
+	solve : 1.1360e+01s
+	solve : 9.2684e+00s
+tol=1e-8, relaxed-p:
+	solve : 5.7878e+00s
+	solve : 5.5295e+00s
+	solve : 5.6878e+00s
+tol=1e-9, fixed-p:
+	solve : 1.1404e+01s
+	solve : 1.1754e+01s
+	solve : 1.1398e+01s
+tol=1e-9, relaxed-p:
+	solve : 8.0696e+00s
+	solve : 7.9147e+00s
+	solve : 7.2896e+00s
+tol=1e-10, fixed-p:
+	solve : 1.3768e+01s
+	solve : 1.4435e+01s
+	solve : 1.3998e+01s
+tol=1e-10, relaxed-p:
+	solve : 1.0096e+01s
+	solve : 9.9997e+00s
+	solve : 1.0469e+01s
+tol=1e-11, fixed-p:
+	solve : 1.5720e+01s
+	solve : 1.5992e+01s
+	solve : 1.5269e+01s
+tol=1e-11, relaxed-p:
+	solve : 1.1945e+01s
+	solve : 1.1790e+01s
+	solve : 1.1910e+01s
