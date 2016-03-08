@@ -6,3 +6,5 @@ BarbaETal2015-inexact-gmres.pdf
 *.log
 *.out
 *.spl
+
+*.gz
