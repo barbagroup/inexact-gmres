@@ -121,7 +121,7 @@
 %% \address{Address\fnref{label3}}
 %% \fntext[label3]{}
 
-\title{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES WITH FAST-MULTIPOLE BOUNDARY ELEMENT METHOD\tnoteref{t1}}
+\title{Inexact Krylov iterations and relaxation strategies with fast-multipole boundary element method\tnoteref{t1}}
 \tnotetext[t1]{This work was partially supported by the National Science Foundation under award ACI-1149784.}
 
 \author[bu,nvidia]{Simon K. Layton\fnref{fn1}}
@@ -139,8 +139,6 @@
 \address[nvidia]{Nvidia, Corp., Santa Clara, CA}
 \address[gwu]{Department of Mechanical and Aerospace Engineering, The George Washington University, Washington DC, 20052}
 
-%\slugger{sisc}{xxxx}{xx}{x}{x--x}
-%slugger should be set to mms, siap, sicomp, sicon, sidma, sima, simax, sinum, siopt, sisc, or sirev
 
 \begin{abstract}
 Boundary element methods produce dense linear systems that can be accelerated via multipole expansions. Solved with Krylov methods, this implies computing the matrix-vector products within each iteration with some error, at an accuracy controlled by the order of the expansion, $p$. We take advantage of a unique property of Krylov iterations that allow lower accuracy of the matrix-vector products as convergence proceeds, and propose a relaxation strategy based on progressively decreasing $p$. Via extensive numerical tests, we show that the relaxed Krylov iterations converge with speed-ups of between $1.5\times$ and $2.2\times$ for Laplace problems and between $3.0\times$ and $5.0\times$ for Stokes problems. We include an application to Stokes flow around red blood cells, computing with up to 64 cells and problem size up to 131k boundary elements and nearly 400k unknowns. The study was done with an in-house multi-threaded C++ code, on a hexa-core CPU. 
