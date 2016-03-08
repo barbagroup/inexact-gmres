@@ -363,14 +363,14 @@ Although the \fmm error bounds are known to be rather loose, we use this approac
 
 %$ RESULTS
 \section{Results and discussion}
-We present numerical experiments with \bem\ solutions for the Laplace and Stokes equations, including an application to Stokes flow around red blood cells. The \bem\ is accelerated with a fast multipole method using spherical expansions, implemented in a code designed to use boundary elements (panels) as the sources and targets and written in multi-threaded \cpp. To facilitate reproducibility of our research, the code is made available via its version-control repository,\footnote{\href{https://github.com/barbagroup/fmm-bem-relaxed}{https://github.com/barbagroup/fmm-bem-relaxed}} under an MIT license. The paper manuscript is also available via its repository,\footnote{\href{https://github.com/barbagroup/inexact-gmres}{https://github.com/barbagroup/inexact-gmres}} which includes running scripts and plotting scripts to produce the included figures (see each figure caption for details).
+Our results include numerical experiments with \bem\ solutions for the Laplace and Stokes equations, including an application to Stokes flow around red blood cells. The \bem\ solver is accelerated with a fast multipole method using spherical expansions, implemented in a code designed to use boundary elements (panels) as the sources and targets, and written in multi-threaded \cpp. To facilitate reproducibility of our research, the code is made available via its version-control repository,\footnote{\href{https://github.com/barbagroup/fmm-bem-relaxed}{https://github.com/barbagroup/fmm-bem-relaxed}} under an MIT license. The paper manuscript is also available via its repository,\footnote{\href{https://github.com/barbagroup/inexact-gmres}{https://github.com/barbagroup/inexact-gmres}} which includes running scripts and plotting scripts to produce the included figures (see each figure caption for details).
 We ran all our tests on a lab workstation with an Intel Core i7-5930K hexa-core processor and 32G RAM. Using a test with the Laplace kernel, we confirmed that our \fmm\ code scales as $\O{N}$ by timing several runs with increasing problem size; see Figure \ref{fig:fmm_scaling}. We also found that the preconditioned cases take fewer iterations but more time to converge than the unpreconditioned ones, because the residuals after the first several iterations in the preconditioned cases are greater. For an inexact {\gmres} iteration, a bigger residual leads to a higher required $p$, which offsets the benefit of using fewer iterations. Therefore, we performed these tests without preconditioning.
 The subsequent experiments investigate the use of a Krylov relaxation strategy by reducing the order of multipole expansions, $p$, as the iterations progress to convergence, determining the speed-up provided by such a strategy for different scenarios and problem sizes.
 
 \begin{figure}[h]
 \begin{center}
 	\includegraphics[width=0.5 \textwidth]{FMMScaling.pdf}
-	\caption{Scaling of our in-house \fmm\ code with respect to problem size $N$, using a Laplace kernel with spherical expansions, $p=5$ and  $\ncrit = 126$. The tests ran on a lab workstation using six \cpu\ threads.}
+	\caption{Scaling of the \fmm\ code with respect to problem size $N$, using a Laplace kernel with spherical expansions, $p=5$ and  $\ncrit = 126$. The tests ran on a lab workstation using six \cpu\ threads. The dotted line shows the expected $\O{N}$ scaling.}
 	\label{fig:fmm_scaling}
 \end{center}
 \end{figure}
@@ -854,8 +854,9 @@ Relaxing the truncation order $p$ in the multipole expansions as Krylov iteratio
 %% Acnowledgements
 %%\textbf{Acknowledgements.}
 \section*{Acknowledgements}
-Dr. Cris Cecka (Harvard University, currently at Nvidia Corp.) contributed greatly to the code used in this research, particularly writing the octree and base evaluator. He later continued developing his fast-multipole framework, which evolved into his FMMTL project; see \href{https://github.com/ccecka/fmmtl}{https://github.com/ccecka/fmmtl}.
-The authors also wish to acknowledge valuable interactions with Dr. Christopher Cooper (Boston University, currently at Universidad T{\'e}cnica Federico Santa Mar{\'i}a) that helped with the implementation of the boundary element method.
+ This work was supported by the National Science Foundation via NSF CAREER award OCI-1149784. LAB also acknowledges support from NVIDIA Corp.\ via the CUDA Fellows Program. 
+Dr. Cris Cecka (previously at Harvard University, currently at Nvidia Corp.) contributed to the development of the code, particularly writing the octree and base evaluator. He later continued developing his fast-multipole framework, which evolved into his FMMTL project; see \href{https://github.com/ccecka/fmmtl}{https://github.com/ccecka/fmmtl}.
+The authors also wish to acknowledge valuable interactions with Dr. Christopher Cooper (previously at Boston University, currently at Universidad T{\'e}cnica Federico Santa Mar{\'i}a) that helped with the implementation of the boundary element method.
 
 
 \section*{References}
