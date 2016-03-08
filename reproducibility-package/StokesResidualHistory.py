@@ -53,7 +53,7 @@ line2, = ax.semilogy(it2,r2,color='k',marker='', ls=':', mfc='w', ms=5, label='R
 # axis labels
 ax.set_ylabel('Residual', fontsize=10)
 ax.set_xlabel('Iteration', fontsize=10)
-ax.legend( (line1, line2), ('Fixed p', 'Relaxed') )
+ax.legend( (line1, line2), ('Fixed p', 'Relaxed'), fontsize='small')
 ax.set_ylim(1e-6, 1e-2)
 fig.subplots_adjust(left=0.195, bottom=0.21, right=0.955, top=0.95)
 canvas = FigureCanvasPdf(fig)

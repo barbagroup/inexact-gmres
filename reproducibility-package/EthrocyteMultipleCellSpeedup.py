@@ -27,9 +27,9 @@ fig = pyplot.figure(figsize=(4,3), dpi=80)
 ax = fig.add_subplot(111)
 
 # plot log-log
-bar1 = ax.bar(ind, speedup[:,0], width, color='r')
-bar2 = ax.bar(ind+width, speedup[:,1],width,color='b')
-bar3 = ax.bar(ind+2*width,speedup[:,2],width,color='g')
+bar1 = ax.bar(ind, speedup[:,0], width, fill=False, edgecolor='k', hatch='..'*2, linewidth=1)
+bar2 = ax.bar(ind+width, speedup[:,1],width,fill=False, edgecolor='k', hatch='//'*2, linewidth=1)
+bar3 = ax.bar(ind+2*width,speedup[:,2],width,fill=False, edgecolor='k', hatch='x'*3, linewidth=1)
 # bar2 = ax.bar(ind+width, speedup_2nd, width, color='b')
 
 # axis labels
@@ -37,7 +37,7 @@ ax.set_ylabel('Speedup', fontsize=10)
 ax.set_xlabel('N', fontsize=10)
 ax.set_xticks(ind+1.5*width)
 ax.set_xticklabels( ('2048','8192','32768','131072') )
-ax.legend( (bar1[0], bar2[0], bar3[0]), ('2048 panels/cell', '8192 panels/cell', '32768 panels/cell'), loc=2 )
+ax.legend( (bar1[0], bar2[0], bar3[0]), ('2048 panels/cell', '8192 panels/cell', '32768 panels/cell'), loc=2, fontsize='small')
 fig.subplots_adjust(left=0.195, bottom=0.21, right=0.955, top=0.95)
 canvas = FigureCanvasPdf(fig)
 

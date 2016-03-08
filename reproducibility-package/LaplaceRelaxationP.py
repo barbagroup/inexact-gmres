@@ -28,8 +28,8 @@ ax = fig.add_subplot(111)
 print(t_relax,t_fixed)
 print(speedup)
 # plot log-log
-bar1 = ax.bar(ind, t_fixed, width, color='r')
-bar2 = ax.bar(ind+width, t_relax, width, color='b')
+bar1 = ax.bar(ind, t_fixed, width, fill=False, edgecolor='k', hatch='..'*2, linewidth=1)
+bar2 = ax.bar(ind+width, t_relax, width, fill=False, edgecolor='k', hatch='/'*4, linewidth=1)
 
 # axis labels
 ax.set_ylabel('Time (s)', fontsize=10)
@@ -37,7 +37,7 @@ ax.set_xlabel('p', fontsize=10)
 ax.set_xticks(ind+width)
 ax.set_xticklabels( ('5','8','10','12','15') )
 fig.subplots_adjust(left=0.195, bottom=0.21, right=0.955, top=0.95)
-ax.legend( (bar1[0], bar2[0]), ('fixed p', 'Relaxed'), loc=2 )
+ax.legend( (bar1[0], bar2[0]), ('fixed p', 'Relaxed'), loc=2, fontsize='small' )
 canvas = FigureCanvasPdf(fig)
 
 # plot to pdf

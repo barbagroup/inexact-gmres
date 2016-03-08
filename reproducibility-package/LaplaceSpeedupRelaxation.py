@@ -58,15 +58,15 @@ speedup_2nd = speedup_2nd[1:]
 ind	= ind[1:]
 
 # plot log-log
-bar1 = ax.bar(ind, speedup_1st, width, color='r')
-bar2 = ax.bar(ind+width, speedup_2nd, width, color='b')
+bar1 = ax.bar(ind, speedup_1st, width, fill=False, edgecolor='k', hatch='..'*2, linewidth=1)
+bar2 = ax.bar(ind+width, speedup_2nd, width, fill=False, edgecolor='k', hatch='/'*3, linewidth=1, alpha=1)
 
 # axis labels
 ax.set_ylabel('Speedup', fontsize=10)
 ax.set_xlabel('N', fontsize=10)
 ax.set_xticks(ind+width)
 ax.set_xticklabels( ('8192','32768','131072') )
-ax.legend( (bar1[0], bar2[0]), ('1st-kind', '2nd-kind'), loc=4, fontsize='small')
+ax.legend( (bar1[0], bar2[0]), ('1st-kind', '2nd-kind'), loc='upper center', fontsize='small')
 fig.subplots_adjust(left=0.185, bottom=0.21, right=0.965, top=0.95)
 canvas = FigureCanvasPdf(fig)
 
