@@ -88,6 +88,12 @@ J.~Van~den Eshof, G.~Sleijpen, Inexact {Krylov} subspace methods for linear
 L.~Greengard, The rapid evaluation of potential fields in particle systems, The
   MIT Press, 1987.
 
+\bibitem{WangLaytonBarba2016-figshare1}
+T.~Wang, S.~K. Layton, L.~A. Barba, Inexact gmres: Fmm scaling, figshare (March
+  20016).
+\newblock \href {http://dx.doi.org/10.6084/m9.figshare.3100816.v1}
+  {\path{doi:10.6084/m9.figshare.3100816.v1}}.
+
 \bibitem{FedosovETal2011}
 D.~A. Fedosov, B.~Caswell, S.~Suresh, G.~E. Karniadakis,
   \href{http://www.pnas.org/content/108/1/35.abstract}{Quantifying the
