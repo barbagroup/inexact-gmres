@@ -602,6 +602,13 @@ Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \g
 \end{center}
 \end{figure}
 
+\begin{figure}%[ht]
+	\centering
+	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSpeedupTolerance.pdf}
+	\caption{Speed-ups for solving a 1st-kind Stokes problem on a sphere discretized with $8,192$ panels, as the \gmres solver's tolerance increases; $p=16$ for all cases. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
+	\label{fig:stokes_tolerance_speedup}
+\end{figure}
+
 \subsection{Application to red blood cells in Stokes flow}
 
 A number of medical applications will benefit from greater understanding of the microflows around red blood cells and of the mechanical effects on the cells from this flow. 
