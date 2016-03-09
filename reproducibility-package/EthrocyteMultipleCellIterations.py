@@ -62,17 +62,19 @@ fig = pyplot.figure(figsize=(7,4), dpi=80)
 ax = fig.add_subplot(111)
 
 # plot log-log
-bar1 = ax.semilogx(N_2048,cells_2048,c='k',marker='o', ls='-', mfc='w', ms=5, label='')
-bar2 = ax.semilogx(N_8192,cells_8192,c='k',marker='o', ls=':', mfc='w', ms=5, label='')
-bar3 = ax.semilogx(N_32768,cells_32768,c='k',marker='o', ls='-.', mfc='w', ms=5, label='')
-bar4 = ax.semilogx(N_2cells,it_2cells,c='r',marker='o', ls='-', mfc='w', ms=5, label='')
-bar5 = ax.semilogx(N_4cells,it_4cells,c='r',marker='o', ls=':', mfc='w', ms=5, label='')
-bar6 = ax.semilogx(N_8cells,it_8cells,c='r',marker='o', ls='-.', mfc='w', ms=5, label='')
+
+bar4 = ax.semilogx(N_2cells,it_2cells,c='k', marker='o', ls=':', mfc='w', ms=6, label='', lw=1)
+bar5 = ax.semilogx(N_4cells,it_4cells,c='k', marker='^', ls=':', mfc='w', ms=7, label='', lw=1)
+bar6 = ax.semilogx(N_8cells,it_8cells,c='k', marker='D', ls=':', mfc='w', ms=5, label='', lw=1)
+
+bar1 = ax.semilogx(N_2048,cells_2048,c='k',marker='x', ls='-', mfc='w', ms=4, label='', lw=1)
+bar2 = ax.semilogx(N_8192,cells_8192,c='k',marker='x', ls='--', mfc='w', ms=4, label='', lw=1)
+bar3 = ax.semilogx(N_32768,cells_32768,c='k', marker='x', ls='-.', mfc='w', ms=4, label='', lw=1)
 
 # axis labels
 ax.set_ylabel('Iterations', fontsize=10)
 ax.set_xlabel('N', fontsize=10)
-ax.legend( (bar1[0],bar2[0],bar3[0],bar4[0],bar5[0],bar6[0]), ('2048 per cell','8192 per cell','32768 per cell','2 cells','4 cells','8cells'),loc=2, fontsize=10)
+ax.legend( (bar1[0],bar2[0],bar3[0],bar4[0],bar5[0],bar6[0]), ('2048 per cell','8192 per cell','32768 per cell','2 cells','4 cells','8 cells'),loc=2, fontsize=10)
 fig.subplots_adjust(left=0.145, bottom=0.21, right=0.915, top=0.95)
 canvas = FigureCanvasPdf(fig)
 
