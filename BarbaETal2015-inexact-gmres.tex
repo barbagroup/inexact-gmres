@@ -416,7 +416,7 @@ To find out the potential speed-up, we compared the time to solution for differe
 \begin{figure}%[h]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceSpeedupRelaxation.pdf}
-	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations. Initial $p=8$, solver tolerance $10^{-5}$. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:relaxation_timing}
 \end{figure}
 
@@ -461,7 +461,7 @@ To find out the potential speed-up, we compared the time to solution for differe
 
 The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation} show a speed-up for the three larger grids---also shown in Figure \ref{fig:relaxation_timing}---of about $1.5\times$ for the 1st-kind integral formulation and $1.1\times$ for the 2nd-kind formulation. These are moderate speedups, but these tests reveal that one has to give up on the idea of partitioning the domain between a near-field and a far-field in a way that balances the time spent computing each one---an accepted idea in \fmm applications. When relaxing the accuracy of the \gmres iterations, the time taken to compute the far field decreases significantly. This means that to minimize time-to-solution when using relaxed \gmres, the near and far fields should not be balanced, but rather the far field should be bloated. As a result, the first few iterations are completely dominated by the time to compute the far field, but this is offset by the benefit of much cheaper iterations from then on. This is a simple but unexpected and counter-intuitive algorithmic consequence of using inexact \gmres with \fmm.
 
-To better evaluate the potential speedup in more general cases, we designed the test in the following two situations: (a) where higher accuracy of \fmm-accelerated mat-vec product is needed (necessitating an initially higher $p$) , and (b) where the linear system demands a greater number of iterations to reach a smaller desired tolerance. 
+To better evaluate the potential speedup in more general cases, we designed tests in the following two situations: (a) where higher accuracy of \fmm-accelerated mat-vec product is needed (necessitating an initially higher $p$) , and (b) where the linear system demands a greater number of iterations to reach a smaller desired tolerance. 
 
 \begin{figure}%[ht]
 	\centering
@@ -492,7 +492,7 @@ Figure \ref{fig:laplace_p_speedup} shows the timings obtained in a situation whe
 \label{tab:laplace_1st_p_relaxation}
 \end{table}%
 
-The final case looks at the situation where the application might demand different tolerances. Keeping the value of $p$ fixed at 10, we ran several cases with $8,192$ panels and a increasingly stricter tolerance. Figure \ref{fig:laplace_tolerance_speedup} and Table \ref{tab:laplace_1st_tolerance_relaxation} show that the relaxed cases experience a speed-up between $1.5\times$ and $2.0\times$ for different desired tolerances and the speed-up peaks at a tolerance of $10^{-6}$. 
+The final case looks at the situation where the application might demand different tolerances. Keeping the value of initial $p$ fixed at 10, we ran several cases with $8,192$ panels and increasingly stricter tolerance. Figure \ref{fig:laplace_tolerance_speedup} and Table \ref{tab:laplace_1st_tolerance_relaxation} show that the relaxed cases experience a speed-up between $1.5\times$ and $2.0\times$ for different desired tolerances and the speed-up peaks at a tolerance of $10^{-6}$. 
 
 
 \begin{figure}%[ht]
@@ -520,7 +520,7 @@ The final case looks at the situation where the application might demand differe
   $10^{-11} $ & 300 & 12.24 & 400 & 17.88 & 1.46 \\
 \end{tabular}
 \end{center}
-\caption{Speed-up of the relaxation strategy on solving a Laplace 1st-kind integral problem on a sphere discretized with $8,192$ panels, with a varying solver's tolerance; $p$ fixed to a value of 10. (Multi-threaded evaluator running on 6 \cpu\ cores.)}
+\caption{Speed-up of the relaxation strategy on solving a Laplace 1st-kind integral problem on a sphere discretized with $8,192$ panels, with a varying solver's tolerance; initial $p$ fixed to a value of 10. (Multi-threaded evaluator running on 6 \cpu\ cores.)}
 \label{tab:laplace_1st_tolerance_relaxation}
 \end{table}%
 
