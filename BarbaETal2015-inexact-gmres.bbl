@@ -130,4 +130,10 @@ E.~Evans, Y.-C. Fung, Improved measurements of the erythrocyte geometry,
 P.~J. Roache, Verification and validation in computational science and
   engineering, Hermosa Albuquerque, 1998.
 
+\bibitem{WangLaytonBarba2016-figshare4}
+T.~Wang, S.~K. Layton, L.~A. Barba, Inexact {GMRES: Red} blood cells, figshare
+  (March 2016).
+\newblock \href {http://dx.doi.org/10.6084/m9.figshare.3100891.v1}
+  {\path{doi:10.6084/m9.figshare.3100891.v1}}.
+
 \end{thebibliography}
