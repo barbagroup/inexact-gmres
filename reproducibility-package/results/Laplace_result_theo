@@ -1,31 +1,24 @@
 LaplaceBEM Convergence - 1st-kind:
-relative error: 3.948e-02
-relative error: 1.437e-02
-relative error: 5.573e-03
-relative error: 3.103e-03
-relative error: 2.450e-03
+relative error: 4.096e-02
+relative error: 1.512e-02
+relative error: 5.335e-03
+relative error: 1.909e-03
+relative error: 7.638e-04
 LaplaceBEM Convergence - 2nd-kind:
-relative error: 1.675e-02
-relative error: 4.217e-03
-relative error: 1.027e-03
-relative error: 2.477e-04
-relative error: 6.392e-05
+relative error: 1.684e-02
+relative error: 4.175e-03
+relative error: 9.987e-04
+relative error: 2.316e-04
+relative error: 5.151e-05
 LaplaceBEM Residual History and required-p:
-it: 001, res: 3.609e-05, fmm_req_p: 8
-it: 002, res: 2.346e-05, fmm_req_p: 4
-it: 003, res: 1.766e-05, fmm_req_p: 4
-it: 004, res: 1.479e-05, fmm_req_p: 3
-it: 005, res: 1.333e-05, fmm_req_p: 3
-it: 006, res: 9.033e-06, fmm_req_p: 3
-it: 007, res: 7.907e-06, fmm_req_p: 3
-it: 008, res: 5.910e-06, fmm_req_p: 3
-it: 009, res: 4.508e-06, fmm_req_p: 2
-it: 010, res: 3.711e-06, fmm_req_p: 2
-it: 011, res: 3.031e-06, fmm_req_p: 2
-it: 012, res: 2.756e-06, fmm_req_p: 2
-it: 013, res: 2.000e-06, fmm_req_p: 2
-it: 014, res: 1.468e-06, fmm_req_p: 1
-it: 015, res: 1.144e-06, fmm_req_p: 1
+it: 001, res: 1.828e-05, fmm_req_p: 12
+it: 002, res: 7.704e-06, fmm_req_p: 3
+it: 003, res: 4.641e-06, fmm_req_p: 3
+it: 004, res: 3.633e-06, fmm_req_p: 2
+it: 005, res: 2.866e-06, fmm_req_p: 2
+it: 006, res: 1.993e-06, fmm_req_p: 2
+it: 007, res: 1.459e-06, fmm_req_p: 1
+it: 008, res: 1.207e-06, fmm_req_p: 1
 LaplaceBEM speedup test - 1st-kind:
 recursions = 5 fixed-p 1st-kind
 	solve : 2.2942e-01s

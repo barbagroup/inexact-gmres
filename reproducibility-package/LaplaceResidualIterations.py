@@ -39,7 +39,7 @@ ax = fig.add_subplot(111)
 
 # plot log-log
 ax.semilogy(ind,r,color='k',marker='', ls='-', mfc='w', ms=5)
-ax.set_xticks(ind[::2])
+ax.set_xticks(ind[::])
 
 ax2 = ax.twinx()
 ax2.plot(ind,p,color='k',marker='o',ls=':', mfc='w', ms=5)
