@@ -11,14 +11,31 @@ relative error: 9.987e-04
 relative error: 2.316e-04
 relative error: 5.151e-05
 LaplaceBEM Residual History and required-p:
-it: 001, res: 1.828e-05, fmm_req_p: 12
-it: 002, res: 7.704e-06, fmm_req_p: 3
-it: 003, res: 4.641e-06, fmm_req_p: 3
-it: 004, res: 3.633e-06, fmm_req_p: 2
-it: 005, res: 2.866e-06, fmm_req_p: 2
-it: 006, res: 1.993e-06, fmm_req_p: 2
-it: 007, res: 1.459e-06, fmm_req_p: 1
-it: 008, res: 1.207e-06, fmm_req_p: 1
+case 1:
+it: 001, res: 4.029e-05, fmm_req_p: 8
+it: 002, res: 2.757e-05, fmm_req_p: 4
+it: 003, res: 2.155e-05, fmm_req_p: 4
+it: 004, res: 1.906e-05, fmm_req_p: 4
+it: 005, res: 1.474e-05, fmm_req_p: 3
+it: 006, res: 9.799e-06, fmm_req_p: 3
+it: 007, res: 8.598e-06, fmm_req_p: 3
+it: 008, res: 6.094e-06, fmm_req_p: 3
+it: 009, res: 4.367e-06, fmm_req_p: 2
+it: 010, res: 3.924e-06, fmm_req_p: 2
+it: 011, res: 3.151e-06, fmm_req_p: 2
+it: 012, res: 2.757e-06, fmm_req_p: 2
+it: 013, res: 1.855e-06, fmm_req_p: 2
+it: 014, res: 1.457e-06, fmm_req_p: 1
+it: 015, res: 1.092e-06, fmm_req_p: 1
+case 2:
+it: 001, res: 1.816e-05, fmm_req_p: 12
+it: 002, res: 7.658e-06, fmm_req_p: 3
+it: 003, res: 4.601e-06, fmm_req_p: 3
+it: 004, res: 3.303e-06, fmm_req_p: 2
+it: 005, res: 2.838e-06, fmm_req_p: 2
+it: 006, res: 1.983e-06, fmm_req_p: 2
+it: 007, res: 1.519e-06, fmm_req_p: 1
+it: 008, res: 1.342e-06, fmm_req_p: 1
 LaplaceBEM speedup test - 1st-kind:
 recursions = 5 fixed-p 1st-kind
 	solve : 2.2942e-01s
