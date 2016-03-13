@@ -411,7 +411,11 @@ But we note that only the far-field evaluation can be sped-up with the relaxatio
 	\label{fig:residualp}
 \end{figure}
 
-To find out the potential speed-up, we compared the time to solution for different cases with and without the relaxation strategy. Using three surface discretizations, we solved the boundary-element problem with 1st- and 2nd-kind formulations to a solver tolerance of $10^{-5}$, using a multi-threaded evaluator on 6 \cpu\ cores. In each case, we were careful to set the value of $\ncrit$ to minimize the time to solution of the particular test case. Figure \ref{fig:relaxation_timing} shows the speed-up in the time spent solving the linear system of equations to the specified tolerance. The detailed results are given in the subsequent Tables.
+To find out the potential speed-up, we compared the time to solution for different cases with and without the relaxation strategy. Using three surface discretizations, we solved the boundary-element problem with 1st- and 2nd-kind formulations, with a multi-threaded evaluator on 6 \cpu\ cores. In each case, we were careful to set the value of $\ncrit$ to minimize the time to solution of the particular test case. 
+The detailed results are given in Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation}.
+Figure \ref{fig:relaxation_timing} shows the speed-up in the time spent solving the linear system of equations to the specified tolerance. 
+As indicated in the caption, we used an initial value of $p=10$ and a solver tolerance of $10^{-6}$.
+We also repeated the experiments with less stringent accuracy settings of $p=8$, and solver tolerance $10^{-5}$. In that case, the speedups are reduced (maximum observed speedup of 2.22 for the 1st-kind formulation), but we decided to show the higher accuracy tests, given the observed degradation of grid-convergence with lower $p$, as seen in Figure \ref{fig:laplaceconvergence}.
 
 
 \begin{figure}%[h]
