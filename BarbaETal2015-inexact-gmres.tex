@@ -430,33 +430,33 @@ To find out the potential speed-up, we compared the time to solution for differe
   N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up \\
  \hline
    & & & & & \\
-  2048 & 400 & 0.25 & 150 & 0.27 & 0.93 \\
-  8192 & 400 & 2.79 & 150 & 1.26 & 2.22 \\
-  32768  & 400 & 7.04 & 150 & 4.90 & 1.44 \\
-  131072  & 400 & 41.66 & 150 & 25.04 & 1.66 \\
+  2048 & 400 & 0.33 & 300 & 0.32 & 1.04 \\
+  8192 & 400 & 4.93 & 175 & 2.32 & 2.13 \\
+  32768  & 400 & 20.32 & 200 & 9.45 & 2.15\\
+  131072  & 400 & 137.84 & 200 & 41.32 & 3.34 \\
  
 \end{tabular}
 \end{center}
-\caption{Speed-ups for the relaxation strategy on a Laplace 1st-kind integral solver, $p=8$, solver tolerance $10^{-5}$.}
+\caption{Speed-ups for the relaxation strategy on a Laplace 1st-kind integral solver, $p=10$, $k=4$, solver tolerance $10^{-6}$.}
 \label{tab:laplace_1st_relaxation}
 \end{table}%
 
 \begin{table}[h]
 \footnotesize
 \begin{center}
-\begin{tabular}{c|cc|cc|c}
-  & \multicolumn{2}{c|}{Non-Relaxed} & \multicolumn{2}{c|}{Relaxed} & \\
-  N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up \\
+\begin{tabular}{c|cc|cc|cc}
+  & \multicolumn{2}{c|}{Non-Relaxed} & \multicolumn{2}{c|}{Relaxed} &  & Number \\
+  N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up & of iterations \\
  \hline
-   & & & & & \\
-  2048 & 400 & 0.16 & 150 & 0.30 & 0.52 \\
-  8192 & 400 & 1.13 & 150 & 1.08 & 1.05 \\
-  32768 & 400 & 4.01 & 150 & 3.60 & 1.11 \\
-  131072 & 400 & 16.64 & 150 & 14.20 & 1.17 \\
+   & & & & & & \\
+  2048 & 400 & 0.15 & 300 & 0.14 & 1.02 & 3 \\
+  8192 & 400 & 2.10 & 300 & 1.55 & 1.35 & 3 \\
+  32768 & 400 & 7.45 & 200 & 5.76 & 1.29 & 2 \\
+  131072 & 400 & 23.63 & 200 & 21.32 & 1.11 & 2\\
  
 \end{tabular}
 \end{center}
-\caption{Speed-ups for the relaxation strategy on a Laplace 2nd-kind integral solver, $p=8$, solver tolerance  $10^{-5}$.}
+\caption{Speed-ups for the relaxation strategy on a Laplace 2nd-kind integral solver, $p=10$, $k=4$, solver tolerance  $10^{-6}$.}
 \label{tab:laplace_2nd_relaxation}
 \end{table}%
 

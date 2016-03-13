@@ -66,7 +66,7 @@ ax.set_ylabel('Speedup', fontsize=10)
 ax.set_xlabel('N', fontsize=10)
 ax.set_xticks(ind+width)
 ax.set_xticklabels( ('8192','32768','131072') )
-ax.legend( (bar1[0], bar2[0]), ('1st-kind', '2nd-kind'), loc='upper center', fontsize='small')
+ax.legend( (bar1[0], bar2[0]), ('1st-kind', '2nd-kind'), loc='upper left', fontsize='small')
 fig.subplots_adjust(left=0.185, bottom=0.21, right=0.965, top=0.95)
 canvas = FigureCanvasPdf(fig)
 
