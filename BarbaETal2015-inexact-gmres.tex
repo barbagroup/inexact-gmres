@@ -396,7 +396,7 @@ This convergence analysis gives confidence in our \bem code, the singular/near-s
 \begin{figure}[t]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceConvergence.pdf}
-	\caption{Convergence of 1st-kind (solid line) and 2nd-kind (dotted line) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vector products, with parameters: $\theta_{\text{MAC}} = 0.5$, $p=12$, $k=4$ and solver tolerance of $10^{-6}$ (no relaxation). For the 1st-kind formulation, we also used $p=10$ (thinner solid line) to show a slight degradation of grid-convergence with lower $p$. The vertical axis is the normalized $L^2$-norm of the relative error with respect to the analytical solution for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{Convergence of 1st-kind (solid line) and 2nd-kind (dotted line) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vector products, with parameters: $\theta_{\text{MAC}} = 0.5$, $p=12$, $k=4$ and solver tolerance of $10^{-6}$ (no relaxation). For the 1st-kind formulation, we also used $p=10$ (thinner solid line) to show a slight degradation of grid-convergence with lower $p$. The vertical axis is the $L^2$-norm of the relative error with respect to the analytical solution for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:laplaceconvergence}
 \end{center}
 \end{figure}
