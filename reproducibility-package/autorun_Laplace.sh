@@ -15,21 +15,21 @@ OUT='Laplace_result'
 # remove the existing result file
 rm -f $OUT
 
-# Fig-5 Convergence: 1st-kind problem: p = 10, solver_tol = 1e-6, no relaxation 
+# Fig-5 Convergence: 1st-kind problem: p = 12, solver_tol = 1e-6, no relaxation 
 printf "LaplaceBEM Convergence - 1st-kind:\n" >> $OUT
 for i in {3..7}
 do eval $DIR$kernel -p 12 -fixed_p -k 4 -ncrit 400 -solver_tol 1e-6 -recursions $i | grep -i relative >> $OUT
 done
 printf ">>>LaplaceBEM convergence test for the 1st-kind problem completed!\n"
 
-# Fig-5 Convergence: 2nd-kind problem: p = 10, solver_tol = 1e-6, no relaxation
+# Fig-5 Convergence: 2nd-kind problem: p = 12, solver_tol = 1e-6, no relaxation
 printf "LaplaceBEM Convergence - 2nd-kind:\n" >> $OUT
 for i in {3..7}
 do eval $DIR$kernel -p 10 -fixed_p -k 4 -ncrit 400 -solver_tol 1e-6 -recursions $i -second_kind | grep -i relative >> $OUT
 done
 printf ">>>LaplaceBEM convergence test for the 2nd-kind problem completed!\n"
 
-# Fig-6 Residual & required-p: 1st-kind problem: N = 32768, solver_tol = 1e-5, with relaxation
+# Fig-6 Residual & required-p: 1st-kind problem: N = 32768, solver_tol = 1e-6, with relaxation
 printf "LaplaceBEM Residual History and required-p:\n" >> $OUT
 printf "case 1:\n" >> $OUT
 eval $DIR$kerne -p 8 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
@@ -38,6 +38,7 @@ eval $DIR$kerne -p 12 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i f
 printf ">>>LaplaceBEM residual history test completed!\n"
 
 # Fig-7 Table-1 Speedup 1st-kind:
+# set optimal ncrits
 read ncrit_r_set[{5..8}] <<< $(echo 300 175 200 200)
 printf "LaplaceBEM speedup test - 1st-kind:\n" >> $OUT
 for i in {5..8}
@@ -49,12 +50,13 @@ do
 
 	printf "recursions = $i relaxed 1st-kind\n" >> $OUT
 	for j in {1..3}
-	do eval $DIR$kernel -p 8 -k 4 -recursions $i -ncrit ${ncrit_r_set[$i]} -solver_tol 1e-6 | grep -i "solve " >> $OUT
+	do eval $DIR$kernel -p 10 -k 4 -recursions $i -ncrit ${ncrit_r_set[$i]} -solver_tol 1e-6 | grep -i "solve " >> $OUT
 	done
 done
 printf ">>>LaplaceBEM speedup test for the 1st-kind problem completed!\n"
 
 # Fig-7 Table-2 Speedup 2nd-kind:
+# set optimal ncrits
 read ncrit_r_set[{5..8}] <<< $(echo 300 300 200 200)
 printf "LaplaceBEM speedup test - 2nd-kind:\n" >> $OUT
 for i in {5..8}
@@ -66,7 +68,7 @@ do
 
 	printf "recursions = $i relaxed 2nd-kind\n" >> $OUT
 	for j in {1..3}
-	do eval $DIR$kernel -p 8 -k 4 -recursions $i -ncrit ${ncrit_r_set[$i]} -second_kind -solver_tol 1e-6 | grep -i "solve " >> $OUT
+	do eval $DIR$kernel -p 10 -k 4 -recursions $i -ncrit ${ncrit_r_set[$i]} -second_kind -solver_tol 1e-6 | grep -i "solve " >> $OUT
 	done
 done
 printf ">>>LaplaceBEM speedup test for the 2nd-kind problem completed!\n"
