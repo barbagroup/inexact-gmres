@@ -25,7 +25,7 @@ printf ">>>LaplaceBEM convergence test for the 1st-kind problem completed!\n"
 # Fig-5 Convergence: 2nd-kind problem: p = 12, solver_tol = 1e-6, no relaxation
 printf "LaplaceBEM Convergence - 2nd-kind:\n" >> $OUT
 for i in {3..7}
-do eval $DIR$kernel -p 10 -fixed_p -k 4 -ncrit 400 -solver_tol 1e-6 -recursions $i -second_kind | grep -i relative >> $OUT
+do eval $DIR$kernel -p 12 -fixed_p -k 4 -ncrit 400 -solver_tol 1e-6 -recursions $i -second_kind | grep -i relative >> $OUT
 done
 printf ">>>LaplaceBEM convergence test for the 2nd-kind problem completed!\n"
 
