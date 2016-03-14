@@ -32,9 +32,9 @@ printf ">>>LaplaceBEM convergence test for the 2nd-kind problem completed!\n"
 # Fig-6 Residual & required-p: 1st-kind problem: N = 32768, solver_tol = 1e-6, with relaxation
 printf "LaplaceBEM Residual History and required-p:\n" >> $OUT
 printf "case 1:\n" >> $OUT
-eval $DIR$kerne -p 8 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
+eval $DIR$kernel -p 8 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
 printf "case 2:\n" >> $OUT
-eval $DIR$kerne -p 12 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
+eval $DIR$kernel -p 12 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
 printf ">>>LaplaceBEM residual history test completed!\n"
 
 # Fig-7 Table-1 Speedup 1st-kind:
