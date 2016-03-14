@@ -1,0 +1,202 @@
+LaplaceBEM Convergence - 1st-kind:
+relative error: 4.096e-02
+relative error: 1.512e-02
+relative error: 5.335e-03
+relative error: 1.909e-03
+relative error: 7.638e-04
+LaplaceBEM Convergence - 2nd-kind:
+relative error: 1.684e-02
+relative error: 4.175e-03
+relative error: 9.987e-04
+relative error: 2.316e-04
+relative error: 5.151e-05
+LaplaceBEM Residual History and required-p:
+case 1:
+it: 001, res: 4.029e-05, fmm_req_p: 8
+it: 002, res: 2.757e-05, fmm_req_p: 4
+it: 003, res: 2.155e-05, fmm_req_p: 4
+it: 004, res: 1.906e-05, fmm_req_p: 4
+it: 005, res: 1.474e-05, fmm_req_p: 3
+it: 006, res: 9.799e-06, fmm_req_p: 3
+it: 007, res: 8.598e-06, fmm_req_p: 3
+it: 008, res: 6.094e-06, fmm_req_p: 3
+it: 009, res: 4.367e-06, fmm_req_p: 2
+it: 010, res: 3.924e-06, fmm_req_p: 2
+it: 011, res: 3.151e-06, fmm_req_p: 2
+it: 012, res: 2.757e-06, fmm_req_p: 2
+it: 013, res: 1.855e-06, fmm_req_p: 2
+it: 014, res: 1.457e-06, fmm_req_p: 1
+it: 015, res: 1.092e-06, fmm_req_p: 1
+case 2:
+it: 001, res: 1.816e-05, fmm_req_p: 12
+it: 002, res: 7.658e-06, fmm_req_p: 3
+it: 003, res: 4.601e-06, fmm_req_p: 3
+it: 004, res: 3.303e-06, fmm_req_p: 2
+it: 005, res: 2.838e-06, fmm_req_p: 2
+it: 006, res: 1.983e-06, fmm_req_p: 2
+it: 007, res: 1.519e-06, fmm_req_p: 1
+it: 008, res: 1.342e-06, fmm_req_p: 1
+LaplaceBEM speedup test - 1st-kind:
+recursions = 5 fixed-p 1st-kind
+	solve : 3.2938e-01s
+	solve : 3.3093e-01s
+	solve : 3.3108e-01s
+recursions = 5 relaxed 1st-kind
+	solve : 3.1851e-01s
+	solve : 3.1621e-01s
+	solve : 3.1602e-01s
+recursions = 6 fixed-p 1st-kind
+	solve : 4.8103e+00s
+	solve : 5.2827e+00s
+	solve : 4.7035e+00s
+recursions = 6 relaxed 1st-kind
+	solve : 2.1803e+00s
+	solve : 2.3069e+00s
+	solve : 2.4698e+00s
+recursions = 7 fixed-p 1st-kind
+	solve : 2.0044e+01s
+	solve : 1.9919e+01s
+	solve : 2.0987e+01s
+recursions = 7 relaxed 1st-kind
+	solve : 9.4594e+00s
+	solve : 9.4135e+00s
+	solve : 9.4856e+00s
+recursions = 8 fixed-p 1st-kind
+	solve : 1.3493e+02s
+	solve : 1.3843e+02s
+	solve : 1.4016e+02s
+recursions = 8 relaxed 1st-kind
+	solve : 3.9714e+01s
+	solve : 4.1714e+01s
+	solve : 4.2534e+01s
+LaplaceBEM speedup test - 2nd-kind:
+recursions = 5 fixed-p 2nd-kind
+	solve : 1.4655e-01s
+	solve : 1.4474e-01s
+	solve : 1.4502e-01s
+recursions = 5 relaxed 2nd-kind
+	solve : 1.4155e-01s
+	solve : 1.4328e-01s
+	solve : 1.4282e-01s
+recursions = 6 fixed-p 2nd-kind
+	solve : 2.0837e+00s
+	solve : 2.0522e+00s
+	solve : 2.1543e+00s
+recursions = 6 relaxed 2nd-kind
+	solve : 1.5609e+00s
+	solve : 1.5891e+00s
+	solve : 1.5006e+00s
+recursions = 7 fixed-p 2nd-kind
+	solve : 7.4488e+00s
+	solve : 7.4397e+00s
+	solve : 7.4561e+00s
+recursions = 7 relaxed 2nd-kind
+	solve : 5.6887e+00s
+	solve : 5.9071e+00s
+	solve : 5.6971e+00s
+recursions = 8 fixed-p 2nd-kind
+	solve : 2.3456e+01s
+	solve : 2.3621e+01s
+	solve : 2.3812e+01s
+recursions = 8 relaxed 2nd-kind
+	solve : 2.1114e+01s
+	solve : 2.1821e+01s
+	solve : 2.1023e+01s
+LaplaceBEM speedup test with an increasing p_intial:
+p=5, fixed-p 1st-kind:
+	solve : 7.6792e+00s
+	solve : 7.4993e+00s
+	solve : 7.6562e+00s
+p=5, relaxed-p 1st-kind:
+	solve : 4.7439e+00s
+	solve : 4.8529e+00s
+	solve : 5.9246e+00s
+p=8, fixed-p 1st-kind:
+	solve : 1.3149e+01s
+	solve : 1.3658e+01s
+	solve : 1.3069e+01s
+p=8, relaxed-p 1st-kind:
+	solve : 7.2632e+00s
+	solve : 7.5739e+00s
+	solve : 7.0637e+00s
+p=10, fixed-p 1st-kind:
+	solve : 1.9806e+01s
+	solve : 2.0578e+01s
+	solve : 2.0144e+01s
+p=10, relaxed-p 1st-kind:
+	solve : 9.6791e+00s
+	solve : 1.0173e+01s
+	solve : 9.2892e+00s
+p=12, fixed-p 1st-kind:
+	solve : 2.5124e+01s
+	solve : 2.4971e+01s
+	solve : 2.4848e+01s
+p=12, relaxed-p 1st-kind:
+	solve : 1.3561e+01s
+	solve : 1.3990e+01s
+	solve : 1.3673e+01s
+p=15, fixed-p 1st-kind:
+	solve : 3.8191e+01s
+	solve : 3.6733e+01s
+	solve : 3.6683e+01s
+p=15, relaxed-p 1st-kind:
+	solve : 2.3925e+01s
+	solve : 2.2059e+01s
+	solve : 2.3076e+01s
+LaplaceBEM speedup test with various tolerances:
+tol=1e-5, fixed-p:
+	solve : 2.7471e+00s
+	solve : 3.0509e+00s
+	solve : 2.8254e+00s
+tol=1e-5, relaxed-p:
+	solve : 1.5185e+00s
+	solve : 1.8673e+00s
+	solve : 1.6504e+00s
+tol=1e-6, fixed-p:
+	solve : 4.4559e+00s
+	solve : 4.5356e+00s
+	solve : 4.7808e+00s
+tol=1e-6, relaxed-p:
+	solve : 2.6001e+00s
+	solve : 2.4735e+00s
+	solve : 2.7787e+00s
+tol=1e-7, fixed-p:
+	solve : 7.3871e+00s
+	solve : 6.7984e+00s
+	solve : 7.2569e+00s
+tol=1e-7, relaxed-p:
+	solve : 3.8016e+00s
+	solve : 4.0750e+00s
+	solve : 3.9635e+00s
+tol=1e-8, fixed-p:
+	solve : 8.7471e+00s
+	solve : 1.1360e+01s
+	solve : 9.2684e+00s
+tol=1e-8, relaxed-p:
+	solve : 5.7878e+00s
+	solve : 5.5295e+00s
+	solve : 5.6878e+00s
+tol=1e-9, fixed-p:
+	solve : 1.1404e+01s
+	solve : 1.1754e+01s
+	solve : 1.1398e+01s
+tol=1e-9, relaxed-p:
+	solve : 8.0696e+00s
+	solve : 7.9147e+00s
+	solve : 7.2896e+00s
+tol=1e-10, fixed-p:
+	solve : 1.3768e+01s
+	solve : 1.4435e+01s
+	solve : 1.3998e+01s
+tol=1e-10, relaxed-p:
+	solve : 1.0096e+01s
+	solve : 9.9997e+00s
+	solve : 1.0469e+01s
+tol=1e-11, fixed-p:
+	solve : 1.5720e+01s
+	solve : 1.5992e+01s
+	solve : 1.5269e+01s
+tol=1e-11, relaxed-p:
+	solve : 1.1945e+01s
+	solve : 1.1790e+01s
+	solve : 1.1910e+01s

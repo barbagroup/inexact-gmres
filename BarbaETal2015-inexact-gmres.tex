@@ -1,11 +1,15 @@
-%% Manuscript for submission to SIAM 
-\documentclass[final,leqno,]{siamltex1213}
-% options that require additional .clo file:  
-% onetabnum: to number equations consecutively with a single digit, instead of using the section number
-% onetabnum: numbers tables consecutively throughout the paper
-% onefignum: numbers figures consecutively throughout the paper
+%% Manuscript for submission to Elsevier
+%% \documentclass[preprint,review,12pt]{elsarticle} 
+%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn 
+%% for a journal layout: 
+%% \documentclass[final,1p,times]{elsarticle} 
+%% \documentclass[final,1p,times,twocolumn]{elsarticle} 
+%% \documentclass[final,3p,times]{elsarticle} 
+%%\documentclass[final,3p,times,twocolumn]{elsarticle} 
+%% \documentclass[final,5p,times]{elsarticle} 
+\documentclass[final,3p,times]{elsarticle}
 
-\usepackage[text={6in,8in},centering]{geometry} % load first
+%\usepackage[text={6in,8in},centering]{geometry} % load first
 
 \usepackage{algorithm}
 \usepackage{algorithmicx}
@@ -19,16 +23,9 @@
 \usepackage{textcomp}
 \usepackage{xspace}
 
-%% The SIAM class file is loading these packages like this:
-%\RequirePackage[dvips]{graphics,graphicx}
-%\RequirePackage[colorlinks,pdfmark,dvips]{hyperref}
-
 %% I don't want to use dvips so let's load them again
 \usepackage{graphicx}
 \usepackage[pdftex]{hyperref}
-
-
-\graphicspath{{figs/}} %  PATH to figure files-- change to ./ for submission
 
 % CUSTOM COMMAND DEFINITIONS
 \newcommand{\R}{\mathbb{R}}
@@ -94,36 +91,74 @@
 \newcommand{\dyad}[2]{#1 \otimes #2}
 
 
+\graphicspath{{figs/}} %  PATH to figure files-- change to ./ for submission
 
 
-
-
-
-\title{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES WITH FAST-MULTIPOLE BOUNDARY ELEMENT METHOD\thanks{This work was partially supported by the National Science Foundation under award ACI-1149784.}} 
-
-\author{Simon K. Layton\thanks{Department of Mechanical Engineering, Boston University, Boston, MA 02215 (\email{slayton@bu.edu}); currently at Nvidia, Corp., Santa Clara, CA.}
-\and Lorena A. Barba\thanks{Department of Mechanical and Aerospace Engineering, The George Washington University, Washington DC, 20052 
-(\email{labarba@gwu.edu}).}}
-
-
+%\journal{Computer Methods in Applied Mechanics and Engineering}
 
 \begin{document}
-\maketitle
-%\slugger{sisc}{xxxx}{xx}{x}{x--x}
-%slugger should be set to mms, siap, sicomp, sicon, sidma, sima, simax, sinum, siopt, sisc, or sirev
+
+\begin{frontmatter}
+
+%% Title, authors and addresses
+
+%% use the tnoteref command within \title for footnotes;
+%% use the tnotetext command for the associated footnote;
+%% use the fnref command within \author or \address for footnotes;
+%% use the fntext command for the associated footnote;
+%% use the corref command within \author for corresponding author footnotes;
+%% use the cortext command for the associated footnote;
+%% use the ead command for the email address,
+%% and the form \ead[url] for the home page:
+%%
+%% \title{Title\tnoteref{label1}}
+%% \tnotetext[label1]{}
+%% \author{Name\corref{cor1}\fnref{label2}}
+%% \ead{email address}
+%% \ead[url]{home page}
+%% \fntext[label2]{}
+%% \cortext[cor1]{}
+%% \address{Address\fnref{label3}}
+%% \fntext[label3]{}
+
+\title{Inexact Krylov iterations and relaxation strategies with fast-multipole boundary element method\tnoteref{t1}}
+\tnotetext[t1]{This work was partially supported by the National Science Foundation under award ACI-1149784.}
+
+
+\author[gwu]{Tingyu Wang}
+\ead{twang66@gwu.edu}
+
+\author[bu,nvidia]{Simon K. Layton\fnref{fn1}}
+\ead{slayton@bu.edu}
+
+\author[gwu]{Lorena A. Barba}
+\ead{labarba@gwu.edu}
+
+\fntext[fn1]{Currently at Nvidia, Corp.}
+
+\address[gwu]{Department of Mechanical and Aerospace Engineering, The George Washington University, Washington DC, 20052}
+\address[bu]{Department of Mechanical Engineering, Boston University, Boston, MA, 02215}
+\address[nvidia]{Nvidia, Corp., Santa Clara, CA}
+
+
 
 \begin{abstract}
-Boundary element methods produce dense linear systems that can be accelerated via multipole expansions. Solved with Krylov methods, this implies computing the matrix-vector products within each iteration with some error, at an accuracy controlled by the order of the expansion, $p$. We take advantage of a unique property of Krylov iterations that allow lower accuracy of the matrix-vector products as convergence proceeds, and propose a relaxation strategy based on progressively decreasing $p$. Via extensive numerical tests, we show that the relaxed Krylov iterations converge with speed-ups of between $2\times$ and $4\times$ for Laplace problems and between $3.5\times$ and $4.5\times$ for Stokes problems. We include an application to Stokes flow around red blood cells, computing with up to 64 cells and problem size up to 131k boundary elements and nearly 400k unknowns. The study was done with an in-house multi-threaded C++ code, on a quad-core CPU. 
+Boundary element methods produce dense linear systems that can be accelerated via multipole expansions. Solved with Krylov methods, this implies computing the matrix-vector products within each iteration with some error, at an accuracy controlled by the order of the expansion, $p$. We take advantage of a unique property of Krylov iterations that allow lower accuracy of the matrix-vector products as convergence proceeds, and propose a relaxation strategy based on progressively decreasing $p$. In extensive numerical tests of the relaxed Krylov iterations, we obtained speed-ups of between $2.1\times$ and $3.3\times$ for Laplace problems and between $1.7\times$ and $4.0\times$ for Stokes problems. We include an application to Stokes flow around red blood cells, computing with up to 64 cells and problem size up to 131k boundary elements and nearly 400k unknowns. The study was done with an in-house multi-threaded C++ code, on a hexa-core CPU. The code is available on its version-control repository, \href{https://github.com/barbagroup/fmm-bem-relaxed}{https://github.com/barbagroup/fmm-bem-relaxed}.
 \end{abstract}
 
-\begin{keywords}Laplace equation, Stokes equation, boundary integral equation, boundary element method, fast multipole method, iterative solvers, Krylov methods, Stokes flow\end{keywords}
+\begin{keyword}
+Laplace equation \sep Stokes equation \sep boundary integral equation \sep boundary element method \sep fast multipole method \sep iterative solvers \sep Krylov methods \sep Stokes flow
 
-\begin{AMS}35Q35, 35Q99, 45B05, 76D07, 76Z99\end{AMS}
+\end{keyword}
+
+\end{frontmatter}
+
+%\begin{AMS}35Q35, 35Q99, 45B05, 76D07, 76Z99\end{AMS}
 
 
-\pagestyle{myheadings}
-\thispagestyle{plain}
-\markboth{S. K. Layton and L. A. Barba}{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES}
+%\pagestyle{myheadings}
+%\thispagestyle{plain}
+%\markboth{S. K. Layton and L. A. Barba}{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES}
 
 \section{Introduction}
 
@@ -194,7 +229,7 @@ The Stokes equation for a flow at very low Reynolds number, $\mu\nabla^{2}\vect{
 	\label{eqn:stresslet}
 	T_{ijk}(\vect{x},\vect{y},\nhat)  =  6\frac{(x_i-y_i)(x_j-y_j)(x_k-y_k)n_k}{r^{5}} \end{equation}
 
-Indices $i, j, k$ denote here the Cartesian-tensor components and $\delta_{ij}$ is the Kr{\"o}necker delta. Discretizing the boundary with $N$ surface panels results in sums that we now number with the index $J$.
+Indices $i, j, k$ denote here the Cartesian-tensor components and $\delta_{ij}$ is the Kronecker delta. Discretizing the boundary with $N$ surface panels results in sums that we now number with the index $J$.
 The discretized form with constant surface panels becomes
 %
 \begin{equation}
@@ -207,8 +242,7 @@ The discretized form with constant surface panels becomes
 
 The boundary integral formulations all demand that we compute integrals of the type $\int_{\Gamma} \K_{ij}\;\di{\Gamma_j}$, where $\K_{ij}=\K(\vect{x}_j-\vect{x}_i)$ is the kernel, the point $\vect{x}_j$ is on the panel surface $\Gamma_j$ and the point $\vect{x}_i$ is a target or evaluation point. Because the kernel $\K$ is often singular, we need specific approaches depending on the distance $\vect{x}_j-\vect{x}_i$. Where the target point is far enough from the surface $\Gamma_j$, simple quadrature with a few Gauss points will suffice. As the target point \emph{nears} the source panel (with the definition of ``near'' to be determined), we need high-accuracy quadrature. Finally, in the case where the target point is on the source panel, the integral is (close to) singular and we must use analytical or semi-analytical methods. Figure \ref{fig:integration_domain} illustrates the three situations.
 
-% This image went off the page and I had to hack an \hspace{-4cm} before the \includegraphics and add a \clearspace after the figure for the graphic to not go out of the text margins --- this was a problem when using the hyperref package as loaded in the SIAM class file. 
-% As a better solution, but still a hack, I commented out the RequirePackage lines that loaded hyperref and graphicx using dvips in the class file, and loaded them in the preamble here. 
+
 \begin{figure}[t]
 	\begin{centering}
 \includegraphics[natwidth=5.15in,natheight=2.6in,width=0.45\textwidth]{IntegrationDomain.pdf}
@@ -216,7 +250,7 @@ The boundary integral formulations all demand that we compute integrals of the t
 	\label{fig:integration_domain}
 	\end{centering}
 \end{figure}
-%\clearpage % had to hack this in to get the graphic within the text margins when using the unmodified SIAM class file
+
 
 
 Applying Gauss quadrature to the integrals appearing in the coefficients of the boundary element discretization of the Laplace equation, \eqref{eqn:laplace_bem_G} and \eqref{eqn:laplace_bem_dGdn}, for example, gives
@@ -229,7 +263,7 @@ Applying Gauss quadrature to the integrals appearing in the coefficients of the 
 \end{eqnarray}
 
 \noindent
-with $q_k$ the area-normalized Gauss quadrature weights and $S_j$ the surface area of panel $\Gamma_j$. To control the accuracy of the numerical integration, we vary the number of quadrature points, using for example $K< 4$ for targets that are far from the source panel and $K\approx 20$ for near-singular situations. 
+with $q_k$ the area-normalized Gauss quadrature weights and $S_j$ the surface area of panel $\Gamma_j$. To control the accuracy of the numerical integration, we vary the number of quadrature points, using for example $K= 4$ for targets that are far from the source panel and $K\approx 20$ for near-singular situations. 
 The near-singular region is within a distance of $2\sqrt{2 S_j}$, a criterion that we settled on after  testing with several choices using a panel's characteristic length scale as factor.
 When the target point is on the source panel, the standard approach is to use analytical or semi-analytical methods for the singular and hyper-singular integrals over the panels.
 For the Laplace equation, we used a semi-analytical method. 
@@ -240,7 +274,7 @@ We obtained the analytic integrals for the Stokes equation from Fata's formulas 
 \subsection{Krylov subspace methods}
 
 For large linear systems of equations $A\vect{x}=\vect{b}$, direct solution is generally impractical and iterative solution methods are preferred. Krylov subspace methods derive from the Cayley-Hamilton theorem, which states that you can express the inverse of a  matrix $A$ as a linear combination of its powers. A Krylov subspace is spanned by the products of $b$ and powers of $A$; to order-$r$, this is: $K_{r}(A,b) = \text{span}\{ b, Ab, A^{2}b, ..., A^{r-1}b\}$.
-Krylov methods include the conjugate gradient method, the biconjugate gradient stabilized method (\textsc{bicgstab}) and the generalized minimal residual method, \gmres \cite{SaadSchultz1986}, which we use. We list the pseudocode of a right-preconditioned {\gmres} algorithm in the Appendix as Algorithm \ref{alg:gmres}. The greatest cost per iteration is the matrix-vector product (mat-vec), $w\gets A\cdot z_j$, taking $\O{N^{2}}$ time in a direct implementation. However, given the structure of the coefficient matrix in boundary element methods, this operation can be reduced to $\O{N}$ time using, for example, the fast multipole method.
+Krylov methods include the conjugate gradient method, the biconjugate gradient stabilized method (\textsc{bicgstab}) and the generalized minimal residual method, \gmres \cite{SaadSchultz1986}, which we use. The greatest cost per iteration is the matrix-vector product (mat-vec), $w\gets A\cdot z_j$, taking $\O{N^{2}}$ time in a direct implementation. However, given the structure of the coefficient matrix in boundary element methods, this operation can be reduced to $\O{N}$ time using, for example, the fast multipole method.
 The key is understanding the matrix-vector product as an $N$-body problem. Let's consider the first-kind integral problem for the Laplace equation. In \eqref{eqn:laplace_matrix} we see that the matrix coefficients are $\int_{\Gamma} G_{ij}\,\di{\Gamma_j}$. Applying Gauss quadrature to obtain the coefficients gives \eqref{eqn:gauss:1st-kind}. Thus, the matrix-vector product gives the following  for row $i$
 %
 \begin{equation}\label{eqn:matvec-onerow}
@@ -318,7 +352,7 @@ In the fast multipole method, we have error bounds available for the approximati
 	\left | \phi(r, \theta, \phi) - \sum_{n=0}^{p}\sum_{m=-n}^{n}\frac{M^{m}_{n}}{r^{n+1}}\cdot Y^{m}_{n}(\theta, \phi) \right | \leq \frac{\sum_{i=1}^{N}q_{i}}{r-a}\left ( \frac{a}{r} \right )^{p+1},
 \end{equation}
 
-\noindent where $a$ isthe  cluster radius and $r$ is the distance between the multipole center and the target. The above inequality is given in Ref. \cite[p.~55]{greengard1987} with label (3.37), and proved using the triangle inequality. This reference also gives similar bounds for the translation and evaluation operators. In the particular case that $r/a\geq 2$ (the distance between a multipole center and target is at least twice the cluster radius), the number of terms needed to obtain a given accuracy $\varepsilon$ is 
+\noindent where $a$ isthe  cluster radius and $r$ is the distance between the multipole center and the target. The above inequality is given in Ref. \cite[p.~55]{greengard1987} with label (3.38), and proved using the triangle inequality. This reference also gives similar bounds for the translation and evaluation operators. In the particular case that $r/a\geq 2$ (the distance between a multipole center and target is at least twice the cluster radius), the number of terms needed to obtain a given accuracy $\varepsilon$ is 
 
 \begin{equation}\label{eqn:fmm_p}
 	p \sim \lceil -\log_{2}(\varepsilon) \rceil.
@@ -330,29 +364,30 @@ Although the \fmm error bounds are known to be rather loose, we use this approac
 
 %$ RESULTS
 \section{Results and discussion}
-We present numerical experiments with \bem\ solutions for the Laplace and Stokes equations, including an application to Stokes flow around red blood cells. The \bem\ is accelerated with a fast multipole method using spherical expansions, implemented in an in-house code designed to use boundary elements (panels) as the sources and targets and written in multi-threaded \cpp. We ran all our tests on a lab workstation with quad-core Intel Core i7 \cpu s. Using a test with the Laplace kernel, we confirmed that our \fmm\ code scales as $\O{N}$ by timing several runs with increasing problem size; see Figure \ref{fig:fmm_scaling}.
+Our results include numerical experiments with \bem\ solutions for the Laplace and Stokes equations, including an application to Stokes flow around red blood cells. The \bem\ solver is accelerated with a fast multipole method using spherical expansions, implemented in a code designed to use boundary elements (panels) as the sources and targets, and written in multi-threaded \cpp. To facilitate reproducibility of our research, the code is made available via its version-control repository,\footnote{\href{https://github.com/barbagroup/fmm-bem-relaxed}{https://github.com/barbagroup/fmm-bem-relaxed}} under an MIT license. The paper manuscript is also available via its repository,\footnote{\href{https://github.com/barbagroup/inexact-gmres}{https://github.com/barbagroup/inexact-gmres}} which includes running scripts and plotting scripts to produce the included figures (see each figure caption for details).
+We ran all our tests on a lab workstation with an Intel Core i7-5930K hexa-core processor and 32GB RAM. Using a test with the Laplace kernel, we confirmed that our \fmm\ code scales as $\O{N}$ by timing several runs with increasing problem size; see Figure \ref{fig:fmm_scaling}. We also found that the preconditioned cases take fewer iterations but more time to converge than the unpreconditioned ones, because the residuals after the first several iterations in the preconditioned cases are greater. For an inexact {\gmres} iteration, a bigger residual leads to a higher required $p$, which offsets the benefit of using fewer iterations. Therefore, we performed these tests without preconditioning.
 The subsequent experiments investigate the use of a Krylov relaxation strategy by reducing the order of multipole expansions, $p$, as the iterations progress to convergence, determining the speed-up provided by such a strategy for different scenarios and problem sizes.
 
 \begin{figure}[h]
 \begin{center}
 	\includegraphics[width=0.5 \textwidth]{FMMScaling.pdf}
-	\caption{Scaling of our in-house \fmm\ code with respect to problem size $N$, using a Laplace kernel with spherical expansions, $p=5$ and  $\ncrit = 126$. The tests ran on a lab workstation using four \cpu\ threads.}
+	\caption{Scaling of the \fmm\ code with respect to problem size $N$, using a Laplace kernel with spherical expansions, $p=5$ and  $\ncrit = 126$. The tests ran on a lab workstation using six \cpu\ threads. The dotted line shows the expected $\O{N}$ scaling. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare1}.}
 	\label{fig:fmm_scaling}
 \end{center}
 \end{figure}
 
 \subsection{Inexact {\small GMRES} for the solution of the Laplace equation}
 \label{sec:inexactLaplace}
-To start, we studied grid convergence comparing numerical results with the analytical solution using a sphere with constant potential and charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. To make surface triangulations of a sphere with increasing refinement, we started with an 8-triangle closed surface, then split recursively each triangle into four smaller ones. Figure \ref{fig:glob_spheres} shows two example discretizations. We solved the boundary-element problem by collocation in both the first-kind and second-kind integral formulations, using a standard right-preconditioned \gmres with fast-multipole-accelerated mat-vecs and the semi-analytical integrals for the singular terms. For the far-field approximations, we used spherical-harmonic expansions with the following parameters in the \fmm: $\theta_{\text{MAC}} = 0.5$, $p = 10$, and a tolerance of $10^{-6}$ in the iterative solver. 
-Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both first-kind and second-kind formulations of the boundary element method on a sphere. They display the expected orders of convergence for boundary element methods: slightly faster than $\O{1/\sqrt{N}}$ in the 1st-kind formulation and $\O{1/N}$ for the 2nd-kind formulation. This gives confidence in our \bem code, the singular/near-singular integral calculations, and the far-field approximation using the \fmm.
-
+To start, we studied grid convergence comparing numerical results with the analytical solution using a sphere with constant potential and charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. To make surface triangulations of a sphere with increasing refinement, we started with an 8-triangle closed surface, then split recursively each triangle into four smaller ones. Figure \ref{fig:glob_spheres} shows two example discretizations. We solved the boundary-element problem by collocation in both the first-kind and second-kind integral formulations, using a standard \gmres with fast-multipole-accelerated mat-vecs and the semi-analytical integrals for the singular terms. For the far-field approximations, we used spherical-harmonic expansions with the following parameters in the \fmm: $\theta_{\text{MAC}} = 0.5$, $p = 12$; the number of Gauss points was $k=4$ and the tolerance in the iterative solver was $10^{-6}$. 
+Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both first-kind and second-kind formulations of the boundary element method on a sphere. The observed order of convergence is 0.76 for the 1st-kind formulation and 1.02 for the 2nd-kind formulation, computed with the three points in the middle of each line. We also observed that the finest mesh detracts from the convergence line with $p=10$, as the thinner line shows in Figure \ref{fig:laplaceconvergence}; in that case, the discretization error of a simple geometry like a sphere is very small and the error of the \fmm-accelerated mat-vecs overtakes.
+This convergence analysis gives confidence in our \bem code, the singular/near-singular integral calculations, and the far-field approximation using the \fmm.
 
 
 
 \begin{figure}%[ht]
 \begin{center}
-	\subfloat[][128 panels]{\includegraphics[natwidth=4.73in,natheight=3.94in,width=0.4\textwidth]{sphere128.pdf}\label{fig:sphere128}}\qquad
-	\subfloat[][2048 panels]{\includegraphics[natwidth=4.73in,natheight=3.94in,width=0.4\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
+	\subfloat[][128 panels]{\includegraphics[natwidth=4.73in,natheight=3.94in,width=0.3\textwidth]{sphere128.pdf}\label{fig:sphere128}}\qquad
+	\subfloat[][2048 panels]{\includegraphics[natwidth=4.73in,natheight=3.94in,width=0.3\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
 	\caption{Triangular discretizations of a spherical surface.}
 	\label{fig:glob_spheres}
 \end{center}
@@ -361,28 +396,32 @@ Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both fir
 \begin{figure}[t]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceConvergence.pdf}
-	\caption{Convergence of 1st-kind (open circles with solid line) and 2nd-kind (open circles with dotted line) solvers for the Laplace equation on a sphere, using a right-preconditioned \gmres with \fmm-accelerated matrix-vecctor products, with parameters: $\theta_{\text{MAC}} = 0.5$, $p=10$, and solver tolerance of $10^{-6}$ (no relaxation). The relative error is with respect to the analytical solution for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$.}
+	\caption{Convergence of 1st-kind (solid line) and 2nd-kind (dotted line) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vecctor products, with parameters: $\theta_{\text{MAC}} = 0.5$, $p=12$, $k=4$ and solver tolerance of $10^{-6}$ (no relaxation). For the 1st-kind formulation, we also used $p=10$ (thinner solid line) to show a degradation of grid-convergence with lower $p$. The vertical axis is the normalized $L^2$-norm of the relative error with respect to the analytical solution for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:laplaceconvergence}
 \end{center}
 \end{figure}
 
-Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and  what value of $p$ is required in the \fmm-accelerated mat-vecs to continue convergence. We discretized a sphere with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-5}$ with an initial value of $p$ set to 8. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 3 is sufficient by the seventh iteration. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale from $\bigO(p^{4})$ for spherical harmonics to $\bigO(p^{6})$ for Cartesian expansions.
+Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and  what value of $p$ is required in the \fmm-accelerated mat-vecs to continue convergence. We discretized a sphere with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-6}$ with an initial value of $p$ set to 8 and 12. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 2 is sufficient by the ninth iteration for $p_\text{{initial}}=8$ and by the fourth iteration for $p_{\text{initial}}=12$. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale from $\bigO(p^{4})$ for spherical harmonics to $\bigO(p^{6})$ for Cartesian expansions. A more accurate first iteration results in a faster drop of required-$p$ and fewer iterations. 
 But we note that only the far-field evaluation can be sped-up with the relaxation strategy, which means that the correct balance between near field and far field in the \fmm could change as we reset $p$ in the later iterations.
 
 \begin{figure}%[ht]
 	\centering
-	\includegraphics[natwidth=3.7in,natheight=2in,width=0.65\textwidth]{LaplaceResidualIterations.pdf}
-	\caption{In a test using a sphere discretized with $32,768$ triangles, the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly.}
+	\includegraphics[natwidth=7in,natheight=2in,width=0.95\textwidth]{LaplaceResidualIterations.pdf}
+	\caption{In a test using a sphere discretized with $32,768$ triangles, with $k=4$, $p_{inital}=8$ (left plot) and $p_{initial}=12$ (right plot), the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:residualp}
 \end{figure}
 
-To find out the potential speed-up, we compared the time to solution for different cases with and without the relaxation strategy. Using three surface discretizations, we solved the boundary-element problem with 1st- and 2nd-kind formulations to a solver tolerance of $10^{-5}$, using a multi-threaded evaluator on 4 \cpu\ cores. In each case, we were careful to set the value of $\ncrit$ to minimize the time to solution of the particular test case. Figure \ref{fig:relaxation_timing} shows the speed-up in the time spent solving the linear system of equations to the specified tolerance. The detailed results are given in the subsequent Tables.
+To find out the potential speed-up, we compared the time to solution for different cases with and without the relaxation strategy. Using three surface discretizations, we solved the boundary-element problem with 1st- and 2nd-kind formulations, with a multi-threaded evaluator on 6 \cpu\ cores. In each case, we were careful to set the value of $\ncrit$ to minimize the time to solution of the particular test case. 
+The detailed results are given in Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation}.
+Figure \ref{fig:relaxation_timing} shows the speed-up in the time spent solving the linear system of equations to the specified tolerance. 
+As indicated in the caption, we used an initial value of $p=10$ and a solver tolerance of $10^{-6}$.
+We also repeated the experiments with less stringent accuracy settings of $p=8$, and solver tolerance $10^{-5}$. In that case, the speedups are reduced (maximum observed speedup of 2.22 for the 1st-kind formulation), but we decided to show the higher accuracy tests, given the observed degradation of grid-convergence with lower $p$, as seen in Figure \ref{fig:laplaceconvergence}.
 
 
 \begin{figure}%[h]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceSpeedupRelaxation.pdf}
-	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
+	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations. Initial $p=10$, $k=4$, solver tolerance $10^{-6}$. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:relaxation_timing}
 \end{figure}
 
@@ -390,53 +429,53 @@ To find out the potential speed-up, we compared the time to solution for differe
 \begin{table}[h]
 \footnotesize
 \begin{center}
-\begin{tabular}{c|cc|cc|c}
-  & \multicolumn{2}{c|}{Non-Relaxed} & \multicolumn{2}{c|}{Relaxed} & \\
-  N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up \\
+\begin{tabular}{c|cc|cc|cc}
+  & \multicolumn{2}{c|}{Non-Relaxed} & \multicolumn{2}{c|}{Relaxed} &  & Number\\
+  N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up & of iterations\\
  \hline
-   & & & & & \\
-  2048 & 400 & 0.27 & 200 & 0.40 & 0.675 \\
-  8192 & 400 & 2.58 & 200 & 1.7 & 1.52 \\
-  32768  & 400 & 7.1 & 200 & 5.07 & 1.40 \\
-  131072  & 400 & 30.1 & 200 & 20.72 & 1.45 \\
+   & & & & & &\\
+  8192 & 400 & 4.93 & 175 & 2.32 & 2.13 & 11\\
+  32768  & 400 & 20.32 & 200 & 9.45 & 2.15 & 13\\
+  131072  & 400 & 137.84 & 200 & 41.32 & 3.34 & 22\\
  
 \end{tabular}
 \end{center}
-\caption{Speed-ups for the relaxation strategy on a Laplace 1st-kind integral solver, $p=8$, solver tolerance $10^{-5}$.}
+\caption{Speed-ups for the relaxation strategy on a Laplace 1st-kind integral solver, $p=10$, $k=4$, solver tolerance $10^{-6}$.}
 \label{tab:laplace_1st_relaxation}
 \end{table}%
 
 \begin{table}[h]
 \footnotesize
 \begin{center}
-\begin{tabular}{c|cc|cc|c}
-  & \multicolumn{2}{c|}{Non-Relaxed} & \multicolumn{2}{c|}{Relaxed} & \\
-  N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up \\
+\begin{tabular}{c|cc|cc|cc}
+  & \multicolumn{2}{c|}{Non-Relaxed} & \multicolumn{2}{c|}{Relaxed} &  & Number \\
+  N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up & of iterations \\
  \hline
-   & & & & & \\
-  2048 & 400 & 0.13 & 200 & 0.64 & 0.20 \\
-  8192 & 400 & 1.49 & 200 & 1.19 & 1.25 \\
-  32768 & 400 & 6.77 & 200 & 5.92 & 1.14 \\
-  131072 & 400 & 30.01 & 200 & 24.2 & 1.24 \\
+   & & & & & & \\
+  8192 & 400 & 2.10 & 300 & 1.55 & 1.35 & 3 \\
+  32768 & 400 & 7.45 & 200 & 5.76 & 1.29 & 2 \\
+  131072 & 400 & 23.63 & 200 & 21.32 & 1.11 & 2\\
  
 \end{tabular}
 \end{center}
-\caption{Speed-ups for the relaxation strategy on a Laplace 2nd-kind integral solver, $p=8$, solver tolerance  $10^{-5}$.}
+\caption{Speed-ups for the relaxation strategy on a Laplace 2nd-kind integral solver, $p=10$, $k=4$, solver tolerance  $10^{-6}$.}
 \label{tab:laplace_2nd_relaxation}
 \end{table}%
 
-The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation} show a speed-up for the three larger grids---also shown in Figure \ref{fig:relaxation_timing}---of about $1.4\times$ for the 1st-kind integral formulation and $1.2\times$ for the 2nd-kind formulation. These are moderate speedups, but these tests reveal that one has to give up on the idea of partitioning the domain between a near-field and a far-field in a way that balances the time spent computing each one---an accepted idea in \fmm applications. When relaxing the accuracy of the \gmres iterations, the time taken to compute the far field decreases significantly. This means that to minimize time-to-solution when using relaxed \gmres, the near and far fields should not be balanced, but rather the far field should be bloated. As a result, the first few iterations are completely dominated by the time to compute the far field, but this is offset by the benefit of much cheaper iterations from then on. This is a simple but unexpected and counter-intuitive algorithmic consequence of using inexact \gmres with \fmm.
+The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation} show a speed-up of between $2.1\times$ and $3.3\times$ for the 1st-kind integral formulation and between $1.1\times$ and $1.35\times$ for the 2nd-kind formulation. 
+The rightmost column shows the number of iterations to converge: we need 3 or less iterations for the 2nd-kind formulation, which explains why we have such low speedup compared with the 1st-kind formulation.
+These tests also taught us that one has to give up on the idea of partitioning the domain between a near-field and a far-field in a way that balances the time spent computing each one---an accepted idea in \fmm applications. When relaxing the accuracy of the \gmres iterations, the time taken to compute the far field decreases significantly. This means that to minimize time-to-solution when using relaxed \gmres, the near and far fields should not be balanced, but rather the far field should be bloated. As a result, the first few iterations are completely dominated by the time to compute the far field, but this is offset by the benefit of much cheaper iterations from then on. This is a simple but unexpected and counter-intuitive algorithmic consequence of using inexact \gmres with \fmm.
 
-It's clear that greater benefits from the relaxation strategy should derive from two situations: (a) where higher accuracy is needed (necessitating an initially higher $p$) , and (b) where the linear system demands a greater number of iterations to reach a set tolerance (resulting in more computations done at low $p$). To demonstrate this, we now present two tests that force these situations. 
+To better evaluate the potential speedup in more general cases, we designed tests in the following two situations: (a) where higher accuracy of \fmm-accelerated mat-vec product is needed (necessitating an initially higher $p$) , and (b) where the linear system demands a greater number of iterations to reach a smaller desired tolerance. 
 
 \begin{figure}%[ht]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceRelaxationP.pdf}
-	\caption{Timings for solving a 1st-kind Laplace integral formulation on a sphere discretized with $32,768$ panels, using a relaxed \gmres with different initial values of $p$, compared with a fixed-$p$ solver. The iteration count was capped at 10 for all cases. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
+	\caption{Timings for solving a 1st-kind Laplace integral formulation on a sphere discretized with $32,768$ panels, using a relaxed \gmres with different initial values of $p$, compared with a fixed-$p$ solver. The iteration count was capped at 10 for all cases. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:laplace_p_speedup}
 \end{figure}
 
-Figure \ref{fig:laplace_p_speedup} shows the timings obtained in a situation where the initial $p$ is incrementally larger, representing applications that demand higher accuracy. The test consists of a 1st-kind Laplace integral solver on a sphere discretized with $32,768$ panels, enforcing a fixed number of $10$ \gmres iterations (which results in a residual of $~5.5\times 10^{-5}$ for the sphere). Table \ref{tab:laplace_1st_p_relaxation} shows the data for this test: the speed-up is greater with larger initial values of $p$, leveling off at around $2\times$ when initial $p$ is greater than 8. Note again that the shortest time-to-solution requires an unbalanced tree on the first iteration, with a bloated far field. This means that the first (high-$p$) iteration is much slower than the corresponding fixed-$p$ case: the speed-up is thus purely a product of the low-cost later iterations.
+Figure \ref{fig:laplace_p_speedup} shows the timings obtained in a situation where the initial $p$ is incrementally larger, representing applications that demand higher accuracy. To minimize the effect of discretization error on total accuracy, we discretized the sphere with $32,768$ panels. We also enforced a fixed number of $10$ \gmres iterations on this 1st-kind Laplace integral solver. Table \ref{tab:laplace_1st_p_relaxation} shows the data for this test: the speed-up is leveling off at around $2\times$ with a varying initial $p$. Note again that the shortest time-to-solution requires an unbalanced tree on the first iteration, with a bloated far field. This means that the first (high-$p$) iteration is much slower than the corresponding fixed-$p$ case: the speed-up is thus purely a product of the low-cost later iterations.
 
 \begin{table}[h]
 \footnotesize
@@ -446,27 +485,26 @@ Figure \ref{fig:laplace_p_speedup} shows the timings obtained in a situation whe
   $p$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup \\
    \hline
    & & & & & \\
-  5 & 100 & 4.21 & 100 & 6.34 & 1.51 \\
-  8 & 100 & 6.24 & 400 & 12.4 & 1.99 \\
-  10 & 150 & 8.76 & 400 & 18.5 & 2.11 \\
-  12 & 150 & 13.2  & 600 & 25.3 & 1.92 \\
-  15 & 150 & 19.3 & 600 & 38.3 & 1.98 \\
+  5 & 100 & 3.94 & 100 & 7.53 & 1.91 \\
+  8 & 100 & 6.20 & 400 & 12.38 & 2.00 \\
+  10 & 150 & 9.08 & 400 & 19.96 & 2.20 \\
+  12 & 150 & 12.70  & 600 & 25.41 & 2.00 \\
+  15 & 150 & 22.05 & 600 & 37.77 & 1.71 \\
  
 \end{tabular}
 \end{center}
-\caption{Speed-up when using a relaxation strategy on a Laplace 1st-kind integral solver, compared with a non-relaxed solver, with increasing value of the initial $p$ (representing increased accuracy demands of the application), for a sphere discretized with $32,768$ panels. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
+\caption{Speed-up when using a relaxation strategy on a Laplace 1st-kind integral solver, compared with a non-relaxed solver, with increasing value of the initial $p$ (representing increased accuracy demands of the application), for a sphere discretized with $32,768$ panels. (Multi-threaded evaluator running on 6 \cpu\ cores.)}
 \label{tab:laplace_1st_p_relaxation}
 \end{table}%
 
-The final case looks at the situation where the application might demand large iteration counts, as could be encountered in harder-to-precondition cases. Keeping the value of $p$ fixed at 10, we ran several cases with increasing numbers of (set) \gmres iterations, representing more ill-conditioned problems. Figure \ref{fig:laplace_iterations_speedup} shows how cases with larger iteration counts experience greater speed-up from the relaxation strategy. As seen in the data of Table \ref{tab:laplace_1st_iterations_relaxation}, each non-relaxed iteration adds approximately $1.68$s to $\tsolve$, while each relaxed iteration adds $0.276$s; we can thus extrapolate a speed-up nearing $5\times$ at 100 iterations.
-
+The final case looks at the situation where the application might demand different tolerances. Keeping the value of initial $p$ fixed at 10, we ran several cases with $8,192$ panels and increasingly stricter tolerance. Figure \ref{fig:laplace_tolerance_speedup} and Table \ref{tab:laplace_1st_tolerance_relaxation} show that the relaxed cases experience a speed-up between $1.5\times$ and $2.0\times$ for different desired tolerances and the speed-up peaks at a tolerance of $10^{-6}$. 
 
 
 \begin{figure}%[ht]
 	\centering
-	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceRelationIterations.pdf}
-	\caption{Speed-ups for solving a 1st-kind Laplace integral problem on a sphere discretized with $32,768$ panels, as the \gmres iteration count increases; $p=10$ for all cases. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
-	\label{fig:laplace_iterations_speedup}
+	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceSpeedupTolerance.pdf}
+	\caption{Speed-ups for solving a 1st-kind Laplace integral problem on a sphere discretized with $8,192$ panels, as the \gmres solver's tolerance increases; $p=10$ for all cases. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\label{fig:laplace_tolerance_speedup}
 \end{figure}
 
 
@@ -475,20 +513,20 @@ The final case looks at the situation where the application might demand large i
 \begin{center}
 \begin{tabular}{c|cc|cc|c}
   & \multicolumn{2}{c|}{Relaxed} & \multicolumn{2}{c|}{Non-Relaxed} & \\
-  Iterations & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup \\
+  tolerance & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup \\
  \hline
    & & & & & \\
-  5 & 100 & 8.57 & 400 & 10.0 & 1.17 \\
-  10 & 100 & 9.81 & 400 & 18.4 & 1.88 \\
-  15 & 100 & 11.1 & 400 & 26.9 & 2.42 \\
-  20 & 100 & 12.4 & 400 & 35.3 & 2.85 \\
-  25 & 100 & 13.7 & 400 & 43.8 & 3.20 \\
-  50 & 100 & 20.6 & 400 & 86.2 & 4.18 \\
- 
+  $10^{-5} $ & 400 & 1.65 & 400 & 3.13 & 1.90 \\
+  $10^{-6} $ & 300 & 2.34 & 400 & 4.71 & 2.01 \\
+  $10^{-7} $ & 300 & 4.07 & 400 & 7.93 & 1.95 \\
+  $10^{-8} $ & 300 & 5.77 & 400 & 9.87 & 1.71 \\
+  $10^{-9} $ & 300 & 8.14 & 400 & 12.51 & 1.54 \\
+  $10^{-10} $ & 300 & 10.11 & 400 & 16.29 & 1.61 \\
+  $10^{-11} $ & 300 & 12.24 & 400 & 17.88 & 1.46 \\
 \end{tabular}
 \end{center}
-\caption{Speed-up of the relaxation strategy on solving a Laplace 1st-kind integral problem on a sphere discretized with $32,768$ panels, with increasing iteration count; $p$ fixed to a value of 10. (Multi-threaded evaluator running on 4 \cpu\ cores.)}
-\label{tab:laplace_1st_iterations_relaxation}
+\caption{Speed-up of the relaxation strategy on solving a Laplace 1st-kind integral problem on a sphere discretized with $8,192$ panels, with a varying solver's tolerance; initial $p$ fixed to a value of 10. (Multi-threaded evaluator running on 6 \cpu\ cores.)}
+\label{tab:laplace_1st_tolerance_relaxation}
 \end{table}%
 
 \subsection{Inexact {\small GMRES} for solving the Stokes equation}
@@ -499,13 +537,14 @@ Like in \S\ref{sec:inexactLaplace}, we start with a grid-convergence study to bu
 	F_d = \int_\Gamma t_x\;\di{\Gamma'} = \sum_{j=1}^{N} t_{x_j}\cdot A_j
 \end{equation}
 
-For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver. We first increased the value of $p$ until the solution stopped improving, and settled for $p=16$ in this case, using a $10^{-5}$ tolerance in the iterative solver.
+%% need to change why we choose p=16 in the third sentence "We first"
+For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver. Based on the inexact Krylov method \cite{bouras2000relaxation,bourasfraysse2005}, we choose an initial $p$ of 16 to compute the first Krylov vectors with full accuracy, and use a $10^{-5}$ tolerance in the iterative solver.
 Figure \ref{fig:stokes_convergence} shows that we observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations.
 
 \begin{figure}%[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesConvergence.pdf}
-	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation; $p=16$, linear system solved to $10^{-5}$ tolerance. The relative error is with respect to the analytical solution for drag on a sphere: $F_d = 6\pi\mu Ru_x$.}
+	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation; $p=16$, linear system solved to $10^{-5}$ tolerance. The relative error is with respect to the analytical solution for drag on a sphere: $F_d = 6\pi\mu Ru_x$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_convergence}
 \end{center}
 \end{figure}
@@ -517,19 +556,20 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 \begin{figure}%[t]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesResidualHistory.pdf}
-	\caption{Residual history solving for surface traction on the surface of a sphere (first-kind integral problem), with a $10^{-5}$ solver tolerance, $8,192$ panels, and $p=16$ in the multipole expansions.}
+	\caption{Residual history solving for surface traction on the surface of a sphere (first-kind integral problem), with a $10^{-5}$ solver tolerance, 8192 panels, and initial $p=16$ in the relaxed case (and throughout in the non-relaxed case). Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_residual_history_relaxed}
 \end{center}
 \end{figure}
 
+% what does "the figure also includes a plot the residual history" mean?
 Figure \ref{fig:stokes_relaxation_breakdown} illustrates clearly how we need to adjust the balance between near field and far field when using relaxation strategies. Because most of the time is spent computing at the low values of $p$, we need to start with a bloated far field. The bar plot shows the breakdown of time spent in the {\ptop} and {\mtol} kernels for each iteration: although the first iteration is unbalanced, with far field taking about 8 times as much \cpu\ time as near field, later iterations are close to balanced and the total time to solution is optimal. 
-The figure also includes a plot of the residual history. We ran extensive tests on the minimum value of $p$ allowed in the relaxed solver, without degrading convergence and accuracy. Table \ref{tab:stokes_min_p} presents some of the data from these tests: for finer surface discretizations, the error degrades when the relaxed value of $p$ is allowed to drop below 3 or 4. To be conservative and avoid any degradation in accuracy, we used a $\pmin=5$ for all further cases with the Stokes equation.
+We ran extensive tests on the minimum value of $p$ allowed in the relaxed solver, without degrading convergence and accuracy. Table \ref{tab:stokes_min_p} presents some of the data from these tests: for finer surface discretizations, the error degrades when the relaxed value of $p$ is allowed to drop below 3 or 4. To be conservative and avoid any degradation in accuracy, we used a $\pmin=5$ for all further cases with the Stokes equation.
 
 
 \begin{figure}%[ht]
 \begin{center}
-	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSolveBreakdown.pdf}
-	\caption{Residual history solving for surface traction on the surface of a sphere, with time breakdown between {\ptop} and {\mtol}. $10^{-5}$ solver tolerance, $8,192$ panels, $p=16$.}
+	\includegraphics[natwidth=9in,natheight=4in,width=0.95\textwidth]{StokesSolveBreakdown.pdf}
+	\caption{Time breakdown between {\ptop} and {\mtol} when using a relaxation strategy for solving surface traction on the surface of a sphere, $10^{-5}$ solver tolerance, $8,192$ panels, $p=16$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_relaxation_breakdown}
 \end{center}
 \end{figure}
@@ -543,26 +583,35 @@ The figure also includes a plot of the residual history. We ran extensive tests 
   & \multicolumn{2}{c|}{2048 panels} & \multicolumn{2}{c|}{8192 panels} & \multicolumn{2}{c}{32768 panels} \\
  $\pmin$ & Error & $it$ & Error & $it$ & Error & $it$ \\ \hline
   & & & & & & \\
- 5 & $4.70\times 10^{-2}$ & 22 & $2.44\times 10^{-2}$ & 28 & $1.34\times 10^{-2}$ & 28 \\
- 4 & $4.49\times 10^{-2}$ & 23 & $2.51\times 10^{-2}$ & 29 & $1.25\times 10^{-2}$ & 29 \\
- 3 & $4.64\times 10^{-2}$ & 22 & $2.78\times 10^{-2}$ & 29 & $1.39\times 10^{-2}$ & 29 \\
- 2 & $4.95\times 10^{-2}$ & 25 & $2.62\times 10^{-2}$ & 33 & $3.18\times 10^{-2}$ & 39 \\
- 1 & $4.96\times 10^{-2}$ & 25 & $2.99\times 10^{-2}$ & 51 & $4.77\times 10^{-2}$ & 53 
+ 5 & $4.61\times 10^{-2}$ & 24 & $2.48\times 10^{-2}$ & 29 & $1.34\times 10^{-2}$ & 28 \\
+ 4 & $4.56\times 10^{-2}$ & 25 & $2.50\times 10^{-2}$ & 29 & $1.17\times 10^{-2}$ & 28 \\
+ 3 & $4.58\times 10^{-2}$ & 23 & $3.57\times 10^{-2}$ & 30 & $1.74\times 10^{-2}$ & 30 \\
+ 2 & $4.41\times 10^{-2}$ & 25 & $1.45\times 10^{-1}$ & 39 & $2.04\times 10^{-2}$ & 39 \\
+ 1 & $4.35\times 10^{-2}$ & 28 & $3.42\times 10^{-2}$ & 100\footnotemark[1] & $3.03\times 10^{-2}$ & 100\footnotemark[1] 
 \end{tabular}
 \end{center}
 \caption{Effect of $p_{\text{min}}$ on accuracy and convergence for Stokes flow around a sphere for differing values of $N$. Error is on the total drag force in the $x$-direction, $F_x$.}
 \label{tab:stokes_min_p}
 \end{table}%
 
-Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \gmres iterations for four increasingly finer surface discretizations. For $N=8,192$ and above, speed-up is $3.5\times$ or more.
+\footnotetext[1]{When $p_{\text{min}}$ is set to 1, solution does not converge within 100 iterations for the two finer meshes.}
+
+Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \gmres iterations for three increasingly finer surface discretizations. For $N=32,768$, speed-up is more than $3.0\times$. We also observed a speedup between $1.7\times$ and $3.5\times$ under different \gmres solver tolerances for $N=8,192$, as shown in Figure \ref{fig:stokes_tolerance_speedup}.
 
 
 \begin{figure}%[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSpeedupRelaxation.pdf}
-	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$. $10^{-5}$ solver tolerance, $p=16$. }
+	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$. $10^{-5}$ solver tolerance, $p=16$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_speedup}
 \end{center}
+\end{figure}
+
+\begin{figure}%[ht]
+	\centering
+	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSpeedupTolerance.pdf}
+	\caption{Speed-ups for solving a 1st-kind Stokes problem on a sphere discretized with $8,192$ panels, as the \gmres solver's tolerance increases; $p=16$ for all cases. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
+	\label{fig:stokes_tolerance_speedup}
 \end{figure}
 
 \subsection{Application to red blood cells in Stokes flow}
@@ -582,8 +631,7 @@ To create a surface discretization for a red blood cell, we start with a sphere 
 \noindent where $x' = x\cdot r,\; y' = y\cdot r,\; \rho = \sqrt{x'^{2}+y'^{2}}$, and the coefficients are: $r=3.91\mu$m,  $C_0= 0.81\mu$m, $C_2= 7.83\mu$m and $C_4=-4.39\mu$m.
 Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.
 
-% This figure behaved weird when using the unmodified SIAM class file, and the images appeared displaced upwards; needed to hack it with \vspace{1cm} before each \subfloat
-% It now works well with the RequirePackage lines commented out on the .cls file !!
+
 \begin{figure}%[ht]
 \begin{center}
 	\subfloat[512 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
@@ -597,7 +645,7 @@ A grid-convergence study using the geometry of a red blood cell requires that we
 If the value $f_1$ corresponds to that obtained using the coarsest mesh and $f_2$ and $f_3$ to those using consecutively refined ones, then we can obtain the extrapolated value approximating the exact solution with the following formula:
 
 \begin{equation}
-	\bar{f} = \frac{f_1f_3-f_2^{2}}{f-1 -2f_2+f_3}
+	\bar{f} = \frac{f_1f_3-f_2^{2}}{f_1 -2f_2+f_3}
 \end{equation}
 
 Table \ref{tab:rbc_richardson_values} presents the computed values of the drag force obtained with three different meshes, of sizes $N=512$, $2048$ and $8192$. We can also obtain the \emph{observed order of convergence}, $p$, as follows
@@ -606,7 +654,7 @@ Table \ref{tab:rbc_richardson_values} presents the computed values of the drag f
 	p = \frac{\ln{\left(\frac{f_2-f_1}{f_3-f_2}\right)}}{\ln{c}},
 \end{equation}
 
-\noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.481$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
+\noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.52$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
 Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with respect to the extrapolated value, as a function of the mesh size. The plot includes the error obtained with four meshes, with the extrapolated value obtained using the first three coarser meshes.
 
 \begin{table}[h]
@@ -616,8 +664,8 @@ Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with res
 	$N$ & $f_x$ \\
 	\hline
 	& \\
-	$512$ & $-0.059$ \\
-	$2048$ & $-0.071$ \\ 
+	$512$ & $-0.057$ \\
+	$2048$ & $-0.070$ \\ 
 	$8192$ & $-0.077$ \\
 %	$32768$ & $-0.080$
 \end{tabular}
@@ -630,19 +678,19 @@ Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with res
 \begin{figure}
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{EthrocyteConvergence.pdf}
-	\caption{Observed convergence for Stokes flow around red blood cells, with respect to the extrapolated value of the drag coefficient, using Richardson extrapolation \cite{roache1998}.}
+	\caption{Observed convergence for Stokes flow around red blood cells, with respect to the extrapolated value of the drag coefficient, using Richardson extrapolation \cite{roache1998}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:rbc_extrapolated_convergence}
 \end{center}
 \end{figure}
 
 
 The calculations with increasingly finer surface meshes take more time to complete not only because the number of unknowns is larger, but also because they may require a greater number of iterations to converge to a desired residual.
-Figure \ref{fig:single_cell_iterations} shows that the number of iterations needed as the surface mesh varies from size $N=128$ to $8,192$ increases from 19 to 37. For further refined meshes, the number of iterations remains about the same. This is an indication that the surface mesh is sufficiently refined with $8,192$ panels for one red blood cell.
+Figure \ref{fig:single_cell_iterations} shows that the number of iterations needed as the surface mesh varies from size $N=128$ to $8,192$ increases from 18 to 39. For further refined meshes, the number of iterations remains about the same. This is an indication that the surface mesh is sufficiently refined with $8,192$ panels for one red blood cell.
 
 \begin{figure}
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{EthrocyteSingleCellIterations.pdf}
-	\caption{Number of iterations needed for the system to converge for increasingly refined surface meshes on one red blood cell; $p = 16$, target residual $10^{-5}$.}
+	\caption{Number of iterations needed for the system to converge for increasingly refined surface meshes on one red blood cell; $p = 16$, target residual $10^{-5}$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:single_cell_iterations}
 \end{center}
 \end{figure}
@@ -650,8 +698,7 @@ Figure \ref{fig:single_cell_iterations} shows that the number of iterations need
 
 For the next tests, we used several red blood cells in a sparse spatial arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem. We set up a collection of red blood cells by making copies of a discretized cell, then randomly rotating each one, and shifting it spatially in each  coordinate direction by a positive random amount that ensures they do not overlap. The resulting arrangement may look like that shown in Figure \ref{fig:multiple_cells}.
 
-% This figure behaved weird with the unmodified SIAM class file, and the images appeared displaced upwards, needing to hacked it with \vspace{1.2cm} before \includegraphics
-% Now it works well with the modified SIAM class file
+
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[natwidth=6in,natheight=2.88in,width=0.75\textwidth]{4Cells_arrow.pdf}
@@ -667,12 +714,12 @@ Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed t
 \begin{figure}
 \begin{center}
 	\includegraphics[natwidth=7in,natheight=3.5in,width=0.85\textwidth]{EthrocyteMultipleCellIterations.pdf}
-	\caption{Number of iterations needed to converge to a desired residual of $10^{-5}$ for systems with multiple red blood cells, discretized with different mesh sizes ($p = 16$).}
+	\caption{Number of iterations needed to converge to a desired residual of $10^{-5}$ for systems with multiple red blood cells, discretized with different mesh sizes ($p = 16$). Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:multiple_cell_iterations}
 \end{center}
 \end{figure}
 
-We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, and Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $4\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use an efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using four threads, like we do here), then the potential for a $7\times$ speed-up is real.
+We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, and Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $4\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use an efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using six threads, like we do here), then the potential for a $7\times$ speed-up is real.
 
 \begin{table}[h]
 \footnotesize
@@ -685,7 +732,7 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
  $p_{\text{min}}$ &  $5$ \\
  solver tolerance & $10^{-5}$ \\
  Near-field & Sparse matrix \\
- Threads & $4$ \\
+ Threads & $6$ \\
  Solver & {\gmres} \\ 
  Preconditioner & None
 \end{tabular}
@@ -695,7 +742,7 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 \end{table}%
 
 
-\begin{table}[htdp]
+\begin{table}[htp]
 \footnotesize
 \begin{center}
 \begin{tabular}{c|c|c|c|c|c|c}
@@ -703,10 +750,10 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
  & & \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} \\
  N & \# unknowns & $\ncrit$ & $t_{\text{solve}}$ & $\ncrit$ & $t_{\text{solve}}$ & Speedup \\\hline
  & & & & & \\
- 2048 & 6144 & 200 & 44.5 & 100 & 11.0 & 4.05 \\
- 8192 & 24576 & 400 & 177 & 150 & 52.4 & 3.37 \\
- 32768 & 98304 & 400 & 848 & 150 & 223 & 3.80 \\
- 131072 & 393216 & 600 & 6386\footnotemark[1] & 150 & 874 & 7.31\footnotemark[1] \\	
+ 2048 & 6144 & 400 & 48.18 & 150 & 14.61 & 3.30 \\
+ 8192 & 24576 & 400 & 234.44 & 100 & 69.03 & 3.40 \\
+ 32768 & 98304 & 400 & 978.80 & 100 & 276.52 & 3.54 \\
+ 131072 & 393216 & 200 & 5122.43\footnotemark[1] & 100 & 1044.77 & 4.90\footnotemark[1] \\	
 \end{tabular}
 \end{center}
 \caption{Timings and speed-up of the relaxation strategy on a single red blood cell in uniform Stokes flow, with the test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
@@ -716,7 +763,7 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 \footnotetext[1]{Due to memory restrictions, a sparse-matrix representation of the near-field could not be used, resulting in a much slower {\ptop} evaluation.}
 
 
-\begin{table}[htdp]
+\begin{table}[htp]
 \footnotesize
 \begin{center}
 \begin{tabular}{c|c|c|cc|cc|c}
@@ -724,10 +771,10 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 & & & \multicolumn{2}{c}{Non-relaxed} & \multicolumn{2}{c}{Relaxed}\\
 N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup \\ \hline
 & & & & & & &  \\
-2048 & 6144 & 1 & 200 & 44.5 & 100 & 11.0 & 4.05 \\ 
-8192 & 24576 & 4 & 200 & 236 & 150 & 59.8 & 3.95 \\ 
-32768 & 98304 & 16 & 400 & 1261 & 150 & 331 & 3.81 \\
-131072 & 393216 & 64 & 300 & 9982\footnotemark[1] & 100 & 1606 & 6.22\footnotemark[1] \\
+2048 & 6144 & 1 & 400 & 48.18 & 150 & 14.61 & 3.30 \\ 
+8192 & 24576 & 4 & 400 & 267.64 & 100 & 87.20 & 3.07 \\ 
+32768 & 98304 & 16 & 400 & 1358.07 & 100 & 444.55 & 3.05 \\
+131072 & 393216 & 64 & 200 & 7077.77\footnotemark[1] & 100 & 1481.47 & 4.78\footnotemark[1] \\
 \end{tabular}
 \end{center}
 \caption{Timings and speed-up of the relaxation strategy with several red blood cells in uniform Stokes flow, each cell discretized with 2048 panels and test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
@@ -735,7 +782,7 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup 
 \end{table}
 
 
-\begin{table}[htdp]
+\begin{table}[htp]
 \footnotesize
 \begin{center}
 \begin{tabular}{c|c|c|cc|cc|c}
@@ -743,9 +790,9 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup 
 & & &  \multicolumn{2}{c}{Non-relaxed} & \multicolumn{2}{c}{Relaxed}\\
 N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup \\ \hline
 & & & & & & &  \\
-8192 & 24576 & 1 & 400 & 177 & 150 & 52.4 & 3.37 \\ 
-32768 & 98304 & 4 & 400 & 1375 & 150 & 315 & 4.37 \\
-131072 & 393216 & 16 & 300 & 15980\footnotemark[1] & 100 & 1692 & 9.44\footnotemark[1] \\
+8192 & 24576 & 1 & 400 & 234.44 & 100 & 69.03 & 3.40 \\ 
+32768 & 98304 & 4 & 400 & 1494.37 & 100 & 371.06 & 4.03 \\
+131072 & 393216 & 16 & 150 & 12817.01\footnotemark[1] & 100 & 1800.53 & 7.12\footnotemark[1] \\
 \end{tabular}
 \end{center}
 \caption{Timings and speed-up of the relaxation strategy with several red blood cells in uniform Stokes flow, each cell discretized with $8,192$ panels and test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
@@ -753,7 +800,7 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 \end{table}
 
 
-\begin{table}[htdp]
+\begin{table}[htp]
 \footnotesize
 \begin{center}
 \begin{tabular}{c|c|c|cc|cc|c}
@@ -761,8 +808,8 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 & & & \multicolumn{2}{c}{Non-relaxed} & \multicolumn{2}{c}{Relaxed}\\
 N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup \\ \hline
 & & & & & & &  \\
-32768 & 98304 & 1 & 400 & 848 & 150 & 223 & 3.80 \\
-131072 & 393216 & 4 & 300 & 9629\footnotemark[1] & 100 & 1247 & 7.72\footnotemark[1] \\	
+32768 & 98304 & 1 & 400 & 978.80 & 100 & 276.52 & 3.54 \\
+131072 & 393216 & 4 & 200 & 7209.57\footnotemark[1] & 100 & 1397.27 & 5.16\footnotemark[1] \\	
 \end{tabular}
 \end{center}
 \caption{Timings and speed-up of the relaxation strategy with several red blood cells in uniform Stokes flow, each cell discretized with $32,768$ panels and test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
@@ -778,47 +825,25 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 \end{center}
 \end{figure}
 
+\subsection{Reproducibility}
 
+Our inexact \gmres code is open-source and available on Github. Knowing the increasing importance of computational reproducibility, we provided the ``\textit{reproducibility package}" --- containing the running and post-processing scripts --- to generate the figures in this result section. To save readers from potential headaches of dependency mismatches, we also prepared a Dockerfile to setup up the software environment (a Docker container), under which the ``\textit{reproducibility package}" can be used to replicate our results.
 
 
 \section{Conclusion} 
 
 We have shown the first successful application of a relaxation strategy for fast-multipole-accelerated boundary element methods, based on the theory of inexact \gmres. Testing the relaxation strategy on Laplace problems, we confirmed that it converges to the right solution, it provides moderate speed-ups over using a fixed $p$, and it leads to initially bloated far-fields to obtain the minimum time to solution.
-Exploring the performance advantage of relaxing the value of $p$ as \gmres iterations advance, we concluded that problems requiring high accuracy and/or resulting in more ill-conditioned linear systems will experience the best speed-ups, which for Laplace problems can be in the order of $2\times$ to $4\times$.
+Exploring the performance advantage of relaxing the value of $p$ as \gmres iterations advance, we concluded that problems requiring high accuracy and/or resulting in more ill-conditioned linear systems will experience the best speed-ups, which for Laplace problems were between $2.1\times$ and $3.3\times$ in our tests on a sphere with constant potential.
 
-In the case of the Stokes equation, the speed-ups that can be obtained using a relaxation strategy are larger, due to the fact that Stokes problems require both more iterations to converge (and the relaxed solver spends more time at low $p$) and more work per iteration (equivalent to four Laplace evaluations). Relaxed \gmres iterations in this case reduced the time to solution by $3.5\times$ to $4.5\times$. We found that it's important for Stokes problems to also enforce a minimum value of $p$ to avoid accuracy or convergence degradation.
-
-Using the relaxation strategy, we completed various tests for Stokes flow around red blood cells, with up to 64 cells. We studied numerical convergence in this situation using Richardson extrapolation and obtained an observed order of convergence of $0.48$, close to the expected value of $1/2$. The speed-ups resulting from the relaxation strategy in these tests were in most cases close to $4\times$.
+In the case of the Stokes equation, the speed-ups that can be obtained using a relaxation strategy are larger, due to the fact that Stokes problems require both more iterations to converge (and the relaxed solver spends more time at low $p$) and more work per iteration (equivalent to four Laplace evaluations). 
+We found that it's important for Stokes problems to also enforce a minimum value of $p$ to avoid accuracy or convergence degradation.
+Relaxed \gmres iterations in this case reduced the time to solution by up to $3.0\times$ in tests of Stokes flow around a sphere. 
+We completed various tests for Stokes flow around red blood cells, with up to 64 cells. We studied numerical convergence in this situation using Richardson extrapolation and obtained an observed order of convergence of $0.52$, close to the expected value of $1/2$. The speed-ups resulting from the relaxation strategy in these tests were in most cases close to $4\times$.
 
 Relaxing the truncation order $p$ in the multipole expansions as Krylov iterations progress is one of those seemingly simple ideas that strike one as obvious a posteriori. Yet, as far as we know, it has not been tried before, nor has it been implemented in a \bem. Given this method's wide popularity in computational engineering, we look forward to many applications benefitting from healthy speed-ups from applying relaxed-$p$ \fmm. We  showed that Stokes problems, in particular, can expect $4\times$ speed-ups in large problems still fitting on one workstation. Linear elasticity problems should experience similar speed-ups (although we didn't try them). This is pure algorithmic speed-up that should multiply with any hardware speed-ups obtained, for example, by moving computational kernels to \gpu s.
 
-\Appendix
+\appendix
 \section{Algorithm listings}\label{sec:algorithms}
- 
- \begin{algorithm}
- \footnotesize
-	\caption{Right-preconditioned \gmres\ \cite{SaadSchultz1986}.}
-	\label{alg:gmres}
-	\begin{algorithmic}
-		\Require Matrix $A$, initial guess $x_{0}$, right-hand side $b$, desired tolerance $\epsilon$, order of the Krylov space $k$, preconditioner $M$.
-		\State Initialize $\bar{H}_{m} \in \R^{(k+1)\times k} = 0\;\forall i,j$
-		\State $r_{0} \gets A\cdot x_{0}-b$
-		\State $\beta \gets ||r_{0}||_{2},\;\; v_{1} \gets r_{0}/\beta$
-		\For{j=1,...,k}
-			\State $z_{j} \gets M^{-1}\cdot v_{j}$
-			\State $w \gets A\cdot z_{j}$
-			\For{i=1,..,j}
-				\State $h_{i,j} \gets (w, v_{i})$
-				\State $w \gets w - h_{i,j}\cdot v_{i}$
-			\EndFor
-			\State $h_{j+1,j} \gets ||w||_{2}$
-			\State $v_{j+1} \gets w / h_{j+1,j}$
-		\EndFor
-		\State $V_{k} \gets [ v_{1}, ..., v_{k}]$
-		\State $y_{k} = \arg\min_{y}||\beta e_{1} - \bar{H}_{k}y||_{2}$ and $e_{1} = [1,0,...,0]$
-		\State $x_{k} \gets x_{0} + M^{-1}V_{k}y_{k}$ 
-	\end{algorithmic}
-\end{algorithm}
  
  \begin{algorithm}
  \footnotesize
@@ -838,15 +863,19 @@ Relaxing the truncation order $p$ in the multipole expansions as Krylov iteratio
 	\end{algorithmic}
 \end{algorithm}
 
- \clearpage
+\clearpage
 %% Acnowledgements
-\textbf{Acknowledgements.}
-Dr. Cris Cecka (Harvard University, currently at Nvidia Corp.) contributed greatly to the code used in this research, particularly writing the octree and base evaluator. He later continued developing his fast-multipole framework, which evolved into his FMMTL project; see \href{https://github.com/ccecka/fmmtl}{https://github.com/ccecka/fmmtl}.
-The authors also wish to acknowledge valuable interactions with Dr. Christopher Cooper (Boston University, currently at Universidad T{\'e}cnica Federico Santa Mar{\'i}a) that helped with the implementation of the boundary element method.
+%%\textbf{Acknowledgements.}
+\section*{Acknowledgements}
+ This work was supported by the National Science Foundation via NSF CAREER award OCI-1149784. LAB also acknowledges support from NVIDIA Corp.\ via the CUDA Fellows Program. 
+Dr. Cris Cecka (previously at Harvard University, currently at Nvidia Corp.) contributed to the development of the code, particularly writing the octree and base evaluator. He later continued developing his fast-multipole framework, which evolved into his FMMTL project; see \href{https://github.com/ccecka/fmmtl}{https://github.com/ccecka/fmmtl}.
+The authors also wish to acknowledge valuable interactions with Dr. Christopher Cooper (previously at Boston University, currently at Universidad T{\'e}cnica Federico Santa Mar{\'i}a) that helped with the implementation of the boundary element method.
 
+
+\section*{References}
 %% Bibliography
-\bibliographystyle{siam}
-\bibliography{bem,cfd,CompBio,FastMethods,InexactMatVec,scicomp}
+\bibliographystyle{elsarticle-num}
+\bibliography{bem,cfd,compbio,fastmethods,inexactmatvec,scicomp}
 
 \end{document}
 %% end of file `docultex.tex'

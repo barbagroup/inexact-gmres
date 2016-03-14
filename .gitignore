@@ -1,8 +1,10 @@
 
 BarbaETal2015-inexact-gmres.pdf
-
+.DS_Store
 *.aux
-
+*.blg
 *.log
-
 *.out
+*.spl
+
+*.gz
