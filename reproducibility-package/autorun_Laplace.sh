@@ -32,9 +32,9 @@ printf ">>>LaplaceBEM convergence test for the 2nd-kind problem completed!\n"
 # Fig-6 Residual & required-p: 1st-kind problem: N = 32768, solver_tol = 1e-5, with relaxation
 printf "LaplaceBEM Residual History and required-p:\n" >> $OUT
 printf "case 1:\n" >> $OUT
-eval $DIR$kerne -p 8 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
+eval $DIR$kerne -p 8 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
 printf "case 2:\n" >> $OUT
-eval $DIR$kerne -p 12 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
+eval $DIR$kerne -p 12 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
 printf ">>>LaplaceBEM residual history test completed!\n"
 
 # Fig-7 Table-1 Speedup 1st-kind:
@@ -61,12 +61,12 @@ for i in {5..8}
 do
 	printf "recursions = $i fixed-p 2nd-kind\n" >> $OUT
 	for j in {1..3}
-	do eval $DIR$kernel -p 8 -recursions $i -ncrit 400 -fixed_p -second_kind -solver_tol 1e-6 | grep -i "solve " >> $OUT
+	do eval $DIR$kernel -p 10 -k 4 -recursions $i -ncrit 400 -fixed_p -second_kind -solver_tol 1e-6 | grep -i "solve " >> $OUT
 	done
 
 	printf "recursions = $i relaxed 2nd-kind\n" >> $OUT
 	for j in {1..3}
-	do eval $DIR$kernel -p 8 -recursions $i -ncrit ${ncrit_r_set[$i]} -second_kind -solver_tol 1e-6 | grep -i "solve " >> $OUT
+	do eval $DIR$kernel -p 8 -k 4 -recursions $i -ncrit ${ncrit_r_set[$i]} -second_kind -solver_tol 1e-6 | grep -i "solve " >> $OUT
 	done
 done
 printf ">>>LaplaceBEM speedup test for the 2nd-kind problem completed!\n"
