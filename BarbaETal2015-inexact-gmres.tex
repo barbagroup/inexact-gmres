@@ -129,7 +129,7 @@
 \ead{twang66@gwu.edu}
 
 \author[bu,nvidia]{Simon K. Layton\fnref{fn1}}
-\ead{slayton@bu.edu}
+\ead{slayton@nvidia.com}
 
 \author[gwu]{Lorena A. Barba}
 \ead{labarba@gwu.edu}
@@ -396,18 +396,18 @@ This convergence analysis gives confidence in our \bem code, the singular/near-s
 \begin{figure}[t]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceConvergence.pdf}
-	\caption{Convergence of 1st-kind (solid line) and 2nd-kind (dotted line) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vecctor products, with parameters: $\theta_{\text{MAC}} = 0.5$, $p=12$, $k=4$ and solver tolerance of $10^{-6}$ (no relaxation). For the 1st-kind formulation, we also used $p=10$ (thinner solid line) to show a degradation of grid-convergence with lower $p$. The vertical axis is the normalized $L^2$-norm of the relative error with respect to the analytical solution for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{Convergence of 1st-kind (solid line) and 2nd-kind (dotted line) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vector products, with parameters: $\theta_{\text{MAC}} = 0.5$, $p=12$, $k=4$ and solver tolerance of $10^{-6}$ (no relaxation). For the 1st-kind formulation, we also used $p=10$ (thinner solid line) to show a degradation of grid-convergence with lower $p$. The vertical axis is the $L^2$-norm of the relative error with respect to the analytical solution for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:laplaceconvergence}
 \end{center}
 \end{figure}
 
-Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and  what value of $p$ is required in the \fmm-accelerated mat-vecs to continue convergence. We discretized a sphere with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-6}$ with an initial value of $p$ set to 8 and 12. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 2 is sufficient by the ninth iteration for $p_\text{{initial}}=8$ and by the fourth iteration for $p_{\text{initial}}=12$. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale from $\bigO(p^{4})$ for spherical harmonics to $\bigO(p^{6})$ for Cartesian expansions. A more accurate first iteration results in a faster drop of required-$p$ and fewer iterations. 
+Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and  what value of $p$ is required in the \fmm-accelerated mat-vecs to continue convergence, according to Equation \eqref{eqn:fmm_p}. We discretized a sphere with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-6}$ with an initial value of $p$ set to 8 and 12. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 2 is sufficient by the ninth iteration for $p_\text{{initial}}=8$ and by the fourth iteration for $p_{\text{initial}}=12$. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale from $\bigO(p^{4})$ for spherical harmonics to $\bigO(p^{6})$ for Cartesian expansions. A more accurate first iteration results in a faster drop of required-$p$ and fewer iterations. 
 But we note that only the far-field evaluation can be sped-up with the relaxation strategy, which means that the correct balance between near field and far field in the \fmm could change as we reset $p$ in the later iterations.
 
 \begin{figure}%[ht]
 	\centering
 	\includegraphics[natwidth=7in,natheight=2in,width=0.95\textwidth]{LaplaceResidualIterations.pdf}
-	\caption{In a test using a sphere discretized with $32,768$ triangles, with $k=4$, $p_{inital}=8$ (left plot) and $p_{initial}=12$ (right plot), the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{In a test using a sphere discretized with $32,768$ triangles, with $k=4$, $p_\text{initial}=8$ (left plot) and $p_\text{initial}=12$ (right plot), the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:residualp}
 \end{figure}
 
@@ -421,7 +421,7 @@ We also repeated the experiments with less stringent accuracy settings of $p=8$,
 \begin{figure}%[h]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceSpeedupRelaxation.pdf}
-	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations. Initial $p=10$, $k=4$, solver tolerance $10^{-6}$. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations. Initial $p=10$, $k=4$, solver tolerance $10^{-6}$. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:relaxation_timing}
 \end{figure}
 
@@ -471,7 +471,7 @@ To better evaluate the potential speedup in more general cases, we designed test
 \begin{figure}%[ht]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceRelaxationP.pdf}
-	\caption{Timings for solving a 1st-kind Laplace integral formulation on a sphere discretized with $32,768$ panels, using a relaxed \gmres with different initial values of $p$, compared with a fixed-$p$ solver. The iteration count was capped at 10 for all cases. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{Timings for solving a 1st-kind Laplace integral formulation on a sphere discretized with $32,768$ panels, using a relaxed \gmres with different initial values of $p$, compared with a fixed-$p$ solver. The iteration count was capped at 10 for all cases. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:laplace_p_speedup}
 \end{figure}
 
@@ -503,7 +503,7 @@ The final case looks at the situation where the application might demand differe
 \begin{figure}%[ht]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceSpeedupTolerance.pdf}
-	\caption{Speed-ups for solving a 1st-kind Laplace integral problem on a sphere discretized with $8,192$ panels, as the \gmres solver's tolerance increases; $p=10$ for all cases. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{Speed-ups for solving a 1st-kind Laplace integral problem on a sphere discretized with $8,192$ panels, as the \gmres solver's tolerance increases; $p=10$ for all cases. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:laplace_tolerance_speedup}
 \end{figure}
 
@@ -561,7 +561,6 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 \end{center}
 \end{figure}
 
-% what does "the figure also includes a plot the residual history" mean?
 Figure \ref{fig:stokes_relaxation_breakdown} illustrates clearly how we need to adjust the balance between near field and far field when using relaxation strategies. Because most of the time is spent computing at the low values of $p$, we need to start with a bloated far field. The bar plot shows the breakdown of time spent in the {\ptop} and {\mtol} kernels for each iteration: although the first iteration is unbalanced, with far field taking about 8 times as much \cpu\ time as near field, later iterations are close to balanced and the total time to solution is optimal. 
 We ran extensive tests on the minimum value of $p$ allowed in the relaxed solver, without degrading convergence and accuracy. Table \ref{tab:stokes_min_p} presents some of the data from these tests: for finer surface discretizations, the error degrades when the relaxed value of $p$ is allowed to drop below 3 or 4. To be conservative and avoid any degradation in accuracy, we used a $\pmin=5$ for all further cases with the Stokes equation.
 
@@ -602,7 +601,7 @@ Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \g
 \begin{figure}%[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSpeedupRelaxation.pdf}
-	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$. $10^{-5}$ solver tolerance, $p=16$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
+	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$. $10^{-5}$ solver tolerance, $p=16$. Time is measured by averaging the solving time of three identical runs. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_speedup}
 \end{center}
 \end{figure}
@@ -610,7 +609,7 @@ Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \g
 \begin{figure}%[ht]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSpeedupTolerance.pdf}
-	\caption{Speed-ups for solving a 1st-kind Stokes problem on a sphere discretized with $8,192$ panels, as the \gmres solver's tolerance increases; $p=16$ for all cases. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
+	\caption{Speed-ups for solving a 1st-kind Stokes problem on a sphere discretized with $8,192$ panels, as the \gmres solver's tolerance increases; $p=16$ for all cases. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_tolerance_speedup}
 \end{figure}
 
@@ -820,7 +819,7 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 \begin{figure}[ht]
 \begin{center}
 	\includegraphics[natwidth=4in,natheight=3in,width=0.55\textwidth]{EthrocyteMultipleCellSpeedup.pdf}
-	\caption{Speed-ups of the relaxation strategy with several red blood cells in uniform Stokes flow, using different mesh sizes on each cell. The abscissa value corresponds to the total number of panels (all cells). Test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
+	\caption{Speed-ups of the relaxation strategy with several red blood cells in uniform Stokes flow, using different mesh sizes on each cell. The abscissa value corresponds to the total number of panels (all cells). Test parameters shown in Table \ref{tab:cells_relaxation_settings}. Time is measured by averaging the solving time of three identical runs.} 
 	\label{fig:multiple_cell_speedup}
 \end{center}
 \end{figure}
