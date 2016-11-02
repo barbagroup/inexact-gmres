@@ -187,18 +187,18 @@ To write the Laplace equation, $\nabla^{2}\phi(\vect{x}) = 0$,  in its integral 
 	\frac{1}{2}\phi_i = \sum_{j=1}^{N} \partiald{\phi_j}{\nhat_j}\;\int_{\Gamma}G_{ij}\di{\Gamma_j} - \sum_{j=1}^{N} \phi_j\int_{\Gamma}\partiald{G_{ij}}{\nhat_j}\;\di{\Gamma_j}.
 \end{equation}
 
-The values of the potential or its normal derivative on each panel are known from boundary conditions, resulting in either first-kind or second-kind integral equations. Finding the remaining unknowns requires solving a system of linear equations $A\vect{x}=\vect{b}$, where the elements of the coefficient matrix are
+The values of the potential or its normal derivative on each panel are known from boundary conditions, resulting in either first-kind or second-kind integral equations. Finding the remaining unknowns requires solving a system of linear equations $A\vect{x}=\vect{b}$. The elements of the coefficient matrix are
 %
 \begin{equation} \label{eqn:laplace_matrix}
 	A_{ij} = 
 	\begin{cases}
 		\int_{\Gamma} G_{ij}\;\di{\Gamma_j}, & \phi\;\text{given on panel}\;j \\
-		\int_{\Gamma} \partiald{G_{ij}}{\nhat_j}\;\di{\Gamma_j}, & \partiald{\phi}{\nhat}\;\text{given on panel } j
+		\int_{\Gamma} \partiald{G_{ij}}{\nhat_j}\;\di{\Gamma_j} + \frac{1}{2} I_{ij}, & \partiald{\phi}{\nhat}\;\text{given on panel } j
 	\end{cases}
 \end{equation}
 
 \noindent
-and $\vect{b}$ is formed with the known terms: e.g., if $\phi$ is given on panel $j$, then $\phi_j\int_{\Gamma_j}\partialdi{G_{ij}}{\nhat_j}\;\di{\Gamma_j}$ will appear in the term $b_i$ on the right-hand side of the linear system.
+where $I$ is an identity matrix. The right-hand side vector $\vect{b}$ is formed with the known terms: e.g., if $\phi$ is given on panel $j$, then $\phi_j\int_{\Gamma_j}\partialdi{G_{ij}}{\nhat_j}\;\di{\Gamma_j}$ will appear in the term $b_i$.
 
 Expressing $G_{ij}$ and $\partialdi{G_{ij}}{\nhat_j}$ in terms of $1/r$ and $\nhat_j\cdot\nabla(1/r)$
 %
