@@ -203,8 +203,8 @@ where $I$ is an identity matrix. The right-hand side vector $\vect{b}$ is formed
 Expressing $G_{ij}$ and $\partialdi{G_{ij}}{\nhat_j}$ in terms of $1/r$ and $\nhat_j\cdot\nabla(1/r)$
 %
 \begin{eqnarray}
-	\label{eqn:laplace_bem_G}\int_{\Gamma} G_{ij}\;\di{\Gamma_j} & = & \int_{\Gamma} \frac{1}{|\vect{x}_i-\vect{x}_j|} \;\di{\Gamma_j} \\ 
-	\label{eqn:laplace_bem_dGdn}\int_{\Gamma} \partiald{G_{ij}}{\nhat_j}\;\di{\Gamma_j} & = & \int_{\Gamma}\frac{d\vect{x}\cdot\nhat_j}{|\vect{x}_i-\vect{x}_j|^{3}}\;\di{\Gamma_j}
+	\label{eqn:laplace_bem_G}\int_{\Gamma} G_{ij}\;\di{\Gamma_j} & = & \frac{1}{4\pi}\int_{\Gamma} \frac{1}{|\vect{x}_i-\vect{x}_j|} \;\di{\Gamma_j} \\ 
+	\label{eqn:laplace_bem_dGdn}\int_{\Gamma} \partiald{G_{ij}}{\nhat_j}\;\di{\Gamma_j} & = & \frac{1}{4\pi}\int_{\Gamma}\frac{d\vect{x}\cdot\nhat_j}{|\vect{x}_i-\vect{x}_j|^{3}}\;\di{\Gamma_j}
 \end{eqnarray}
 
 The next steps are to apply an appropriate numerical integration scheme in order to generate all the terms of the coefficient matrix, and subsequently solve the linear system of equations, as described below.
@@ -257,9 +257,9 @@ Applying Gauss quadrature to the integrals appearing in the coefficients of the 
 %
 \begin{eqnarray}
 	\label{eqn:gauss:1st-kind}
-	\int_{\Gamma} G(\vect{x}_i,\vect{x}_j)\;\di{\Gamma_j} & \approx & \sum_{k=1}^{K} q_k\cdot S_j\cdot \frac{1}{|\vect{x}_i-\vect{x}_k|},\;\;\vect{x}_k \in \Gamma_j, \\ 
+	\int_{\Gamma} G(\vect{x}_i,\vect{x}_j)\;\di{\Gamma_j} & \approx & \frac{1}{4\pi} \sum_{k=1}^{K} q_k\cdot S_j\cdot \frac{1}{|\vect{x}_i-\vect{x}_k|},\;\;\vect{x}_k \in \Gamma_j, \\ 
 	\label{eqn:gauss:2nd-kind}
-	\int_{\Gamma} \partiald{G(\vect{x}_i,\vect{x}_j)}{\nhat_j}\;\di{\Gamma_j} & \approx & \sum_{k=1}^{K}q_k\cdot S_j\cdot \frac{d\vect{x}\cdot\nhat_j}{|\vect{x}_i-\vect{x}_k|^{3}},\;\;\vect{x}_k \in \Gamma_j,
+	\int_{\Gamma} \partiald{G(\vect{x}_i,\vect{x}_j)}{\nhat_j}\;\di{\Gamma_j} & \approx & \frac{1}{4\pi} \sum_{k=1}^{K}q_k\cdot S_j\cdot \frac{d\vect{x}\cdot\nhat_j}{|\vect{x}_i-\vect{x}_k|^{3}},\;\;\vect{x}_k \in \Gamma_j,
 \end{eqnarray}
 
 \noindent
