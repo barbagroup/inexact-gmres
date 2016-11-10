@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+# inexact-GMRES reproducibility package:
+# This script will automatically run a couple of tests on a Laplace problem to 
+# generate the result data, which will be later used for reproducing the figures
+# and tables in our paper.
 
 # set the number of threads (using # of physical cores)
 export OMP_NUM_THREADS=6
@@ -6,35 +11,82 @@ export OMP_NUM_THREADS=6
 # define the path
 DIR="./"
 
-# LaplaceBEM kernel
-kernel="LaplaceBEM"
+# define KERNEL name
+KERNEL="LaplaceBEM"
 
-# define the result file
+# define the result filename
 OUT='Laplace_result'
 
 # remove the existing result file
 rm -f $OUT
 
-# Fig-5 Convergence: 1st-kind problem: p = 12, solver_tol = 1e-6, no relaxation 
+########## Convergence: 1st-kind problem: ##########
+
+# fixed-p, tight parameters: p = 20, k = 13, tol = 1e-10, ncrit = 400
 printf "LaplaceBEM Convergence - 1st-kind:\n" >> $OUT
-for i in {3..7}
-do eval $DIR$kernel -p 12 -fixed_p -k 4 -ncrit 400 -solver_tol 1e-6 -recursions $i | grep -i relative >> $OUT
+for i in {3..8}; do
+	eval $DIR$KERNEL -p 20 -fixed_p -k 13 -ncrit 400 -solver_tol 1e-10 -recursions $i | grep 'external phi' >> $OUT
 done
+
+# fixed-p, loose parameters:
+read p[{6..8}] <<< $(echo 8 10 10)
+read ncrit[{6..8}] <<< $(echo 300 400 500)
+for i in {6..8}; do
+	eval $DIR$KERNEL -p ${p[$i]} -fixed_p -k 4 -ncrit ${ncrit[$i]} -solver_tol 1e-6 -recursions $i | grep 'external phi' >> $OUT
+done
+
+# relaxed-p, loose parameters:
+read ncrit[{6..8}] <<< $(echo 100 100 200)
+for i in {6..8}; do
+	eval $DIR$KERNEL -p ${p[$i]} -k 4 -ncrit ${ncrit[$i]} -solver_tol 1e-6 -recursions $i | grep 'external phi' >> $OUT
+done
+
+# print out messages
 printf ">>>LaplaceBEM convergence test for the 1st-kind problem completed!\n"
+
+
+########## Convergence: 2nd-kind problem: ##########
+
+# fixed-p, tight parameters: p = 20, k = 13, tol = 1e-10, ncrit = 400
+printf "LaplaceBEM Convergence - 2nd-kind:\n" >> $OUT
+for i in {3..8}; do
+	eval $DIR$KERNEL -p 20 -fixed_p -k 13 -ncrit 400 -solver_tol 1e-10 -recursions $i -second_kind | grep 'external phi' >> $OUT
+done
+
+# fixed-p, loose parameters:
+read p[{6..8}] <<< $(echo 8 10 10)
+read ncrit[{6..8}] <<< $(echo 300 400 500)
+for i in {6..8}; do
+	eval $DIR$KERNEL -p ${p[$i]} -fixed_p -k 4 -ncrit ${ncrit[$i]} -solver_tol 1e-6 -recursions $i -second_kind | grep 'external phi' >> $OUT
+done
+
+# relaxed-p, loose parameters:
+read ncrit[{6..8}] <<< $(echo 300 300 300)
+for i in {6..8}; do
+	eval $DIR$KERNEL -p ${p[$i]} -k 4 -ncrit ${ncrit[$i]} -solver_tol 1e-6 -recursions $i -second_kind | grep 'external phi' >> $OUT
+done
+
+# print out messages
+printf ">>>LaplaceBEM convergence test for the 2nd-kind problem completed!\n"
+
+
+
+# comment out below
+: <<'END'
 
 # Fig-5 Convergence: 2nd-kind problem: p = 12, solver_tol = 1e-6, no relaxation
 printf "LaplaceBEM Convergence - 2nd-kind:\n" >> $OUT
 for i in {3..7}
-do eval $DIR$kernel -p 12 -fixed_p -k 4 -ncrit 400 -solver_tol 1e-6 -recursions $i -second_kind | grep -i relative >> $OUT
+do eval $DIR$KERNEL -p 12 -fixed_p -k 4 -ncrit 400 -solver_tol 1e-6 -recursions $i -second_kind | grep -i relative >> $OUT
 done
 printf ">>>LaplaceBEM convergence test for the 2nd-kind problem completed!\n"
 
 # Fig-6 Residual & required-p: 1st-kind problem: N = 32768, solver_tol = 1e-6, with relaxation
 printf "LaplaceBEM Residual History and required-p:\n" >> $OUT
 printf "case 1:\n" >> $OUT
-eval $DIR$kernel -p 8 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
+eval $DIR$KERNEL -p 8 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
 printf "case 2:\n" >> $OUT
-eval $DIR$kernel -p 12 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
+eval $DIR$KERNEL -p 12 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
 printf ">>>LaplaceBEM residual history test completed!\n"
 
 # Fig-7 Table-1 Speedup 1st-kind:
@@ -45,12 +97,12 @@ for i in {5..8}
 do
 	printf "recursions = $i fixed-p 1st-kind\n" >> $OUT
 	for j in {1..3}
-	do eval $DIR$kernel -p 10 -k 4 -recursions $i -ncrit 400 -fixed_p -solver_tol 1e-6 | grep -i "solve " >> $OUT
+	do eval $DIR$KERNEL -p 10 -k 4 -recursions $i -ncrit 400 -fixed_p -solver_tol 1e-6 | grep -i "solve " >> $OUT
 	done
 
 	printf "recursions = $i relaxed 1st-kind\n" >> $OUT
 	for j in {1..3}
-	do eval $DIR$kernel -p 10 -k 4 -recursions $i -ncrit ${ncrit_r_set[$i]} -solver_tol 1e-6 | grep -i "solve " >> $OUT
+	do eval $DIR$KERNEL -p 10 -k 4 -recursions $i -ncrit ${ncrit_r_set[$i]} -solver_tol 1e-6 | grep -i "solve " >> $OUT
 	done
 done
 printf ">>>LaplaceBEM speedup test for the 1st-kind problem completed!\n"
@@ -63,12 +115,12 @@ for i in {5..8}
 do
 	printf "recursions = $i fixed-p 2nd-kind\n" >> $OUT
 	for j in {1..3}
-	do eval $DIR$kernel -p 10 -k 4 -recursions $i -ncrit 400 -fixed_p -second_kind -solver_tol 1e-6 | grep -i "solve " >> $OUT
+	do eval $DIR$KERNEL -p 10 -k 4 -recursions $i -ncrit 400 -fixed_p -second_kind -solver_tol 1e-6 | grep -i "solve " >> $OUT
 	done
 
 	printf "recursions = $i relaxed 2nd-kind\n" >> $OUT
 	for j in {1..3}
-	do eval $DIR$kernel -p 10 -k 4 -recursions $i -ncrit ${ncrit_r_set[$i]} -second_kind -solver_tol 1e-6 | grep -i "solve " >> $OUT
+	do eval $DIR$KERNEL -p 10 -k 4 -recursions $i -ncrit ${ncrit_r_set[$i]} -second_kind -solver_tol 1e-6 | grep -i "solve " >> $OUT
 	done
 done
 printf ">>>LaplaceBEM speedup test for the 2nd-kind problem completed!\n"
@@ -86,12 +138,12 @@ for i in {1..5}
 do
     printf "p=${p_set[$i]}, fixed-p 1st-kind:\n" >> $OUT
     for j in {1..3}
-    do eval $DIR$kernel -p ${p_set[$i]} -recursions 7 -ncrit ${ncrit_f_set[$i]} -fixed_p -solver_tol ${tol_f_set[$i]} | grep -i "solve " >> $OUT
+    do eval $DIR$KERNEL -p ${p_set[$i]} -recursions 7 -ncrit ${ncrit_f_set[$i]} -fixed_p -solver_tol ${tol_f_set[$i]} | grep -i "solve " >> $OUT
     done
 
     printf "p=${p_set[$i]}, relaxed-p 1st-kind:\n" >> $OUT
     for j in {1..3}
-    do eval $DIR$kernel -p ${p_set[$i]} -recursions 7 -ncrit ${ncrit_r_set[$i]} -solver_tol ${tol_r_set[$i]} | grep -i "solve " >> $OUT
+    do eval $DIR$KERNEL -p ${p_set[$i]} -recursions 7 -ncrit ${ncrit_r_set[$i]} -solver_tol ${tol_r_set[$i]} | grep -i "solve " >> $OUT
     done
 done
 printf ">>>LaplaceBEM speedup test with an increasing p_initial completed!\n"
@@ -106,12 +158,14 @@ for i in {1..7}
 do
 	printf "tol=${tol_set[$i]}, fixed-p:\n" >> $OUT
 	for j in {1..3}
-	do eval $DIR$kernel -p 10 -recursions 6 -ncrit ${ncrit_f_set[$i]} -fixed_p -solver_tol ${tol_set[$i]} | grep -i "solve " >> $OUT
+	do eval $DIR$KERNEL -p 10 -recursions 6 -ncrit ${ncrit_f_set[$i]} -fixed_p -solver_tol ${tol_set[$i]} | grep -i "solve " >> $OUT
 	done
 
 	printf "tol=${tol_set[$i]}, relaxed-p:\n" >> $OUT
 	for j in {1..3}
-	do eval $DIR$kernel -p 10 -recursions 6 -ncrit ${ncrit_r_set[$i]} -solver_tol ${tol_set[$i]} | grep -i "solve " >> $OUT
+	do eval $DIR$KERNEL -p 10 -recursions 6 -ncrit ${ncrit_r_set[$i]} -solver_tol ${tol_set[$i]} | grep -i "solve " >> $OUT
 	done
 done
 printf ">>>LaplaceBEM speedup test with various tolerances completed!\n"
+
+END
