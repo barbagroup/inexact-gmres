@@ -20,7 +20,10 @@ OUT='Laplace_result'
 # remove the existing result file
 rm -f $OUT
 
+
+####################################################
 ########## Convergence: 1st-kind problem: ##########
+####################################################
 
 # fixed-p, tight parameters: p = 20, k = 13, tol = 1e-10, ncrit = 400
 printf "LaplaceBEM Convergence - 1st-kind:\n" >> $OUT
@@ -45,7 +48,9 @@ done
 printf ">>>LaplaceBEM convergence test for the 1st-kind problem completed!\n"
 
 
+####################################################
 ########## Convergence: 2nd-kind problem: ##########
+####################################################
 
 # fixed-p, tight parameters: p = 20, k = 13, tol = 1e-10, ncrit = 400
 printf "LaplaceBEM Convergence - 2nd-kind:\n" >> $OUT
@@ -70,24 +75,30 @@ done
 printf ">>>LaplaceBEM convergence test for the 2nd-kind problem completed!\n"
 
 
+###################################################################
+########## Residual & required-p plot: 1st-kind problem: ##########
+###################################################################
+
+# N = 32768, k = 4, solver_tol = 1e-6, ncrit = 100 (optimal), p = {8,10} with relaxation
+printf "LaplaceBEM Residual History and required-p:\n" >> $OUT
+
+# case 1 when p = 8
+printf "case 1, p = 8:\n" >> $OUT
+eval $DIR$KERNEL -p 8 -k 4 -recursions 7 -ncrit 100 -solver_tol 1e-6 | grep -E "fmm_req_p|residual" >> $OUT
+
+# case 2 when p = 10
+printf "case 2, p = 10:\n" >> $OUT
+eval $DIR$KERNEL -p 10 -k 4 -recursions 7 -ncrit 100 -solver_tol 1e-6 | grep -E "fmm_req_p|residual" >> $OUT
+
+# print out messages
+printf ">>>LaplaceBEM residual history & required-p test completed!\n"
+
+
+
+
 
 # comment out below
 : <<'END'
-
-# Fig-5 Convergence: 2nd-kind problem: p = 12, solver_tol = 1e-6, no relaxation
-printf "LaplaceBEM Convergence - 2nd-kind:\n" >> $OUT
-for i in {3..7}
-do eval $DIR$KERNEL -p 12 -fixed_p -k 4 -ncrit 400 -solver_tol 1e-6 -recursions $i -second_kind | grep -i relative >> $OUT
-done
-printf ">>>LaplaceBEM convergence test for the 2nd-kind problem completed!\n"
-
-# Fig-6 Residual & required-p: 1st-kind problem: N = 32768, solver_tol = 1e-6, with relaxation
-printf "LaplaceBEM Residual History and required-p:\n" >> $OUT
-printf "case 1:\n" >> $OUT
-eval $DIR$KERNEL -p 8 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
-printf "case 2:\n" >> $OUT
-eval $DIR$KERNEL -p 12 -k 4 -recursions 7 -ncrit 150 -solver_tol 1e-6 | grep -i fmm_req_p >> $OUT
-printf ">>>LaplaceBEM residual history test completed!\n"
 
 # Fig-7 Table-1 Speedup 1st-kind:
 # set optimal ncrits
