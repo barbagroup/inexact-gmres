@@ -11,7 +11,7 @@ export OMP_NUM_THREADS=6
 # define the path
 DIR="./"
 
-# define KERNEL name
+# define kernel name
 KERNEL="LaplaceBEM"
 
 # define the result filename
@@ -25,8 +25,9 @@ rm -f $OUT
 ########## Convergence: 1st-kind problem: ##########
 ####################################################
 
-# fixed-p, tight parameters: p = 20, k = 13, tol = 1e-10, ncrit = 400
 printf "LaplaceBEM Convergence - 1st-kind:\n" >> $OUT
+
+# fixed-p, tight parameters: p = 20, k = 13, tol = 1e-10, ncrit = 400
 for i in {3..8}; do
 	eval $DIR$KERNEL -p 20 -fixed_p -k 13 -ncrit 400 -solver_tol 1e-10 -recursions $i | grep 'external phi' >> $OUT
 done
@@ -46,15 +47,16 @@ for i in {6..8}; do
 done
 
 # print out messages
-printf ">>>LaplaceBEM convergence test for the 1st-kind problem completed!\n"
+printf ">>> LaplaceBEM convergence test for the 1st-kind problem completed!\n"
 
 
 ####################################################
 ########## Convergence: 2nd-kind problem: ##########
 ####################################################
 
-# fixed-p, tight parameters: p = 20, k = 13, tol = 1e-10, ncrit = 400
 printf "LaplaceBEM Convergence - 2nd-kind:\n" >> $OUT
+
+# fixed-p, tight parameters: p = 20, k = 13, tol = 1e-10, ncrit = 400
 for i in {3..8}; do
 	eval $DIR$KERNEL -p 20 -fixed_p -k 13 -ncrit 400 -solver_tol 1e-10 -recursions $i -second_kind | grep 'external phi' >> $OUT
 done
@@ -67,44 +69,46 @@ for i in {6..8}; do
 done
 
 # relaxed-p, loose parameters:
+read p[{6..8}] <<< $(echo 8 10 10)
 read ncrit[{6..8}] <<< $(echo 300 300 300)
 for i in {6..8}; do
 	eval $DIR$KERNEL -p ${p[$i]} -k 4 -ncrit ${ncrit[$i]} -solver_tol 1e-6 -recursions $i -second_kind | grep 'external phi' >> $OUT
 done
 
 # print out messages
-printf ">>>LaplaceBEM convergence test for the 2nd-kind problem completed!\n"
+printf ">>> LaplaceBEM convergence test for the 2nd-kind problem completed!\n"
 
 
 ###################################################################
 ########## Residual & required-p plot: 1st-kind problem: ##########
 ###################################################################
 
-# N = 32768, k = 4, solver_tol = 1e-6, ncrit = 100 (optimal), p = {8,10} with relaxation
 printf "LaplaceBEM Residual History and required-p:\n" >> $OUT
 
-# case 1 when p = 8
+# N = 32768, k = 4, solver_tol = 1e-6, ncrit = 100 (optimal), p = {8,10} with relaxation
+
+# case 1 when p = 8:
 printf "case 1, p = 8:\n" >> $OUT
 eval $DIR$KERNEL -p 8 -k 4 -recursions 7 -ncrit 100 -solver_tol 1e-6 | grep -E "fmm_req_p|residual" >> $OUT
 
-# case 2 when p = 10
+# case 2 when p = 10:
 printf "case 2, p = 10:\n" >> $OUT
 eval $DIR$KERNEL -p 10 -k 4 -recursions 7 -ncrit 100 -solver_tol 1e-6 | grep -E "fmm_req_p|residual" >> $OUT
 
 # print out messages
-printf ">>>LaplaceBEM residual history & required-p test completed!\n"
+printf ">>> LaplaceBEM residual history & required-p test completed!\n"
 
 
 #####################################################
 ########## Speedup test: 1st-kind problem: ##########
 #####################################################
 
+printf "LaplaceBEM speedup test - 1st-kind:\n" >> $OUT
+
 # Speedup 1st-kind: using loose parameters, optimal ncrits
 read p[{6..8}] <<< $(echo 8 10 10)   # p or p_intial
 read ncrit_f[{6..8}] <<< $(echo 300 400 500)   # fixed-p
 read ncrit_r[{6..8}] <<< $(echo 100 100 200)   # relaxed-p
-
-printf "LaplaceBEM speedup test - 1st-kind:\n" >> $OUT
 
 for i in {6..8}; do
 	
@@ -121,19 +125,19 @@ for i in {6..8}; do
 done
 
 # print out messages
-printf ">>>LaplaceBEM speedup test for the 1st-kind problem completed!\n"
+printf ">>> LaplaceBEM speedup test for the 1st-kind problem completed!\n"
 
 
 #####################################################
 ########## Speedup test: 2nd-kind problem: ##########
 #####################################################
 
+printf "LaplaceBEM speedup test - 2nd-kind:\n" >> $OUT
+
 # Speedup 2nd-kind: using loose parameters, optimal ncrits
 read p[{6..8}] <<< $(echo 8 10 10)   # p or p_intial
 read ncrit_f[{6..8}] <<< $(echo 300 400 500)   # fixed-p
 read ncrit_r[{6..8}] <<< $(echo 300 300 300)   # relaxed-p
-
-printf "LaplaceBEM speedup test - 2nd-kind:\n" >> $OUT
 
 for i in {6..8}; do
 
@@ -148,4 +152,6 @@ for i in {6..8}; do
 	done
 
 done
-printf ">>>LaplaceBEM speedup test for the 2nd-kind problem completed!\n"
+
+# print out messages
+printf ">>> LaplaceBEM speedup test for the 2nd-kind problem completed!\n"
