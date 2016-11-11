@@ -40,7 +40,7 @@ eval $DIR$KERNEL -p 20 -pmin 20 -fixed_p -k 13 -ncrit 150 -solver_tol 1e-10 -rec
 
 # fixed-p, loose parameters:
 read p[{6..8}] <<< $(echo 12 12 14)
-read ncrit[{6..8}] <<< $(echo 400 400 150)
+read ncrit[{6..8}] <<< $(echo 300 400 150)
 
 for i in {6..8}; do
 	eval $DIR$KERNEL -p ${p[$i]} -pmin ${p[$i]} -fixed_p -k 4 -ncrit ${ncrit[$i]} -solver_tol 1e-5 -recursions $i | grep "error on a sphere" >> $OUT
@@ -57,7 +57,7 @@ for i in {6..8}; do
 done
 
 # print out messages
-printf ">>>StokesBEM on a sphere: Convergence test completed!\n"
+printf ">>> StokesBEM on a sphere: Convergence test completed!\n"
 
 
 
@@ -65,11 +65,17 @@ printf ">>>StokesBEM on a sphere: Convergence test completed!\n"
 ########## Time Breakdown P2P vs M2L: ##########
 ################################################
 
-: <<"END"
-# Fig - 12 time breakdown:
 printf "StokesBEM on a sphere: Time breakdown\n" >> $OUT
-eval $DIR$KERNEL -p 16 -recursions 6 -ncrit 150 | grep -i "P2P" >> $OUT
-printf ">>>StokesBEM on a sphere: Time breakdown test completed!\n"
+
+# the optimal case for N = 32768
+# p_init = 12, p_min = 3, k = 4, tol = 1e-5, ncrit = 60
+eval $DIR$KERNEL -p 12 -pmin 3 -k 4 -ncrit 60 -solver_tol 1e-5 -recursions 6 | grep "P2P" >> $OUT
+
+# print out messages
+printf ">>> StokesBEM on a sphere: Time breakdown test completed!\n"
+
+: <<"END"
+
 
 # Fig - 13 Speedup: p = 16, recursions = {5,6,7}, 1st-kind:
 printf "StokesBEM on a sphere: Speedup\n" >> $OUT
