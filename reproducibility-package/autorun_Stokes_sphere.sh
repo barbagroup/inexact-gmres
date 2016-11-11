@@ -74,25 +74,32 @@ eval $DIR$KERNEL -p 12 -pmin 3 -k 4 -ncrit 60 -solver_tol 1e-5 -recursions 6 | g
 # print out messages
 printf ">>> StokesBEM on a sphere: Time breakdown test completed!\n"
 
-: <<"END"
 
 
-# Fig - 13 Speedup: p = 16, recursions = {5,6,7}, 1st-kind:
+###################################
+########## Speedup Test: ##########
+###################################
+
 printf "StokesBEM on a sphere: Speedup\n" >> $OUT
-for i in {5..7}
-do
+
+# speedup test: using loose parameters, optimal ncrits
+read p[{6..8}] <<< $(echo 8 10 10)   # p or p_intial
+read pmin[{6..8}] <<< $(echo 4 3 4)  # p_min
+read ncrit_f[{6..8}] <<< $(echo 300 400 150)   # fixed-p
+read ncrit_r[{6..8}] <<< $(echo 100 60 80)   # relaxed-p
+read tol[{6..8}] <<< $(echo 1e-5 1e-5 5e-6)   # tolerance
+
+for i in {6..8}; do
+
     printf "recursions = $i fixed-p\n" >> $OUT
-    for j in {1..3}
-        do eval $DIR$KERNEL -p 16 -recursions $i -fixed_p -ncrit 400 | grep -i "solve " >> $OUT
+    for j in {1..3}; do 
+    	eval $DIR$KERNEL -p ${p[$i]} -pmin ${p[$i]} -fixed_p -k 4 -ncrit ${ncrit_f[$i]} -solver_tol 1e-5 -recursions $i | grep "solve " >> $OUT
     done
 
     printf "recursions = $i relaxed-p\n" >> $OUT
-    for j in {1..3}
-        do eval $DIR$KERNEL -p 16 -recursions $i -ncrit 150 | grep -i "solve " >> $OUT
+    for j in {1..3}; do
+    	eval $DIR$KERNEL -p ${p[$i]} -pmin ${pmin[$i]} -k 4 -ncrit ${ncrit_r[$i]} -solver_tol ${tol[$i]} -recursions $i | grep "solve " >> $OUT
     done
+
 done
-printf ">>>StokesBEM on a sphere: Speedup test completed!\n"
-
-
-
-END
+printf ">>> StokesBEM on a sphere: Speedup test completed!\n"
