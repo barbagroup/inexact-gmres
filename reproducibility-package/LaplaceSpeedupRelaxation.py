@@ -8,6 +8,7 @@ from matplotlib.backends.backend_pdf import FigureCanvasPdf
 rcParams['font.family'] = 'serif'
 rcParams['font.size'] = '10'
 
+# load result file
 result = open(sys.argv[1])
 lines = result.readlines()
 
@@ -15,14 +16,10 @@ for i,line in enumerate(lines):
     if "LaplaceBEM speedup test - 1st-kind" in line:
         break
 
-for j,line in enumerate(lines):
-	if "LaplaceBEM speedup test with an increasing p_intial" in line:
-		break
-
 # initialize a list of temporary parsing result
 temp = []
 
-for line in lines[i+1:j]:
+for line in lines[i+1:]:
     # remove string "s" (seconds) for parsing
     for elem in line.replace("s","").split():
         try:
@@ -40,8 +37,8 @@ print(time) # values in table
 
 # calculate the speedups
 speedup = time[::2] / time[1::2]
-speedup_1st = speedup[:len(speedup)/2]
-speedup_2nd = speedup[len(speedup)/2:]
+speedup_1st = speedup[:len(speedup)//2]
+speedup_2nd = speedup[len(speedup)//2:]
 
 print(speedup_1st, speedup_2nd) # values in table
 
@@ -52,21 +49,19 @@ width = 0.35
 fig = pyplot.figure(figsize=(3,2), dpi=80)
 ax = fig.add_subplot(111)
 
-# get rid of the smallest case
-speedup_1st = speedup_1st[1:]
-speedup_2nd = speedup_2nd[1:]
-ind	= ind[1:]
-
 # plot log-log
-bar1 = ax.bar(ind, speedup_1st, width, fill=False, edgecolor='k', hatch='..'*2, linewidth=1)
-bar2 = ax.bar(ind+width, speedup_2nd, width, fill=False, edgecolor='k', hatch='/'*3, linewidth=1, alpha=1)
+bar1 = ax.bar(ind, speedup_1st, width, fill=False,
+	          edgecolor='k', hatch='..'*2, linewidth=1)
+bar2 = ax.bar(ind+width, speedup_2nd, width, fill=False,
+	          edgecolor='k', hatch='/'*3, linewidth=1)
 
 # axis labels
 ax.set_ylabel('Speedup', fontsize=10)
-ax.set_xlabel('N', fontsize=10)
+ax.set_xlabel('$N$', fontsize=10)
 ax.set_xticks(ind+width)
 ax.set_xticklabels( ('8192','32768','131072') )
-ax.legend( (bar1[0], bar2[0]), ('1st-kind', '2nd-kind'), loc='upper left', fontsize='small')
+ax.legend((bar1[0], bar2[0]), ('1st-kind', '2nd-kind'),
+	      loc='upper left', fontsize='small')
 fig.subplots_adjust(left=0.185, bottom=0.21, right=0.965, top=0.95)
 canvas = FigureCanvasPdf(fig)
 
