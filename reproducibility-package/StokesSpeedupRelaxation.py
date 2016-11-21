@@ -8,6 +8,7 @@ from matplotlib.backends.backend_pdf import FigureCanvasPdf
 rcParams['font.family'] = 'serif'
 rcParams['font.size'] = '10'
 
+# load result file
 result = open(sys.argv[1])
 lines = result.readlines()
 
@@ -16,13 +17,9 @@ for i,line in enumerate(lines):
     if "StokesBEM on a sphere: Speedup" in line:
         break
 
-for j,line in enumerate(lines):
-    if "StokesBEM on a sphere: Time breakdown" in line:
-        break
-
 temp = []
 
-for line in lines[i+1:j]:
+for line in lines[i+1:]:
     # remove string "s" (seconds) for parsing
     for elem in line.replace("s","").split():
         try:
@@ -30,8 +27,7 @@ for line in lines[i+1:j]:
         except ValueError:
             pass
 
-# remove problem size number from the list
-N = 2 * 4**numpy.array(temp[::8], dtype=int)
+# remove recursion number from the list
 del temp[::4]
 
 # make an average for each case
@@ -39,6 +35,7 @@ time = numpy.mean(numpy.array(temp).reshape(-1,3), axis=1)
 
 # calculate speedup
 speedup = time[::2] / time[1::2]
+print("Speedup: ", speedup)
 
 ind = numpy.arange(len(speedup))
 width = 0.3
@@ -53,7 +50,7 @@ bar = ax.bar(ind+0.1, speedup, width, fill=False, edgecolor='k', hatch='..'*2, l
 # axis labels
 ax.set_xticks(ind+0.1+width/2)
 ax.set_xlim(-0.4, 3)
-ax.set_xticklabels( ('2048','8192','32768') )
+ax.set_xticklabels( ('8192','32768','131072') )
 ax.set_ylabel('Speedup', fontsize=10)
 ax.set_xlabel('N', fontsize=10)
 fig.subplots_adjust(left=0.195, bottom=0.21, right=0.955, top=0.95)
