@@ -83,7 +83,7 @@ printf ">>> StokesBEM on a sphere: Time breakdown test completed!\n"
 printf "StokesBEM on a sphere: Speedup\n" >> $OUT
 
 # speedup test: using loose parameters, optimal ncrits
-read p[{6..8}] <<< $(echo 8 10 10)   # p or p_intial
+read p[{6..8}] <<< $(echo 12 12 14)   # p or p_intial
 read pmin[{6..8}] <<< $(echo 4 3 4)  # p_min
 read ncrit_f[{6..8}] <<< $(echo 300 400 150)   # fixed-p
 read ncrit_r[{6..8}] <<< $(echo 100 60 80)   # relaxed-p
