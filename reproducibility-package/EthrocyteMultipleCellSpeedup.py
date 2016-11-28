@@ -8,29 +8,76 @@ from matplotlib.backends.backend_pdf import FigureCanvasPdf
 rcParams['font.family'] = 'serif'
 rcParams['font.size'] = '10'
 
+# load result file
+result = open(sys.argv[1])
+lines = result.readlines()
+
+for i,line in enumerate(lines):
+    if "StokesBEM on 1 rbc: Speedup test" in line:
+        break
+
+for j,line in enumerate(lines):
+    if "StokesBEM on multiple rbcs: Speedup test" in line:
+        break
+
+# single rbc
+temp1 = []
+
+for line in lines[i+1:j]:
+    # remove string "s" (seconds) for parsing
+    for elem in line.replace("s","").split():
+        try:
+            temp1.append(float(elem))
+        except ValueError:
+            pass
+
+del temp1[::2]
+time_single = numpy.array(temp1).reshape(len(temp1)//3, 3)
+time_single = numpy.mean(time_single, axis=1)
+speedup_single = time_single[::2] / time_single[1::2]
+
+
+# multiple rbcs
+temp2 = []
+for line in lines[j+1:]:
+    # remove string "s" (seconds) for parsing
+    for elem in line.replace("s","").split():
+        try:
+            temp2.append(float(elem))
+        except ValueError:
+            pass
+
+del temp2[::2]
+time_multi = numpy.array(temp2).reshape(len(temp2)//3, 3)
+time_multi = numpy.mean(time_multi, axis=1)
+speedup_multi = time_multi[::2] / time_multi[1::2]
+
+
 # set up data
-N = 4
+# 2048, 8192, 32768 panels per cell
+s_2048 = numpy.array([speedup_single[0], *speedup_multi[:3]])
+s_8192 = numpy.array([0, speedup_single[1], *speedup_multi[3:5]])
+s_32768 = numpy.array([0, 0, speedup_single[2], *speedup_multi[5:]])
 
-eps = 1e-14
-data_relax = numpy.array([[14.61,eps,eps],[87.20,69.03,eps],[444.55,371.06,276.52],[1481.47,1800.53,1397.27]])
-data_fixed = numpy.array([[48.18,0.,0.],[267.64,234.44,0],[1358.07,1494.37,978.80],[7077.77,12817.01,7209.57]])
-
-speedup = data_fixed / data_relax
-
-print(speedup)
-
-ind = numpy.arange(N)
-width = 0.3
+print(s_2048)
+print(s_8192)
+print(s_32768)
 
 # set up plot
 fig = pyplot.figure(figsize=(4,3), dpi=80)
 ax = fig.add_subplot(111)
 
+ind = numpy.arange(4)
+width = 0.3
+
 # plot log-log
-bar1 = ax.bar(ind, speedup[:,0], width, fill=False, edgecolor='k', hatch='..'*2, linewidth=1)
-bar2 = ax.bar(ind+width, speedup[:,1],width,fill=False, edgecolor='k', hatch='//'*2, linewidth=1)
-bar3 = ax.bar(ind+2*width,speedup[:,2],width,fill=False, edgecolor='k', hatch='x'*3, linewidth=1)
-# bar2 = ax.bar(ind+width, speedup_2nd, width, color='b')
+bar1 = ax.bar(ind, s_2048, width, fill=False,
+	          edgecolor='k', hatch='..'*2, linewidth=1)
+bar2 = ax.bar(ind+width, s_8192, width, fill=False,
+	          edgecolor='k', hatch='//'*2, linewidth=1)
+bar3 = ax.bar(ind+2*width, s_32768, width, fill=False,
+	          edgecolor='k', hatch='x'*3, linewidth=1)
+
 
 # axis labels
 ax.set_ylabel('Speedup', fontsize=10)

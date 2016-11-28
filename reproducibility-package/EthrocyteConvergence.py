@@ -14,8 +14,13 @@ lines = result.readlines()
 
 # find line numbers
 for i,line in enumerate(lines):
-    if "StokesBEM on 1 rbc:" in line:
+    if "StokesBEM Convergence on 1 rbc:" in line:
         break
+
+for j,line in enumerate(lines):
+    if "StokesBEM on 1 rbc: num of Iterations test" in line:
+        break
+
 
 # panel numbers
 recursions = numpy.arange(4, 9, dtype=int)
@@ -23,7 +28,7 @@ N = 2 * 4**recursions
 
 temp = []
 
-for line in lines[i+1:]:
+for line in lines[i+1:j]:
 	for elem in line.replace(",","").split():
 		# append numbers
 		try:

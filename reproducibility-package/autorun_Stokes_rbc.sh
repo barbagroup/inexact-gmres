@@ -57,6 +57,23 @@ done
 printf ">>> StokesBEM on 1 rbc: Convergence test completed!\n"
 
 
+###############################################################
+########## num of iterations for one red blood cell: ##########
+###############################################################
+
+# recursions = {3,4}, just for plotting # of iterations for one red blood cell
+# for larger meshes, we obtain the iteration number from the speedup tests below
+
+printf "StokesBEM on 1 rbc: num of Iterations test\n" >> $OUT
+
+for i in {3..4}; do
+
+	eval $DIR$KERNEL -p 14 -pmin 14 -fixed_p -k 4 -ncrit 400 -solver_tol 1e-5 -rbc $i -cells 1 | grep "Final" >> $OUT
+
+done
+
+printf ">>> StokesBEM on 1 rbc: num of Iterations test completed!\n"
+
 #####################################################
 ########## Speedup for one red blood cell: ##########
 #####################################################
@@ -86,9 +103,9 @@ done
 printf ">>> StokesBEM on 1 rbc: Speedup test completed!\n"
 
 
-############################################################
+###########################################################
 ########## Speedup for multiple red blood cells: ##########
-############################################################
+###########################################################
 
 printf "StokesBEM on multiple rbcs: Speedup test\n" >> $OUT
 
