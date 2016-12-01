@@ -52,7 +52,7 @@ e_relaxed = numpy.abs((f_relaxed-f_bar) / f_bar)
 
 # reference line
 # use scale to move up the line (save space for drawing legend)
-scale1 = 1.3
+scale1 = 1.6    # for plot adjustment
 line_sqrtN = 1 / numpy.sqrt(N) * scale1
 
 # set up plot
@@ -71,7 +71,7 @@ ax.loglog(N[1:], e_relaxed, c='k', ls='-', lw=0.5, marker='x',
 ax.loglog(N, line_sqrtN, c='k',ls='--')
 
 # text on plot
-scale2 = 1.2
+scale2 = 0.6    # for plot adjustment
 loc = (3*N[0]+N[1])/4
 tex_loc = numpy.array((loc, N[0]*e[0]/loc)) * scale2
 tex_angle = - 23
