@@ -20,6 +20,11 @@ for j,line in enumerate(lines):
     if "StokesBEM on multiple rbcs: Speedup test" in line:
         break
 
+for k,line in enumerate(lines):
+    if "StokesBEM on multiples rbcs - num of iterations:" in line:
+        break
+
+
 # single rbc
 temp1 = []
 
@@ -39,7 +44,7 @@ speedup_single = time_single[::2] / time_single[1::2]
 
 # multiple rbcs
 temp2 = []
-for line in lines[j+1:]:
+for line in lines[j+1:k]:
     # remove string "s" (seconds) for parsing
     for elem in line.replace("s","").split():
         try:
