@@ -50,6 +50,7 @@ bar = ax.bar(ind+0.1, speedup, width, fill=False, edgecolor='k', hatch='..'*2, l
 # axis labels
 ax.set_xticks(ind+0.1+width/2)
 ax.set_xlim(-0.4, 3)
+ax.set_ylim(0, numpy.ceil(numpy.max(speedup)))
 ax.set_xticklabels( ('8192','32768','131072') )
 ax.set_ylabel('Speedup', fontsize=10)
 ax.set_xlabel('N', fontsize=10)
