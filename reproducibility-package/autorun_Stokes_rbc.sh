@@ -163,3 +163,27 @@ done
 
 # print out messages
 printf ">>> StokesBEM on multiple rbcs: Speedup test completed!\n"
+
+
+#####################################################################
+########## num of iterations for multiple red blood cells: ##########
+#####################################################################
+
+printf "StokesBEM on multiples rbcs - num of iterations:\n" >> $OUT
+
+printf "2048 panels per cell\n" >> $OUT
+for i in 1 2 4 8 16 32 64; do
+	eval $DIR$KERNEL -p 14 -pmin 14 -fixed_p -k 4 -ncrit 400 -solver_tol 1e-5 -rbc 5 -cells $i | grep "Final" >> $OUT
+done
+
+printf "8192 panels per cell\n" >> $OUT
+for i in 1 2 4 8 16; do
+	eval $DIR$KERNEL -p 14 -pmin 14 -fixed_p -k 4 -ncrit 400 -solver_tol 1e-5 -rbc 6 -cells $i | grep "Final" >> $OUT
+done
+
+printf "32768 panels per cell\n" >> $OUT
+for i in 1 2 4; do
+	eval $DIR$KERNEL -p 14 -pmin 14 -fixed_p -k 4 -ncrit 400 -solver_tol 1e-5 -rbc 7 -cells $i | grep "Final" >> $OUT
+done
+
+printf ">>> StokesBEM on multiple rbcs: num of iterations test completed!\n"
