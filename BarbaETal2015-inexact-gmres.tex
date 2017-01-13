@@ -378,7 +378,7 @@ The subsequent experiments investigate the use of a Krylov relaxation strategy b
 
 \subsection{Inexact {\small GMRES} for the solution of the Laplace equation}
 \label{sec:inexactLaplace}
-To start, we studied grid convergence comparing numerical results with the analytical solution using a sphere with constant potential and charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. To make surface triangulations of a sphere with increasing refinement, we started with an 8-triangle closed surface, then split recursively each triangle into four smaller ones. Figure \ref{fig:glob_spheres} shows two example discretizations. We solved the boundary-element problem by collocation in both the first-kind and second-kind integral formulations, using a standard \gmres with fast-multipole-accelerated mat-vecs and the semi-analytical integrals for the singular terms. For the far-field approximations, we used spherical-harmonic expansions with the following parameters in the \fmm: $\theta_{\text{MAC}} = 0.5$, $p = 12$; the number of Gauss points was $k=4$ and the tolerance in the iterative solver was $10^{-6}$. 
+To start, we studied grid convergence comparing numerical results with the analytical solution using a sphere with constant potential and charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. To make surface triangulations of a sphere with increasing refinement, we started with an 8-triangle closed surface, then split recursively each triangle into four smaller ones. Figure \ref{fig:glob_spheres} shows two example discretizations. We solved the boundary-element problem by collocation in both the first-kind and second-kind integral formulations, using a standard \gmres with fast-multipole-accelerated mat-vecs and the semi-analytical integrals for the singular terms. For the far-field approximations, we used spherical-harmonic expansions with the following parameters in the \fmm: $\theta_{\text{MAC}} = 0.5$, $p = 12$; the number of Gauss points was $K=4$ and the tolerance in the iterative solver was $10^{-6}$. 
 Figure \ref{fig:laplaceconvergence} shows the resulting convergence for both first-kind and second-kind formulations of the boundary element method on a sphere. The observed order of convergence is 0.76 for the 1st-kind formulation and 1.02 for the 2nd-kind formulation, computed with the three points in the middle of each line. We also observed that the finest mesh detracts from the convergence line with $p=10$, as the thinner line shows in Figure \ref{fig:laplaceconvergence}; in that case, the discretization error of a simple geometry like a sphere is very small and the error of the \fmm-accelerated mat-vecs overtakes.
 This convergence analysis gives confidence in our \bem code, the singular/near-singular integral calculations, and the far-field approximation using the \fmm.
 
@@ -396,7 +396,7 @@ This convergence analysis gives confidence in our \bem code, the singular/near-s
 \begin{figure}[t]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceConvergence.pdf}
-	\caption{Convergence of 1st-kind (solid line) and 2nd-kind (dotted line) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vector products, with parameters: $\theta_{\text{MAC}} = 0.5$, $p=12$, $k=4$ and solver tolerance of $10^{-6}$ (no relaxation). For the 1st-kind formulation, we also used $p=10$ (thinner solid line) to show a degradation of grid-convergence with lower $p$. The vertical axis is the $L^2$-norm of the relative error with respect to the analytical solution for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{Convergence of 1st-kind (solid line) and 2nd-kind (dotted line) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vector products, with parameters: $\theta_{\text{MAC}} = 0.5$, $p=12$, $K=4$ and solver tolerance of $10^{-6}$ (no relaxation). For the 1st-kind formulation, we also used $p=10$ (thinner solid line) to show a degradation of grid-convergence with lower $p$. The vertical axis is the $L^2$-norm of the relative error with respect to the analytical solution for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:laplaceconvergence}
 \end{center}
 \end{figure}
@@ -407,7 +407,7 @@ But we note that only the far-field evaluation can be sped-up with the relaxatio
 \begin{figure}%[ht]
 	\centering
 	\includegraphics[natwidth=7in,natheight=2in,width=0.95\textwidth]{LaplaceResidualIterations.pdf}
-	\caption{In a test using a sphere discretized with $32,768$ triangles, with $k=4$, $p_\text{initial}=8$ (left plot) and $p_\text{initial}=12$ (right plot), the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{In a test using a sphere discretized with $32,768$ triangles, with $K=4$, $p_\text{initial}=8$ (left plot) and $p_\text{initial}=12$ (right plot), the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:residualp}
 \end{figure}
 
@@ -854,7 +854,7 @@ Relaxing the truncation order $p$ in the multipole expansions as Krylov iteratio
 		\For{Collocation points $i=1\cdots N_p$}
 			\State $w_i \gets 0$
 			\For{Integration panels $j=1 \cdots N_p$}
-				\For{Gauss quadrature points $k= 1 \cdots N_k$}
+				\For{Gauss quadrature points $k= 1 \cdots K$}
 				\State $w_i \gets w_i + v_j \cdot q_k \cdot S_j \, \frac{1}{|\mathbf{x_i}-\mathbf{x_k}|}$
 				\EndFor
 			\EndFor
