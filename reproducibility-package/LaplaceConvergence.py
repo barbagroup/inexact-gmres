@@ -53,15 +53,15 @@ fig = pyplot.figure(figsize=(7,3), dpi=80)
 ax1 = fig.add_subplot(121)
 
 ax1.loglog(N, e1, c='k', ls='-', lw=1.0, marker='o', mfc='w',
-	       ms=5, label='fixed-p, tight parameters')
+	       ms=5, label='non-relaxed, tight parameters')
 ax1.loglog(N[-3:], e1_fixed, c='k', ls='-', lw=0.5, marker='+',
-           ms=5, label='fixed-p, loose parameters')
+           ms=5, label='non-relaxed, loose parameters')
 ax1.loglog(N[-3:], e1_relaxed, c='k', ls='-', lw=0.5, marker='x',
-           ms=5, label='relaxed-p, loose parameters')
+           ms=5, label='relaxed, loose parameters')
 
 ax1.set_xlabel('$N$', fontsize=10)
 ax1.set_ylabel('Relative Error')
-ax1.legend(loc=1, fontsize=7)
+ax1.legend(loc=1, fontsize=6.5)
 ax1.grid('on')
 ax1.set_title('1st-kind', fontsize=10)
 
@@ -69,14 +69,14 @@ ax1.set_title('1st-kind', fontsize=10)
 ax2 = fig.add_subplot(122)
 
 ax2.loglog(N, e2, c='k', ls='-', lw=1.0, marker='o', mfc='w',
-	       ms=5, label='fixed-p, tight parameters')
+	       ms=5, label='non-relaxed, tight parameters')
 ax2.loglog(N[-3:], e2_fixed, c='k', ls='-', lw=0.5, marker='+',
-           ms=5, label='fixed-p, loose parameters')
+           ms=5, label='non-relaxed, loose parameters')
 ax2.loglog(N[-3:], e2_relaxed, c='k', ls='-', lw=0.5, marker='x',
-           ms=5, label='relaxed-p, loose parameters')
+           ms=5, label='relaxed, loose parameters')
 
 ax2.set_xlabel('$N$', fontsize=10)
-ax2.legend(loc=1, fontsize=7)
+ax2.legend(loc=1, fontsize=6.5)
 ax2.set_yticklabels([])
 ax2.grid('on')
 ax2.set_title('2nd-kind', fontsize=10)

@@ -61,11 +61,11 @@ ax = fig.add_subplot(111)
 
 # plot log-log
 ax.loglog(N, e, c='k', ls='-', lw=1.0, marker='o', mfc='w', 
-	      ms=5, label='fixed-p, tight parameters')
+	      ms=5, label='non-relaxed, tight parameters')
 ax.loglog(N[1:], e_fixed, c='k', ls='-', lw=0.5, marker='+',
-           ms=5, label='fixed-p, loose parameters')
+           ms=5, label='non-relaxed, loose parameters')
 ax.loglog(N[1:], e_relaxed, c='k', ls='-', lw=0.5, marker='x',
-           ms=5, label='relaxed-p, loose parameters')
+           ms=5, label='relaxed, loose parameters')
 
 # referece line
 ax.loglog(N, line_sqrtN, c='k',ls='--')
