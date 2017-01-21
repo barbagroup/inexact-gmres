@@ -482,68 +482,6 @@ The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_
 We need only 2 iterations for the 2nd-kind formulation, which explains why we have such low speedup compared with the 1st-kind formulation.
 These tests also taught us that one has to give up on the idea of partitioning the domain between a near-field and a far-field in a way that balances the time spent computing each one---an accepted idea in \fmm applications. When relaxing the accuracy of the \gmres iterations, the time taken to compute the far field decreases significantly. This means that to minimize time-to-solution when using relaxed \gmres, the near and far fields should not be balanced, but rather the far field should be bloated. As a result, the first few iterations are completely dominated by the time to compute the far field, but this is offset by the benefit of much cheaper iterations from then on. This is a simple but unexpected and counter-intuitive algorithmic consequence of using inexact \gmres with \fmm.
 
-To better evaluate the potential speedup in more general cases, we designed tests in the following two situations: (a) where higher accuracy of \fmm-accelerated mat-vec product is needed (necessitating an initially higher $p$) , and (b) where the linear system demands a greater number of iterations to reach a smaller desired tolerance. 
-
-\begin{figure}%[ht]
-	\centering
-	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceRelaxationP.pdf}
-	\caption{Timings for solving a 1st-kind Laplace integral formulation on a sphere discretized with $32,768$ panels, using a relaxed \gmres with different initial values of $p$, compared with a fixed-$p$ solver. The iteration count was capped at 10 for all cases. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
-	\label{fig:laplace_p_speedup}
-\end{figure}
-
-Figure \ref{fig:laplace_p_speedup} shows the timings obtained in a situation where the initial $p$ is incrementally larger, representing applications that demand higher accuracy. To minimize the effect of discretization error on total accuracy, we discretized the sphere with $32,768$ panels. We also enforced a fixed number of $10$ \gmres iterations on this 1st-kind Laplace integral solver. Table \ref{tab:laplace_1st_p_relaxation} shows the data for this test: the speed-up is leveling off at around $2\times$ with a varying initial $p$. Note again that the shortest time-to-solution requires an unbalanced tree on the first iteration, with a bloated far field. This means that the first (high-$p$) iteration is much slower than the corresponding fixed-$p$ case: the speed-up is thus purely a product of the low-cost later iterations.
-
-\begin{table}[h]
-\footnotesize
-\begin{center}
-\begin{tabular}{c|cc|cc|c}
-  & \multicolumn{2}{c|}{Relaxed} & \multicolumn{2}{c|}{Non-Relaxed} & \\
-  $p$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup \\
-   \hline
-   & & & & & \\
-  5 & 100 & 3.94 & 100 & 7.53 & 1.91 \\
-  8 & 100 & 6.20 & 400 & 12.38 & 2.00 \\
-  10 & 150 & 9.08 & 400 & 19.96 & 2.20 \\
-  12 & 150 & 12.70  & 600 & 25.41 & 2.00 \\
-  15 & 150 & 22.05 & 600 & 37.77 & 1.71 \\
- 
-\end{tabular}
-\end{center}
-\caption{Speed-up when using a relaxation strategy on a Laplace 1st-kind integral solver, compared with a non-relaxed solver, with increasing value of the initial $p$ (representing increased accuracy demands of the application), for a sphere discretized with $32,768$ panels. (Multi-threaded evaluator running on 6 \cpu\ cores.)}
-\label{tab:laplace_1st_p_relaxation}
-\end{table}%
-
-The final case looks at the situation where the application might demand different tolerances. Keeping the value of initial $p$ fixed at 10, we ran several cases with $8,192$ panels and increasingly stricter tolerance. Figure \ref{fig:laplace_tolerance_speedup} and Table \ref{tab:laplace_1st_tolerance_relaxation} show that the relaxed cases experience a speed-up between $1.5\times$ and $2.0\times$ for different desired tolerances and the speed-up peaks at a tolerance of $10^{-6}$. 
-
-
-\begin{figure}%[ht]
-	\centering
-	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{LaplaceSpeedupTolerance.pdf}
-	\caption{Speed-ups for solving a 1st-kind Laplace integral problem on a sphere discretized with $8,192$ panels, as the \gmres solver's tolerance increases; $p=10$ for all cases. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
-	\label{fig:laplace_tolerance_speedup}
-\end{figure}
-
-
-\begin{table}[h]
-\footnotesize
-\begin{center}
-\begin{tabular}{c|cc|cc|c}
-  & \multicolumn{2}{c|}{Relaxed} & \multicolumn{2}{c|}{Non-Relaxed} & \\
-  tolerance & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup \\
- \hline
-   & & & & & \\
-  $10^{-5} $ & 400 & 1.65 & 400 & 3.13 & 1.90 \\
-  $10^{-6} $ & 300 & 2.34 & 400 & 4.71 & 2.01 \\
-  $10^{-7} $ & 300 & 4.07 & 400 & 7.93 & 1.95 \\
-  $10^{-8} $ & 300 & 5.77 & 400 & 9.87 & 1.71 \\
-  $10^{-9} $ & 300 & 8.14 & 400 & 12.51 & 1.54 \\
-  $10^{-10} $ & 300 & 10.11 & 400 & 16.29 & 1.61 \\
-  $10^{-11} $ & 300 & 12.24 & 400 & 17.88 & 1.46 \\
-\end{tabular}
-\end{center}
-\caption{Speed-up of the relaxation strategy on solving a Laplace 1st-kind integral problem on a sphere discretized with $8,192$ panels, with a varying solver's tolerance; initial $p$ fixed to a value of 10. (Multi-threaded evaluator running on 6 \cpu\ cores.)}
-\label{tab:laplace_1st_tolerance_relaxation}
-\end{table}%
 
 \subsection{Inexact {\small GMRES} for solving the Stokes equation}
 Like in \S\ref{sec:inexactLaplace}, we start with a grid-convergence study to build confidence that the Stokes solver is correct and converges to the right solution at the expected rate. As an application of the Stokes equation, we chose low-Reynolds-number flow, using a spherical geometry for the grid-convergence study. This classical problem of fluid mechanics has an analytical solution that gives the drag force on the sphere as $F_d = 6\pi\mu Ru_x$, where $\mu$ is the viscosity of the fluid, $R$ is the Reynolds number and $u_x$ is the freestream velocity, taken in the $x$-direction. We solve a first-kind integral equation for the traction force, $\vect{t}$, by imposing $\vect{u} = (1,0,0)^{T}$ at the center of every panel, and compute the drag force with
