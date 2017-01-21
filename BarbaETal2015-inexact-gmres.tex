@@ -431,14 +431,13 @@ But we note that only the far-field evaluation can be sped-up with the relaxatio
 To find out the potential speed-up, we compared the time to solution for different cases with and without the relaxation strategy. Using three surface discretizations, we solved the boundary-element problem with 1st- and 2nd-kind formulations, with a multi-threaded evaluator on 6 \cpu\ cores. In each case, we were careful to set the value of $\ncrit$ to minimize the time to solution of the particular test case. 
 The detailed results are given in Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation}.
 Figure \ref{fig:relaxation_timing} shows the speed-up in the time spent solving the linear system of equations to the specified tolerance. 
-As indicated in the caption, we used an initial value of $p=10$ and a solver tolerance of $10^{-6}$.
-We also repeated the experiments with less stringent accuracy settings of $p=8$, and solver tolerance $10^{-5}$. In that case, the speedups are reduced (maximum observed speedup of 2.22 for the 1st-kind formulation), but we decided to show the higher accuracy tests, given the observed degradation of grid-convergence with lower $p$, as seen in Figure \ref{fig:laplaceconvergence}.
+As indicated in the caption, we used the loose parameters in Table \ref{tab:laplace_loose_params} in our experiments to measure modest speedup for each case.
 
 
 \begin{figure}%[h]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceSpeedupRelaxation.pdf}
-	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations. Initial $p=10$, $k=4$, solver tolerance $10^{-6}$. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:relaxation_timing}
 \end{figure}
 
@@ -446,41 +445,41 @@ We also repeated the experiments with less stringent accuracy settings of $p=8$,
 \begin{table}[h]
 \footnotesize
 \begin{center}
-\begin{tabular}{c|cc|cc|cc}
-  & \multicolumn{2}{c|}{Non-Relaxed} & \multicolumn{2}{c|}{Relaxed} &  & Number\\
-  N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up & of iterations\\
+\begin{tabular}{c|cccc|cccc|c}
+  & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+  N & $\ncrit$ & $\tsolve$ & Error & \# of iters & $\ncrit$ & $\tsolve$ & Error & \# of iters & Speed-up\\
  \hline
-   & & & & & &\\
-  8192 & 400 & 4.93 & 175 & 2.32 & 2.13 & 11\\
-  32768  & 400 & 20.32 & 200 & 9.45 & 2.15 & 13\\
-  131072  & 400 & 137.84 & 200 & 41.32 & 3.34 & 22\\
+   & & & & & & & & &\\
+  8192 & 300 & 3.14 & $6.17\times10^{-4}$ & 11 & 100 & 2.07 & $6.13\times10^{-4}$ & 12 & 1.52\\
+  32768 & 400 & 19.84 & $1.69\times10^{-4}$ & 11 & 100 & 11.48 & $1.70\times10^{-4}$ & 13 & 1.73\\
+  131072 & 500 & 97.37 & $4.94\times10^{-5}$ & 13 & 200 & 43.06 & $5.06\times10^{-5}$ & 14 & 2.26\\
  
 \end{tabular}
 \end{center}
-\caption{Speed-ups for the relaxation strategy on a Laplace 1st-kind integral solver, $p=10$, $k=4$, solver tolerance $10^{-6}$.}
+\caption{Speed-ups for the relaxation strategy on a Laplace 1st-kind integral solver.}
 \label{tab:laplace_1st_relaxation}
 \end{table}%
 
 \begin{table}[h]
 \footnotesize
 \begin{center}
-\begin{tabular}{c|cc|cc|cc}
-  & \multicolumn{2}{c|}{Non-Relaxed} & \multicolumn{2}{c|}{Relaxed} &  & Number \\
-  N & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speed-up & of iterations \\
+\begin{tabular}{c|cccc|cccc|c}
+  & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+  N & $\ncrit$ & $\tsolve$ & Error & \# of iters & $\ncrit$ & $\tsolve$ & Error & \# of iters & Speed-up\\
  \hline
-   & & & & & & \\
-  8192 & 400 & 2.10 & 300 & 1.55 & 1.35 & 3 \\
-  32768 & 400 & 7.45 & 200 & 5.76 & 1.29 & 2 \\
-  131072 & 400 & 23.63 & 200 & 21.32 & 1.11 & 2\\
+   & & & & & & & & &\\
+  8192 & 300 & 1.19 & $9.74\times10^{-4}$ & 2 & 300 & 1.00 & $9.74\times10^{-4}$ & 2 & 1.19\\
+  32768 & 400 & 7.10 & $2.29\times10^{-4}$ & 2 & 300 & 5.49 & $2.29\times10^{-4}$ & 2 & 1.29\\
+  131072 & 500 & 27.49 & $5.01\times10^{-5}$ & 2 & 300 & 22.49 & $4.97\times10^{-5}$ & 2 & 1.22\\
  
 \end{tabular}
 \end{center}
-\caption{Speed-ups for the relaxation strategy on a Laplace 2nd-kind integral solver, $p=10$, $k=4$, solver tolerance  $10^{-6}$.}
+\caption{Speed-ups for the relaxation strategy on a Laplace 2nd-kind integral solver.}
 \label{tab:laplace_2nd_relaxation}
 \end{table}%
 
-The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation} show a speed-up of between $2.1\times$ and $3.3\times$ for the 1st-kind integral formulation and between $1.1\times$ and $1.35\times$ for the 2nd-kind formulation. 
-The rightmost column shows the number of iterations to converge: we need 3 or less iterations for the 2nd-kind formulation, which explains why we have such low speedup compared with the 1st-kind formulation.
+The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation} show a speed-up of between $1.5\times$ and $2.3\times$ for the 1st-kind integral formulation and between $1.1\times$ and $1.3\times$ for the 2nd-kind formulation. We also report the number of iterations to converge and the relative error with respect to the analytical solution. At the cost of adding one or two more iterations, the relaxation strategy yields decent speedup without corrupting the accuracy.
+We need only 2 iterations for the 2nd-kind formulation, which explains why we have such low speedup compared with the 1st-kind formulation.
 These tests also taught us that one has to give up on the idea of partitioning the domain between a near-field and a far-field in a way that balances the time spent computing each one---an accepted idea in \fmm applications. When relaxing the accuracy of the \gmres iterations, the time taken to compute the far field decreases significantly. This means that to minimize time-to-solution when using relaxed \gmres, the near and far fields should not be balanced, but rather the far field should be bloated. As a result, the first few iterations are completely dominated by the time to compute the far field, but this is offset by the benefit of much cheaper iterations from then on. This is a simple but unexpected and counter-intuitive algorithmic consequence of using inexact \gmres with \fmm.
 
 To better evaluate the potential speedup in more general cases, we designed tests in the following two situations: (a) where higher accuracy of \fmm-accelerated mat-vec product is needed (necessitating an initially higher $p$) , and (b) where the linear system demands a greater number of iterations to reach a smaller desired tolerance. 
