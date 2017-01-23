@@ -601,14 +601,14 @@ If the value $f_1$ corresponds to that obtained using the coarsest mesh and $f_2
 	\bar{f} = \frac{f_1f_3-f_2^{2}}{f_1 -2f_2+f_3}
 \end{equation}
 
-Table \ref{tab:rbc_richardson_values} presents the computed values of the drag force obtained with three different meshes, of sizes $N=512$, $2048$ and $8192$. We can also obtain the \emph{observed order of convergence}, $p$, as follows
+Table \ref{tab:rbc_richardson_values} presents the computed values of the drag force obtained with three different meshes, of sizes $N=512$, $2048$ and $8192$, by using a tight set of parameters: $p=20$, $K=13$ and $\eta=10^{-10}$. We can also obtain the \emph{observed order of convergence}, $p$, as follows
 %
 \begin{equation}
 	p = \frac{\ln{\left(\frac{f_2-f_1}{f_3-f_2}\right)}}{\ln{c}},
 \end{equation}
 
 \noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.52$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
-Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with respect to the extrapolated value, as a function of the mesh size. The plot includes the error obtained with four meshes, with the extrapolated value obtained using the first three coarser meshes.
+The thicker line in Figure \ref{fig:rbc_extrapolated_convergence} shows the error with respect to the extrapolated value, as a function of the mesh size. The plot includes the error obtained with five meshes, with the extrapolated value obtained using the first three coarser meshes. Like what we did before, we also wish to select a slack set of parameters for convergence test and benchmarking. Because the problem lacks an analytical solution and later we will test on multiple combinations of different number of cells and different number of panels per cell, it is cumbersome to search for the loose parameters case by case. Instead, based on our choice for the Stokes flow on a sphere (Table \ref{tab:stokes_loose_params}), we choose the loose parameters ($p$, $K$, $\eta$) for the application to red blood cells, as listed in Table \ref{tab:rbc_loose_params}, then we find the optimal $\ncrit$ case by case with and without relaxation. The convergence result by using the loose parameters is represented by the two thinner lines in Figure \ref{fig:rbc_extrapolated_convergence}, showing that drag force calculated by using loose parameters with relaxation matches the result by using tight parameters without relaxation. Thus, we used the loose parameters in the following studies. 
 
 \begin{table}[h]
 \footnotesize
@@ -637,19 +637,39 @@ Figure \ref{fig:rbc_extrapolated_convergence} shows a plot of the error with res
 \end{figure}
 
 
+\begin{table}[h]
+\footnotesize
+\begin{center}
+\begin{tabular}{c|cccc|ccccc}
+  & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{5}{c}{Relaxed}\\
+  N & $K$ & $p$ & $\eta$ & $\ncrit$ & $K$ & $p_{init}$ & $p_{min}$ & $\eta$ & $\ncrit$\\
+ \hline
+   & & & & & & & & &\\
+  2048 & 4 & 14 & $10^{-5}$ & 400 & 4 & 14 & 3 & $10^{-5}$ & 130 \\
+  8192 & 4 & 14 & $10^{-5}$ & 400 & 4 & 14 & 3 & $10^{-5}$ & 140 \\
+  32768 & 4 & 14 & $10^{-5}$ & 400 & 4 & 14 & 3 & $10^{-5}$ & 120 \\
+  131072 & 4 & 14 & $10^{-5}$ & 150 & 4 & 14 & 3 & $10^{-5}$ & 100 \\
+ 
+\end{tabular}
+\end{center}
+\caption{Loose parameters for the application to red blood cells in Stokes flow.}
+\label{tab:rbc_loose_params}
+\end{table}%
+
+
 The calculations with increasingly finer surface meshes take more time to complete not only because the number of unknowns is larger, but also because they may require a greater number of iterations to converge to a desired residual.
-Figure \ref{fig:single_cell_iterations} shows that the number of iterations needed as the surface mesh varies from size $N=128$ to $8,192$ increases from 18 to 39. For further refined meshes, the number of iterations remains about the same. This is an indication that the surface mesh is sufficiently refined with $8,192$ panels for one red blood cell.
+Figure \ref{fig:single_cell_iterations} shows that the number of iterations needed as the surface mesh varies from size $N=128$ to $8,192$ increases from 18 to 39 for the non-relaxed solver. For further refined meshes, the number of iterations remains above 30. This is an indication that the surface mesh is sufficiently refined with $8,192$ panels for one red blood cell.
 
 \begin{figure}
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{EthrocyteSingleCellIterations.pdf}
-	\caption{Number of iterations needed for the system to converge for increasingly refined surface meshes on one red blood cell; $p = 16$, target residual $10^{-5}$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
+	\caption{Number of iterations needed for the system to converge for increasingly refined surface meshes on one red blood cell. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:single_cell_iterations}
 \end{center}
 \end{figure}
 
 
-For the next tests, we used several red blood cells in a sparse spatial arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem. We set up a collection of red blood cells by making copies of a discretized cell, then randomly rotating each one, and shifting it spatially in each  coordinate direction by a positive random amount that ensures they do not overlap. The resulting arrangement may look like that shown in Figure \ref{fig:multiple_cells}.
+For the next test, we used several red blood cells in a sparse spatial arrangement. Realistic blood flows have densely packed red blood cells, but the purpose of this test is to simply demonstrate the boundary element solver with a larger problem. We set up a collection of red blood cells by making copies of a discretized cell, then randomly rotating each one, and shifting it spatially in each  coordinate direction by a positive random amount that ensures they do not overlap. The resulting arrangement may look like that shown in Figure \ref{fig:multiple_cells}.
 
 
 \begin{figure}[ht]
@@ -660,19 +680,19 @@ For the next tests, we used several red blood cells in a sparse spatial arrangem
 \end{center}
 \end{figure}
 
-Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed to converge to a solver tolerance of $10^{-5}$ when using three different surface mesh sizes on each cell: $N=2048$, $8192$ and $32,768$. In all cases $p = 16,\;p_{\text{min}} = 5$. Figure \ref{fig:multiple_cell_iterations} shows that the number of iterations needed to converge increases sharply with the number of red blood cells in the system, while the number of panels per cell has a smaller effect in this range of mesh sizes. In all cases, the number of iterations is between 45 and 65, and thus we expect to see good speed-ups using the relaxation strategy.
+Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed to converge to a solver tolerance of $10^{-5}$ when using three different surface mesh sizes on each cell: $N=2048$, $8192$ and $32,768$. In all cases, we ran the non-relaxed solver with the loose parameters in Table \ref{tab:rbc_loose_params}. Figure \ref{fig:multiple_cell_iterations} shows that the number of iterations needed to converge increases sharply with the number of red blood cells in the system, while the number of panels per cell has a smaller effect in this range of mesh sizes. In all cases, the number of iterations is between 45 and 65, and thus we expect to see good speed-ups using the relaxation strategy.
 
 
 
 \begin{figure}
 \begin{center}
 	\includegraphics[natwidth=7in,natheight=3.5in,width=0.85\textwidth]{EthrocyteMultipleCellIterations.pdf}
-	\caption{Number of iterations needed to converge to a desired residual of $10^{-5}$ for systems with multiple red blood cells, discretized with different mesh sizes ($p = 16$). Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
+	\caption{Number of iterations needed to converge to a desired residual of $10^{-5}$ for systems with multiple red blood cells, discretized with different mesh sizes. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:multiple_cell_iterations}
 \end{center}
 \end{figure}
 
-We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, and Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $4\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use an efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using six threads, like we do here), then the potential for a $7\times$ speed-up is real.
+We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, and Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $3\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use an efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using six threads, like we do here), then the potential for a $4\times$ speed-up is real.
 
 \begin{table}[h]
 \footnotesize
@@ -681,8 +701,8 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
  Variable & Setting \\ 
 \hline
  & \\
- $p_{\text{initial}}$ & $16$ \\
- $p_{\text{min}}$ &  $5$ \\
+ $p_{\text{initial}}$ & $14$ \\
+ $p_{\text{min}}$ &  $3$ \\
  solver tolerance & $10^{-5}$ \\
  Near-field & Sparse matrix \\
  Threads & $6$ \\
@@ -698,36 +718,34 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 \begin{table}[htp]
 \footnotesize
 \begin{center}
-\begin{tabular}{c|c|c|c|c|c|c}
- & & \multicolumn{2}{c|}{Non-relaxed} & \multicolumn{2}{c|}{Relaxed} \\
- & & \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} \\
- N & \# unknowns & $\ncrit$ & $t_{\text{solve}}$ & $\ncrit$ & $t_{\text{solve}}$ & Speedup \\\hline
- & & & & & \\
- 2048 & 6144 & 400 & 48.18 & 150 & 14.61 & 3.30 \\
- 8192 & 24576 & 400 & 234.44 & 100 & 69.03 & 3.40 \\
- 32768 & 98304 & 400 & 978.80 & 100 & 276.52 & 3.54 \\
- 131072 & 393216 & 200 & 5122.43\footnotemark[1] & 100 & 1044.77 & 4.90\footnotemark[1] \\	
+\begin{tabular}{c|c|cccc|cccc|c}
+  & & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+  N & \# unknowns & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & Speed-up\\
+ \hline
+   & & & & & & & & & &\\
+  2048 & 6144 & 400 & 33.64 & -0.07033 & 35 & 130 & 11.21 & -0.07010 & 37 & 3.00\\
+  8192 & 24576 & 400 & 183.73 & -0.07678 & 39 & 140 & 64.92 & -0.07780 & 41 & 2.83\\
+  32768 & 98304 & 400 & 809.90 & -0.07989 & 35 & 120 & 253.90 & -0.07977 & 39 & 3.19\\
+  131072 & 393216 & 150 & 4407.47 & -0.08141 & 31 & 100 & 980.65 & -0.08149 & 35 & 4.49\\
 \end{tabular}
 \end{center}
 \caption{Timings and speed-up of the relaxation strategy on a single red blood cell in uniform Stokes flow, with the test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
 \label{tab:single_cell_relaxation_results}
 \end{table}%
 
-\footnotetext[1]{Due to memory restrictions, a sparse-matrix representation of the near-field could not be used, resulting in a much slower {\ptop} evaluation.}
-
 
 \begin{table}[htp]
 \footnotesize
 \begin{center}
-\begin{tabular}{c|c|c|cc|cc|c}
-\multicolumn{8}{c}{2048 panels / cell} \\
-& & & \multicolumn{2}{c}{Non-relaxed} & \multicolumn{2}{c}{Relaxed}\\
-N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup \\ \hline
-& & & & & & &  \\
-2048 & 6144 & 1 & 400 & 48.18 & 150 & 14.61 & 3.30 \\ 
-8192 & 24576 & 4 & 400 & 267.64 & 100 & 87.20 & 3.07 \\ 
-32768 & 98304 & 16 & 400 & 1358.07 & 100 & 444.55 & 3.05 \\
-131072 & 393216 & 64 & 200 & 7077.77\footnotemark[1] & 100 & 1481.47 & 4.78\footnotemark[1] \\
+\begin{tabular}{c|c|c|cccc|cccc|c}
+  & & & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+  N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & Speed-up\\
+ \hline
+   & & & & & & & & & &\\
+  2048 & 6144 & 1 & 400 & 33.64 & -0.07033 & 35 & 130 & 11.21 & -0.07010 & 37 & 3.00\\
+  8192 & 24576 & 4 & 400 & 204.43 & -0.19825 & 51 & 140 & 87.34 & -0.19765 & 52 & 2.34\\
+  32768 & 98304 & 16 & 400 & 1128.50 & -0.67816 & 67 & 100 & 466.12 & -0.67270 & 70 & 2.42\\
+  131072 & 393216 & 64 & 150 & 6186.23 & -2.41785 & 76 & 120 & 1953.23 & -2.41026 & 79 & 3.17\\
 \end{tabular}
 \end{center}
 \caption{Timings and speed-up of the relaxation strategy with several red blood cells in uniform Stokes flow, each cell discretized with 2048 panels and test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
@@ -738,14 +756,14 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & Speedup 
 \begin{table}[htp]
 \footnotesize
 \begin{center}
-\begin{tabular}{c|c|c|cc|cc|c}
-\multicolumn{8}{c}{8192 panels / cell} \\
-& & &  \multicolumn{2}{c}{Non-relaxed} & \multicolumn{2}{c}{Relaxed}\\
-N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup \\ \hline
-& & & & & & &  \\
-8192 & 24576 & 1 & 400 & 234.44 & 100 & 69.03 & 3.40 \\ 
-32768 & 98304 & 4 & 400 & 1494.37 & 100 & 371.06 & 4.03 \\
-131072 & 393216 & 16 & 150 & 12817.01\footnotemark[1] & 100 & 1800.53 & 7.12\footnotemark[1] \\
+\begin{tabular}{c|c|c|cccc|cccc|c}
+  & & & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+  N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & Speed-up\\
+ \hline
+   & & & & & & & & & &\\
+  8192 & 24576 & 1 & 400 & 183.73 & -0.07678 & 39 & 140 & 64.92 & -0.07780 & 41 & 2.83\\
+  32768 & 98304 & 4 & 400 & 1300.30 & -0.21589 & 54 & 120 & 423.83 & -0.21703 & 55 & 3.07\\
+  131072 & 393216 & 16 & 150 & 8837.73 & -0.73883 & 67 & 100 & 2097.87 & -0.73841 & 68 & 4.21\\
 \end{tabular}
 \end{center}
 \caption{Timings and speed-up of the relaxation strategy with several red blood cells in uniform Stokes flow, each cell discretized with $8,192$ panels and test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
@@ -756,13 +774,13 @@ N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup 
 \begin{table}[htp]
 \footnotesize
 \begin{center}
-\begin{tabular}{c|c|c|cc|cc|c}
-\multicolumn{8}{c}{32768 panels / cell} \\
-& & & \multicolumn{2}{c}{Non-relaxed} & \multicolumn{2}{c}{Relaxed}\\
-N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $\ncrit$ & $\tsolve$ & speedup \\ \hline
-& & & & & & &  \\
-32768 & 98304 & 1 & 400 & 978.80 & 100 & 276.52 & 3.54 \\
-131072 & 393216 & 4 & 200 & 7209.57\footnotemark[1] & 100 & 1397.27 & 5.16\footnotemark[1] \\	
+\begin{tabular}{c|c|c|cccc|cccc|c}
+  & & & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+  N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & Speed-up\\
+ \hline
+   & & & & & & & & & &\\
+  32768 & 98304 & 1 & 400 & 809.90 & -0.07989 & 35 & 120 & 253.90 & -0.07977 & 39 & 3.19\\
+  131072 & 393216 & 4 & 150 & 6171.47 & -0.22452 & 49 & 120 & 1599.33 & -0.22450 & 51 & 3.86\\
 \end{tabular}
 \end{center}
 \caption{Timings and speed-up of the relaxation strategy with several red blood cells in uniform Stokes flow, each cell discretized with $32,768$ panels and test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
