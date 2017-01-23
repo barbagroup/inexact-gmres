@@ -41,6 +41,10 @@ time_single = numpy.array(temp1).reshape(len(temp1)//3, 3)
 time_single = numpy.mean(time_single, axis=1)
 speedup_single = time_single[::2] / time_single[1::2]
 
+# single cell
+# print out the execution time
+print("fixed-p: ", time_single[::2])
+print("relaxed-p: ", time_single[1::2])
 
 # multiple rbcs
 temp2 = []
@@ -57,6 +61,11 @@ time_multi = numpy.array(temp2).reshape(len(temp2)//3, 3)
 time_multi = numpy.mean(time_multi, axis=1)
 speedup_multi = time_multi[::2] / time_multi[1::2]
 
+
+# multiple cells
+# print out the execution time
+print("fixed-p: ", time_multi[::2])
+print("relaxed-p: ", time_multi[1::2])
 
 # set up data
 # 2048, 8192, 32768 panels per cell
