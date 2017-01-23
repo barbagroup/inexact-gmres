@@ -492,80 +492,80 @@ Like in \S\ref{sec:inexactLaplace}, we start with a grid-convergence study to bu
 \end{equation}
 
 %% need to change why we choose p=16 in the third sentence "We first"
-For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver. Based on the inexact Krylov method \cite{bouras2000relaxation,bourasfraysse2005}, we choose an initial $p$ of 16 to compute the first Krylov vectors with full accuracy, and use a $10^{-5}$ tolerance in the iterative solver.
-Figure \ref{fig:stokes_convergence} shows that we observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations.
+For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver.
+Like with the Laplace equation, we first used a set of stringent parameters: $p=20$, $K=13$ and $\eta=10^{-10}$, to guarantee that discretization error dominates errors from other sources. The thicker line in Figure \ref{fig:stokes_convergence} shows that we observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations. Again for both cases with and without relaxation, we gradually slacken these tight parameters one at a time to find the loosest possible values without affecting accuracy, and they are listed in Table \ref{tab:stokes_loose_params}. Through our extensive tests, we also found that we need to enforce a minimum $p$ to maintain accuracy for the cases with relaxations in the Stokes solver, which means the required $p$ at each step is determined by Equation \eqref{eqn:fmm_p} with a floor of $p_{min}$. The choices of $\ncrit$ are optimal (except for the largest case without relaxation) in Table \ref{tab:stokes_loose_params}. The finer lines in Figure \ref{fig:stokes_convergence} demonstrates the convergence result by using the loose parameters, which confirms our choice of parameters and the relaxation strategy on $p$.
+
 
 \begin{figure}%[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesConvergence.pdf}
-	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation; $p=16$, linear system solved to $10^{-5}$ tolerance. The relative error is with respect to the analytical solution for drag on a sphere: $F_d = 6\pi\mu Ru_x$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
+	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation. The relative error is with respect to the analytical solution for drag on a sphere: $F_d = 6\pi\mu Ru_x$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_convergence}
 \end{center}
 \end{figure}
 
-Like with the Laplace equation, we need to show that the relaxation strategy does not hinder convergence and that there is a potential for speed-ups. We solved the problem of Stokes flow around a sphere, discretized with $8,192$ panels, and compared the residual history of a fixed-$p$ solver with a relaxed \gmres with an initial $p=16$. Figure \ref{fig:stokes_residual_history_relaxed} shows that the residual history (for the traction force) is similar for both relaxed and non-relaxed Krylov iterations, both methods reaching the stipulated tolerance of $10^{-5}$ after about 27 iterations.
-The number of iterations needed to converge is larger in the case of the Stokes equation compared to the Laplace equation, which bodes well for the speed-up that we could get from relaxation. Moreover, computing the spherical expansion for the Stokes kernel is equivalent to computing four Laplace expansions, which combines with the larger number of iterations to offer greater speed-ups.
 
-
-\begin{figure}%[t]
+\begin{table}[h]
+\footnotesize
 \begin{center}
-	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesResidualHistory.pdf}
-	\caption{Residual history solving for surface traction on the surface of a sphere (first-kind integral problem), with a $10^{-5}$ solver tolerance, 8192 panels, and initial $p=16$ in the relaxed case (and throughout in the non-relaxed case). Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
-	\label{fig:stokes_residual_history_relaxed}
+\begin{tabular}{c|cccc|ccccc}
+  & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{5}{c}{Relaxed}\\
+  N & $K$ & $p$ & $\eta$ & $\ncrit$ & $K$ & $p_{init}$ & $p_{min}$ & $\eta$ & $\ncrit$\\
+ \hline
+   & & & & & & & & &\\
+  8192 & 4 & 12 & $10^{-5}$ & 300 & 4 & 12 & 4 & $10^{-5}$ & 100 \\
+  32768 & 4 & 12 & $10^{-5}$ & 400 & 4 & 12 & 3 & $10^{-5}$ & 60 \\
+  131072 & 4 & 14 & $10^{-5}$ & 150 & 4 & 14 & 4 & $5\times10^{-6}$ & 80 \\
+ 
+\end{tabular}
 \end{center}
-\end{figure}
+\caption{Loose parameters on a Stokes solver.}
+\label{tab:stokes_loose_params}
+\end{table}%
 
-Figure \ref{fig:stokes_relaxation_breakdown} illustrates clearly how we need to adjust the balance between near field and far field when using relaxation strategies. Because most of the time is spent computing at the low values of $p$, we need to start with a bloated far field. The bar plot shows the breakdown of time spent in the {\ptop} and {\mtol} kernels for each iteration: although the first iteration is unbalanced, with far field taking about 8 times as much \cpu\ time as near field, later iterations are close to balanced and the total time to solution is optimal. 
-We ran extensive tests on the minimum value of $p$ allowed in the relaxed solver, without degrading convergence and accuracy. Table \ref{tab:stokes_min_p} presents some of the data from these tests: for finer surface discretizations, the error degrades when the relaxed value of $p$ is allowed to drop below 3 or 4. To be conservative and avoid any degradation in accuracy, we used a $\pmin=5$ for all further cases with the Stokes equation.
+
+Figure \ref{fig:stokes_relaxation_breakdown} illustrates clearly how we need to adjust the balance between near field and far field when using relaxation strategies. We ran the Stokes solver on a sphere discretized with 8,192 panels, using loose parameters and the corresponding optimal $\ncrit$ in Table \ref{tab:stokes_loose_params}. Because most of the iterations are spent computing at the low values of $p$, we need to start with a bloated far field. The bar plot shows the breakdown of time spent in the {\ptop} and {\mtol} kernels for each iteration: although the first iteration is unbalanced, with far field taking about 10 times as much \cpu\ time as near field, later iterations are close to balanced and the total time to solution is optimal: {\ptop} takes 63s in total, while {\mtol} costs 47s. 
+
+
+The number of iterations needed to converge is larger in the case of the Stokes equation compared to the Laplace equation, which bodes well for the speed-up that we could get from relaxation. Moreover, computing the spherical expansion for the Stokes kernel is equivalent to computing four Laplace expansions, which combines with the larger number of iterations to offer greater speed-ups. Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \gmres iterations for three increasingly finer surface discretizations, where we observed a speedup around $3.0\times$. Table \ref{tab:stokes_speedup} shows the detailed result of the speedup test, including the relative error compared with the analytical solution and the number of iterations to converge.
 
 
 \begin{figure}%[ht]
 \begin{center}
 	\includegraphics[natwidth=9in,natheight=4in,width=0.95\textwidth]{StokesSolveBreakdown.pdf}
-	\caption{Time breakdown between {\ptop} and {\mtol} when using a relaxation strategy for solving surface traction on the surface of a sphere, $10^{-5}$ solver tolerance, $8,192$ panels, $p=16$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
+	\caption{Time breakdown between {\ptop} and {\mtol} when using a relaxation strategy for solving surface traction on the surface of a sphere with $8,192$ panels. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_relaxation_breakdown}
 \end{center}
 \end{figure}
 
 
-
-\begin{table}[ht]
-\footnotesize
-\begin{center}
-\begin{tabular}{c|cc|cc|cc}
-  & \multicolumn{2}{c|}{2048 panels} & \multicolumn{2}{c|}{8192 panels} & \multicolumn{2}{c}{32768 panels} \\
- $\pmin$ & Error & $it$ & Error & $it$ & Error & $it$ \\ \hline
-  & & & & & & \\
- 5 & $4.61\times 10^{-2}$ & 24 & $2.48\times 10^{-2}$ & 29 & $1.34\times 10^{-2}$ & 28 \\
- 4 & $4.56\times 10^{-2}$ & 25 & $2.50\times 10^{-2}$ & 29 & $1.17\times 10^{-2}$ & 28 \\
- 3 & $4.58\times 10^{-2}$ & 23 & $3.57\times 10^{-2}$ & 30 & $1.74\times 10^{-2}$ & 30 \\
- 2 & $4.41\times 10^{-2}$ & 25 & $1.45\times 10^{-1}$ & 39 & $2.04\times 10^{-2}$ & 39 \\
- 1 & $4.35\times 10^{-2}$ & 28 & $3.42\times 10^{-2}$ & 100\footnotemark[1] & $3.03\times 10^{-2}$ & 100\footnotemark[1] 
-\end{tabular}
-\end{center}
-\caption{Effect of $p_{\text{min}}$ on accuracy and convergence for Stokes flow around a sphere for differing values of $N$. Error is on the total drag force in the $x$-direction, $F_x$.}
-\label{tab:stokes_min_p}
-\end{table}%
-
-\footnotetext[1]{When $p_{\text{min}}$ is set to 1, solution does not converge within 100 iterations for the two finer meshes.}
-
-Figure \ref{fig:stokes_speedup} shows the speed-up resulting from the relaxed \gmres iterations for three increasingly finer surface discretizations. For $N=32,768$, speed-up is more than $3.0\times$. We also observed a speedup between $1.7\times$ and $3.5\times$ under different \gmres solver tolerances for $N=8,192$, as shown in Figure \ref{fig:stokes_tolerance_speedup}.
-
-
 \begin{figure}%[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSpeedupRelaxation.pdf}
-	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$. $10^{-5}$ solver tolerance, $p=16$. Time is measured by averaging the solving time of three identical runs. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
+	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$. Time is measured by averaging the solving time of three identical runs. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_speedup}
 \end{center}
 \end{figure}
 
-\begin{figure}%[ht]
-	\centering
-	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSpeedupTolerance.pdf}
-	\caption{Speed-ups for solving a 1st-kind Stokes problem on a sphere discretized with $8,192$ panels, as the \gmres solver's tolerance increases; $p=16$ for all cases. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
-	\label{fig:stokes_tolerance_speedup}
-\end{figure}
+
+\begin{table}[h]
+\footnotesize
+\begin{center}
+\begin{tabular}{c|cccc|cccc|c}
+  & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+  N & $\ncrit$ & $\tsolve$ & Error & \# of iters & $\ncrit$ & $\tsolve$ & Error & \# of iters & Speed-up\\
+ \hline
+   & & & & & & & & &\\
+  8192 & 300 & 82.57 & $2.28\times10^{-2}$ & 27 & 100 & 30.56 & $2.32\times10^{-2}$ & 29 & 2.70\\
+  32768 & 400 & 370.18 & $1.11\times10^{-2}$ & 27 & 100 & 111.93 & $1.11\times10^{-2}$ & 30 & 3.31\\
+  131072 & 150 & 3058.93 & $5.78\times10^{-3}$ & 24 & 200 & 682.14 & $6.55\times10^{-3}$ & 34 & 4.48\\
+ 
+\end{tabular}
+\end{center}
+\caption{Speed-ups for the relaxation strategy on a Stokes solver.}
+\label{tab:stokes_speedup}
+\end{table}%
+
 
 \subsection{Application to red blood cells in Stokes flow}
 
