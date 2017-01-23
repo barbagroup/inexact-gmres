@@ -36,6 +36,8 @@ time = numpy.mean(numpy.array(temp).reshape(-1,3), axis=1)
 # calculate speedup
 speedup = time[::2] / time[1::2]
 print("Speedup: ", speedup)
+print("fixed-p: ", time[::2])
+print("relaxed-p: ", time[1::2])
 
 ind = numpy.arange(len(speedup))
 width = 0.3
