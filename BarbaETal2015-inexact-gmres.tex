@@ -395,7 +395,7 @@ Then we carefully slackened these parameters $p$, $K$, $\eta$ one at a time for 
 \begin{figure}[t]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=1.0\textwidth]{LaplaceConvergence.pdf}
-	\caption{Convergence of 1st-kind (solid line) and 2nd-kind (dotted line) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vector products, with $\theta_{\text{MAC}} = 0.5$. The vertical axis is the relative error of the potential evaluated at an exterior point with respect to the analytical solution, for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{Convergence of 1st-kind (left plot) and 2nd-kind (right plot) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vector products, with $\theta_{\text{MAC}} = 0.5$. The vertical axis is the relative error of the potential evaluated at an exterior point with respect to the analytical solution, for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:laplaceconvergence}
 \end{center}
 \end{figure}
@@ -414,7 +414,7 @@ Then we carefully slackened these parameters $p$, $K$, $\eta$ one at a time for 
  
 \end{tabular}
 \end{center}
-\caption{Loose parameters on a Laplace solver.}
+\caption{Loose parameters on a Laplace solver, the subscript on $\ncrit$ indicates 1st-kind or 2nd-kind integral formulation.}
 \label{tab:laplace_loose_params}
 \end{table}%
 
@@ -478,7 +478,7 @@ As indicated in the caption, we used the loose parameters in Table \ref{tab:lapl
 \label{tab:laplace_2nd_relaxation}
 \end{table}%
 
-The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation} show a speed-up of between $1.5\times$ and $2.3\times$ for the 1st-kind integral formulation and between $1.1\times$ and $1.3\times$ for the 2nd-kind formulation. We also report the number of iterations to converge and the relative error with respect to the analytical solution. At the cost of adding one or two more iterations, the relaxation strategy yields decent speedup without corrupting the accuracy.
+The results on Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation} show a speed-up of between $1.5\times$ and $2.3\times$ for the 1st-kind integral formulation and between $1.1\times$ and $1.3\times$ for the 2nd-kind formulation. We also report the number of iterations to converge and the relative error with respect to the analytical solution. At the cost of one or two more iterations, the relaxation strategy yields decent speedup without corrupting the accuracy.
 We need only 2 iterations for the 2nd-kind formulation, which explains why we have such low speedup compared with the 1st-kind formulation.
 These tests also taught us that one has to give up on the idea of partitioning the domain between a near-field and a far-field in a way that balances the time spent computing each one---an accepted idea in \fmm applications. When relaxing the accuracy of the \gmres iterations, the time taken to compute the far field decreases significantly. This means that to minimize time-to-solution when using relaxed \gmres, the near and far fields should not be balanced, but rather the far field should be bloated. As a result, the first few iterations are completely dominated by the time to compute the far field, but this is offset by the benefit of much cheaper iterations from then on. This is a simple but unexpected and counter-intuitive algorithmic consequence of using inexact \gmres with \fmm.
 
@@ -493,7 +493,7 @@ Like in \S\ref{sec:inexactLaplace}, we start with a grid-convergence study to bu
 
 %% need to change why we choose p=16 in the third sentence "We first"
 For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver.
-Like with the Laplace equation, we first used a set of stringent parameters: $p=20$, $K=13$ and $\eta=10^{-10}$, to guarantee that discretization error dominates errors from other sources. The thicker line in Figure \ref{fig:stokes_convergence} shows that we observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations. Again for both cases with and without relaxation, we gradually slacken these tight parameters one at a time to find the loosest possible values without affecting accuracy, and they are listed in Table \ref{tab:stokes_loose_params}. Through our extensive tests, we also found that we need to enforce a minimum $p$ to maintain accuracy for the cases with relaxations in the Stokes solver, which means the required $p$ at each step is determined by Equation \eqref{eqn:fmm_p} with a floor of $p_{min}$. The choices of $\ncrit$ are optimal (except for the largest case without relaxation) in Table \ref{tab:stokes_loose_params}. The finer lines in Figure \ref{fig:stokes_convergence} demonstrates the convergence result by using the loose parameters, which confirms our choice of parameters and the relaxation strategy on $p$.
+Like with the Laplace equation, we first used a set of stringent parameters: $p=20$, $K=13$ and $\eta=10^{-10}$, to guarantee that discretization error dominates error from other sources. The thicker line in Figure \ref{fig:stokes_convergence} shows that we observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations. Again for both cases with and without relaxation, we gradually slacken these tight parameters one at a time to find the loosest possible values without affecting accuracy, and they are listed in Table \ref{tab:stokes_loose_params}. Through our extensive tests, we also found that we need to enforce a minimum $p$ to maintain accuracy for the cases with relaxations in the Stokes solver, which means the required $p$ at each step is determined by Equation \eqref{eqn:fmm_p} with a floor of $p_{min}$. The choices of $\ncrit$ are optimal (except for the largest case without relaxation) in Table \ref{tab:stokes_loose_params}. The finer lines in Figure \ref{fig:stokes_convergence} demonstrates the convergence result by using the loose parameters, which confirms our choice of parameters and the relaxation strategy on $p$.
 
 
 \begin{figure}%[ht]
