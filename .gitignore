@@ -8,3 +8,6 @@ BarbaETal2015-inexact-gmres.pdf
 *.spl
 
 *.gz
+
+# Ignore notebook checkpoints
+.ipynb_checkpoints
