@@ -21,11 +21,11 @@ ax = fig.add_subplot(111)
 
 # plot log-log
 ax.loglog(N,t,color='k',marker='o', ms=5, mfc='w')
-ax.loglog(N,N/10000,color='k', ls=':', ms=5, mfc='w')
+ax.loglog(N,N/20000,color='k', ls=':', ms=5, mfc='w')
 loc = (3*N[0]+N[1])/4
 
 # text of plot
-tex_loc = numpy.array((loc,N[0]*t[0]/loc))
+tex_loc = numpy.array((loc,N[0]*t[0]/loc)) * 1.2
 tex_angle = numpy.arctan2(numpy.log(abs(N[-1]/10000-N[0]/10000)),numpy.log(abs(N[-1]-N[0])))*180/numpy.pi
 ax.text(tex_loc[0], 6.5*tex_loc[1],r'$O(N)$',fontsize=10,rotation=tex_angle,rotation_mode='anchor')
 
