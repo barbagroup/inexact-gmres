@@ -1,0 +1,13 @@
+it: 001, res: 2.249e-05, fmm_req_p: 10
+it: 002, res: 1.381e-05, fmm_req_p: 5
+it: 003, res: 8.808e-06, fmm_req_p: 4
+it: 004, res: 7.795e-06, fmm_req_p: 4
+it: 005, res: 5.635e-06, fmm_req_p: 3
+it: 006, res: 4.126e-06, fmm_req_p: 3
+it: 007, res: 3.068e-06, fmm_req_p: 3
+it: 008, res: 2.384e-06, fmm_req_p: 2
+it: 009, res: 1.824e-06, fmm_req_p: 2
+it: 010, res: 1.377e-06, fmm_req_p: 1
+it: 011, res: 1.104e-06, fmm_req_p: 1
+it: 012, res: 1.028e-06, fmm_req_p: 1
+Final residual: 7.2588e-07, after 13 iterations
