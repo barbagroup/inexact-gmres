@@ -1,0 +1,108 @@
+LaplaceBEM Convergence - 1st-kind:
+external phi: 0.18589, exact: 0.19245, error: 3.4071e-02
+external phi: 0.19072, exact: 0.19245, error: 8.9945e-03
+external phi: 0.192, exact: 0.19245, error: 2.3178e-03
+external phi: 0.19234, exact: 0.19245, error: 5.9768e-04
+external phi: 0.19242, exact: 0.19245, error: 1.5686e-04
+external phi: 0.19244, exact: 0.19245, error: 4.2754e-05
+external phi: 0.19233, exact: 0.19245, error: 6.1633e-04
+external phi: 0.19242, exact: 0.19245, error: 1.6895e-04
+external phi: 0.19244, exact: 0.19245, error: 4.9346e-05
+external phi: 0.19233, exact: 0.19245, error: 6.1280e-04
+external phi: 0.19242, exact: 0.19245, error: 1.7036e-04
+external phi: 0.19244, exact: 0.19245, error: 5.0550e-05
+LaplaceBEM Convergence - 2nd-kind:
+external phi: 0.18037, exact: 0.19245, error: 6.2776e-02
+external phi: 0.18934, exact: 0.19245, error: 1.6136e-02
+external phi: 0.19168, exact: 0.19245, error: 4.0271e-03
+external phi: 0.19226, exact: 0.19245, error: 9.9279e-04
+external phi: 0.1924, exact: 0.19245, error: 2.4106e-04
+external phi: 0.19244, exact: 0.19245, error: 5.6755e-05
+external phi: 0.19226, exact: 0.19245, error: 9.7391e-04
+external phi: 0.19241, exact: 0.19245, error: 2.2897e-04
+external phi: 0.19244, exact: 0.19245, error: 5.0137e-05
+external phi: 0.19226, exact: 0.19245, error: 9.7391e-04
+external phi: 0.19241, exact: 0.19245, error: 2.2894e-04
+external phi: 0.19244, exact: 0.19245, error: 4.9731e-05
+LaplaceBEM Residual History and required-p:
+case 1, p = 8:
+it: 001, res: 4.029e-05, fmm_req_p: 8
+it: 002, res: 2.754e-05, fmm_req_p: 6
+it: 003, res: 2.152e-05, fmm_req_p: 5
+it: 004, res: 1.903e-05, fmm_req_p: 5
+it: 005, res: 1.470e-05, fmm_req_p: 5
+it: 006, res: 9.767e-06, fmm_req_p: 4
+it: 007, res: 8.582e-06, fmm_req_p: 4
+it: 008, res: 6.331e-06, fmm_req_p: 4
+it: 009, res: 5.361e-06, fmm_req_p: 3
+it: 010, res: 3.902e-06, fmm_req_p: 3
+it: 011, res: 3.302e-06, fmm_req_p: 2
+it: 012, res: 2.791e-06, fmm_req_p: 2
+it: 013, res: 1.873e-06, fmm_req_p: 2
+it: 014, res: 1.537e-06, fmm_req_p: 1
+it: 015, res: 1.314e-06, fmm_req_p: 1
+Final residual: 9.9268e-07, after 16 iterations
+case 2, p = 10:
+it: 001, res: 2.249e-05, fmm_req_p: 10
+it: 002, res: 1.381e-05, fmm_req_p: 5
+it: 003, res: 8.809e-06, fmm_req_p: 4
+it: 004, res: 7.799e-06, fmm_req_p: 4
+it: 005, res: 5.637e-06, fmm_req_p: 3
+it: 006, res: 4.128e-06, fmm_req_p: 3
+it: 007, res: 3.094e-06, fmm_req_p: 3
+it: 008, res: 2.564e-06, fmm_req_p: 2
+it: 009, res: 1.956e-06, fmm_req_p: 2
+it: 010, res: 1.716e-06, fmm_req_p: 1
+it: 011, res: 1.477e-06, fmm_req_p: 1
+it: 012, res: 1.081e-06, fmm_req_p: 1
+Final residual: 8.3419e-07, after 13 iterations
+LaplaceBEM speedup test - 1st-kind:
+recursions = 6 fixed-p 1st-kind
+	solve : 3.1120e+00s
+	solve : 3.1169e+00s
+	solve : 3.1763e+00s
+recursions = 6 relaxed-p 1st-kind
+	solve : 2.0493e+00s
+	solve : 2.0915e+00s
+	solve : 2.0657e+00s
+recursions = 7 fixed-p 1st-kind
+	solve : 2.0049e+01s
+	solve : 1.9952e+01s
+	solve : 1.9506e+01s
+recursions = 7 relaxed-p 1st-kind
+	solve : 1.1318e+01s
+	solve : 1.1413e+01s
+	solve : 1.1721e+01s
+recursions = 8 fixed-p 1st-kind
+	solve : 9.7309e+01s
+	solve : 9.8525e+01s
+	solve : 9.6280e+01s
+recursions = 8 relaxed-p 1st-kind
+	solve : 4.3524e+01s
+	solve : 4.2927e+01s
+	solve : 4.2732e+01s
+LaplaceBEM speedup test - 2nd-kind:
+recursions = 6 fixed-p 2nd-kind
+	solve : 1.1875e+00s
+	solve : 1.1865e+00s
+	solve : 1.1857e+00s
+recursions = 6 relaxed-p 2nd-kind
+	solve : 1.0073e+00s
+	solve : 1.0063e+00s
+	solve : 9.8874e-01s
+recursions = 7 fixed-p 2nd-kind
+	solve : 7.1702e+00s
+	solve : 7.1713e+00s
+	solve : 6.9718e+00s
+recursions = 7 relaxed-p 2nd-kind
+	solve : 5.5769e+00s
+	solve : 5.4963e+00s
+	solve : 5.3865e+00s
+recursions = 8 fixed-p 2nd-kind
+	solve : 2.7542e+01s
+	solve : 2.7608e+01s
+	solve : 2.7331e+01s
+recursions = 8 relaxed-p 2nd-kind
+	solve : 2.2612e+01s
+	solve : 2.3547e+01s
+	solve : 2.1317e+01s

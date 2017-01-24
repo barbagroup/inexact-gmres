@@ -1,0 +1,70 @@
+StokesBEM on a sphere: Convergence
+error on a sphere: 1.87492e-01
+error on a sphere: 9.39450e-02
+error on a sphere: 4.63921e-02
+error on a sphere: 2.29368e-02
+error on a sphere: 1.13821e-02
+error on a sphere: 5.66115e-03
+error on a sphere: 2.27534e-02
+error on a sphere: 1.11135e-02
+error on a sphere: 5.78210e-03
+error on a sphere: 2.36407e-02
+error on a sphere: 1.10485e-02
+error on a sphere: 6.52664e-03
+StokesBEM on a sphere: Time breakdown
+P2P: 2.084s, M2L (46124): 18.9s
+P2P: 2.079s, M2L (46124): 20.5s
+P2P: 2.078s, M2L (46124): 14.65s
+P2P: 2.124s, M2L (46124): 2.222s
+P2P: 2.114s, M2L (46124): 0.6339s
+P2P: 2.097s, M2L (46124): 0.6811s
+P2P: 2.078s, M2L (46124): 0.4118s
+P2P: 2.122s, M2L (46124): 0.344s
+P2P: 2.131s, M2L (46124): 0.328s
+P2P: 2.185s, M2L (46124): 0.322s
+P2P: 2.088s, M2L (46124): 0.3368s
+P2P: 2.107s, M2L (46124): 0.3356s
+P2P: 2.161s, M2L (46124): 0.3352s
+P2P: 2.097s, M2L (46124): 0.3685s
+P2P: 2.164s, M2L (46124): 0.3261s
+P2P: 2.109s, M2L (46124): 0.3552s
+P2P: 2.076s, M2L (46124): 0.2589s
+P2P: 2.083s, M2L (46124): 0.2762s
+P2P: 2.084s, M2L (46124): 0.329s
+P2P: 2.088s, M2L (46124): 0.3576s
+P2P: 2.143s, M2L (46124): 0.3097s
+P2P: 2.094s, M2L (46124): 0.3317s
+P2P: 2.11s, M2L (46124): 0.3735s
+P2P: 2.125s, M2L (46124): 0.3986s
+P2P: 2.105s, M2L (46124): 0.3247s
+P2P: 2.079s, M2L (46124): 0.2853s
+P2P: 2.082s, M2L (46124): 0.3648s
+P2P: 2.082s, M2L (46124): 0.3674s
+P2P: 2.085s, M2L (46124): 0.4147s
+P2P: 2.096s, M2L (46124): 0.4118s
+P2P: 2.098s, M2L (46124): 0.3861s
+StokesBEM on a sphere: Speedup
+recursions = 6 fixed-p
+	solve : 8.1295e+01s
+	solve : 8.1902e+01s
+	solve : 8.4504e+01s
+recursions = 6 relaxed-p
+	solve : 3.1031e+01s
+	solve : 2.9880e+01s
+	solve : 3.0769e+01s
+recursions = 7 fixed-p
+	solve : 3.6814e+02s
+	solve : 3.7363e+02s
+	solve : 3.6876e+02s
+recursions = 7 relaxed-p
+	solve : 1.0976e+02s
+	solve : 1.1305e+02s
+	solve : 1.1298e+02s
+recursions = 8 fixed-p
+	solve : 3.0652e+03s
+	solve : 3.0782e+03s
+	solve : 3.0334e+03s
+recursions = 8 relaxed-p
+	solve : 6.8174e+02s
+	solve : 6.8251e+02s
+	solve : 6.8217e+02s

@@ -1,0 +1,178 @@
+StokesBEM Convergence on 1 rbc:
+Fx: 0.05705, analytical: 0.01885
+Fx: 0.07032, analytical: 0.01885
+Fx: 0.07663, analytical: 0.01885
+Fx: 0.07988, analytical: 0.01885
+Fx: 0.08141, analytical: 0.01885
+Fx: 0.07033, analytical: 0.01885
+Fx: 0.07678, analytical: 0.01885
+Fx: 0.07989, analytical: 0.01885
+Fx: 0.08141, analytical: 0.01885
+Fx: 0.07028, analytical: 0.01885
+Fx: 0.07790, analytical: 0.01885
+Fx: 0.07995, analytical: 0.01885
+Fx: 0.08159, analytical: 0.01885
+StokesBEM on 1 rbc: num of Iterations test
+Final residual: 9.7654e-06, after 18 iterations
+Final residual: 7.3049e-06, after 24 iterations
+StokesBEM on 1 rbc: Speedup test
+recursions = 5, cells = 1, fixed-p
+Final residual: 8.9871e-06, after 35 iterations
+	solve : 3.3543e+01s
+Final residual: 8.8982e-06, after 35 iterations
+	solve : 3.4284e+01s
+Final residual: 9.4833e-06, after 35 iterations
+	solve : 3.3085e+01s
+recursions = 5, cells = 1, relaxed-p
+Final residual: 9.3068e-06, after 38 iterations
+	solve : 1.2049e+01s
+Final residual: 8.7385e-06, after 36 iterations
+	solve : 1.0432e+01s
+Final residual: 9.8068e-06, after 37 iterations
+	solve : 1.1161e+01s
+recursions = 6, cells = 1, fixed-p
+Final residual: 8.9953e-06, after 39 iterations
+	solve : 1.8878e+02s
+Final residual: 9.9154e-06, after 39 iterations
+	solve : 1.8210e+02s
+Final residual: 9.3981e-06, after 39 iterations
+	solve : 1.8031e+02s
+recursions = 6, cells = 1, relaxed-p
+Final residual: 9.9730e-06, after 41 iterations
+	solve : 6.4950e+01s
+Final residual: 9.8312e-06, after 41 iterations
+	solve : 6.4933e+01s
+Final residual: 9.9396e-06, after 41 iterations
+	solve : 6.4886e+01s
+recursions = 7, cells = 1, fixed-p
+Final residual: 9.9360e-06, after 35 iterations
+	solve : 8.0950e+02s
+Final residual: 9.8972e-06, after 35 iterations
+	solve : 8.0933e+02s
+Final residual: 9.9024e-06, after 35 iterations
+	solve : 8.1086e+02s
+recursions = 7, cells = 1, relaxed-p
+Final residual: 9.8774e-06, after 39 iterations
+	solve : 2.5682e+02s
+Final residual: 9.8837e-06, after 39 iterations
+	solve : 2.5186e+02s
+Final residual: 9.8797e-06, after 39 iterations
+	solve : 2.5302e+02s
+recursions = 8, cells = 1, fixed-p
+Final residual: 9.8699e-06, after 31 iterations
+	solve : 4.4197e+03s
+Final residual: 9.7733e-06, after 31 iterations
+	solve : 4.4060e+03s
+Final residual: 9.7945e-06, after 31 iterations
+	solve : 4.3967e+03s
+recursions = 8, cells = 1, relaxed-p
+Final residual: 9.6799e-06, after 35 iterations
+	solve : 9.8501e+02s
+Final residual: 9.6793e-06, after 35 iterations
+	solve : 9.7967e+02s
+Final residual: 9.6813e-06, after 35 iterations
+	solve : 9.7727e+02s
+StokesBEM on multiple rbcs: Speedup test
+recursions = 5, cells = 4, fixed-p
+Final residual: 9.8859e-06, after 51 iterations
+	solve : 2.0303e+02s
+Final residual: 9.8859e-06, after 51 iterations
+	solve : 2.0538e+02s
+Final residual: 9.8859e-06, after 51 iterations
+	solve : 2.0488e+02s
+recursions = 5, cells = 4, relaxed-p
+Final residual: 8.5906e-06, after 52 iterations
+	solve : 8.6939e+01s
+Final residual: 8.6025e-06, after 52 iterations
+	solve : 8.7869e+01s
+Final residual: 8.5853e-06, after 52 iterations
+	solve : 8.7198e+01s
+recursions = 5, cells = 16, fixed-p
+Final residual: 9.8752e-06, after 67 iterations
+	solve : 1.1253e+03s
+Final residual: 9.8752e-06, after 67 iterations
+	solve : 1.1246e+03s
+Final residual: 9.8752e-06, after 67 iterations
+	solve : 1.1356e+03s
+recursions = 5, cells = 16, relaxed-p
+Final residual: 9.9908e-06, after 70 iterations
+	solve : 4.6691e+02s
+Final residual: 9.9873e-06, after 70 iterations
+	solve : 4.6544e+02s
+Final residual: 9.9767e-06, after 70 iterations
+	solve : 4.6601e+02s
+recursions = 5, cells = 64, fixed-p
+Final residual: 9.9807e-06, after 76 iterations
+	solve : 6.1889e+03s
+Final residual: 9.9872e-06, after 76 iterations
+	solve : 6.1842e+03s
+Final residual: 9.9709e-06, after 76 iterations
+	solve : 6.1856e+03s
+recursions = 5, cells = 64, relaxed-p
+Final residual: 9.9807e-06, after 79 iterations
+	solve : 1.9540e+03s
+Final residual: 9.9872e-06, after 79 iterations
+	solve : 1.9521e+03s
+Final residual: 9.9709e-06, after 79 iterations
+	solve : 1.9536e+03s
+recursions = 6, cells = 4, fixed-p
+Final residual: 9.5135e-06, after 54 iterations
+	solve : 1.3001e+03s
+Final residual: 9.5135e-06, after 54 iterations
+	solve : 1.2998e+03s
+Final residual: 9.5135e-06, after 54 iterations
+	solve : 1.3010e+03s
+recursions = 6, cells = 4, relaxed-p
+Final residual: 9.8399e-06, after 55 iterations
+	solve : 4.2398e+02s
+Final residual: 9.8080e-06, after 55 iterations
+	solve : 4.2385e+02s
+Final residual: 9.7878e-06, after 55 iterations
+	solve : 4.2367e+02s
+recursions = 6, cells = 16, fixed-p
+Final residual: 9.9647e-06, after 67 iterations
+	solve : 8.8362e+03s
+Final residual: 9.9723e-06, after 67 iterations
+	solve : 8.8369e+03s
+Final residual: 9.9783e-06, after 67 iterations
+	solve : 8.8401e+03s
+recursions = 6, cells = 16, relaxed-p
+Final residual: 9.9783e-06, after 68 iterations
+	solve : 2.0961e+03s
+Final residual: 9.9665e-06, after 68 iterations
+	solve : 2.0954e+03s
+Final residual: 9.9633e-06, after 68 iterations
+	solve : 2.1021e+03s
+recursions = 7, cells = 4, fixed-p
+Final residual: 9.9581e-06, after 49 iterations
+	solve : 6.1693e+03s
+Final residual: 9.9581e-06, after 49 iterations
+	solve : 6.1720e+03s
+Final residual: 9.9581e-06, after 49 iterations
+	solve : 6.1731e+03s
+recursions = 7, cells = 4, relaxed-p
+Final residual: 9.6651e-06, after 51 iterations
+	solve : 1.5993e+03s
+Final residual: 9.6668e-06, after 51 iterations
+	solve : 1.5986e+03s
+Final residual: 9.6798e-06, after 51 iterations
+	solve : 1.6001e+03s
+StokesBEM on multiples rbcs - num of iterations:
+2048 panels per cell
+Final residual: 9.7320e-06, after 35 iterations
+Final residual: 8.9094e-06, after 45 iterations
+Final residual: 9.8864e-06, after 51 iterations
+Final residual: 8.9955e-06, after 60 iterations
+Final residual: 9.8756e-06, after 67 iterations
+Final residual: 9.7937e-06, after 72 iterations
+Final residual: 9.8898e-06, after 76 iterations
+8192 panels per cell
+Final residual: 9.8154e-06, after 39 iterations
+Final residual: 9.3556e-06, after 48 iterations
+Final residual: 9.5136e-06, after 54 iterations
+Final residual: 9.4970e-06, after 61 iterations
+Final residual: 9.7843e-06, after 67 iterations
+32768 panels per cell
+Final residual: 9.7077e-06, after 35 iterations
+Final residual: 9.4371e-06, after 45 iterations
+Final residual: 9.8530e-06, after 49 iterations
