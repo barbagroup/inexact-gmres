@@ -429,7 +429,7 @@ But we note that only the far-field evaluation can be sped-up with the relaxatio
 \end{figure}
 
 To find out the potential speed-up, we compared the time to solution for different cases with and without the relaxation strategy. Using three surface discretizations, we solved the boundary-element problem with 1st- and 2nd-kind formulations, with a multi-threaded evaluator on 6 \cpu\ cores. In each case, we were careful to set the value of $\ncrit$ to minimize the time to solution of the particular test case. 
-The detailed results are given in Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation}.
+The detailed timings, the number of iterations to converge and the drag force $f_x$ are given in Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation}.
 Figure \ref{fig:relaxation_timing} shows the speed-up in the time spent solving the linear system of equations to the specified tolerance. 
 As indicated in the caption, we used the loose parameters in Table \ref{tab:laplace_loose_params} in our experiments to measure modest speedup for each case.
 
@@ -610,7 +610,7 @@ Table \ref{tab:rbc_richardson_values} presents the computed values of the drag f
 \end{equation}
 
 \noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.52$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
-The thicker line in Figure \ref{fig:rbc_extrapolated_convergence} shows the error with respect to the extrapolated value, as a function of the mesh size. The plot includes the error obtained with five meshes, with the extrapolated value obtained using the first three coarser meshes. Like what we did before, we also wish to select a slack set of parameters for convergence test and benchmarking. Because the problem lacks an analytical solution and later we will test on multiple combinations of different number of cells and different number of panels per cell, it is cumbersome to search for the loose parameters case by case. Instead, based on our choice for the Stokes flow on a sphere (Table \ref{tab:stokes_loose_params}), we choose the loose parameters ($p$, $K$, $\eta$) for the application to red blood cells, as listed in Table \ref{tab:rbc_loose_params}, then we find the optimal $\ncrit$ case by case with and without relaxation. The convergence result by using the loose parameters is represented by the two thinner lines in Figure \ref{fig:rbc_extrapolated_convergence}, showing that drag force calculated by using loose parameters with relaxation matches the result by using tight parameters without relaxation. Thus, we used the loose parameters in the following studies. 
+The thicker line in Figure \ref{fig:rbc_extrapolated_convergence} shows the error with respect to the extrapolated value, as a function of the mesh size. The plot includes the error obtained with five meshes, with the extrapolated value obtained using the first three coarser meshes. Like what we did before, we also wish to select a slack set of parameters for convergence test and benchmarking. Because the problem lacks an analytical solution and later we will test on multiple combinations of different number of cells and different number of panels per cell, it is cumbersome to search for the loose parameters case by case. Instead, based on our choice for the Stokes flow on a sphere (Table \ref{tab:stokes_loose_params}), we chose a safe and universal set of loose parameters---$p \left( p_{initial} \right) = 14$, $p_{min}=3$, $K=4$ and $\eta=10^{-5}$---for the application to red blood cells, then we found the optimal $\ncrit$ for each case with and without relaxation. These values are listed in Table \ref{tab:rbc_loose_params}. The convergence result associated with the loose settings is represented by the two thinner lines in Figure \ref{fig:rbc_extrapolated_convergence}, showing that drag force calculated by using loose parameters with relaxation matches the result by using tight parameters without relaxation, which convinces us to use the slacker set in the following studies. 
 
 \begin{table}[h]
 \footnotesize
@@ -650,22 +650,23 @@ The thicker line in Figure \ref{fig:rbc_extrapolated_convergence} shows the erro
   2048 & 4 & 14 & $10^{-5}$ & 400 & 4 & 14 & 3 & $10^{-5}$ & 130 \\
   8192 & 4 & 14 & $10^{-5}$ & 400 & 4 & 14 & 3 & $10^{-5}$ & 140 \\
   32768 & 4 & 14 & $10^{-5}$ & 400 & 4 & 14 & 3 & $10^{-5}$ & 120 \\
-  131072 & 4 & 14 & $10^{-5}$ & 150 & 4 & 14 & 3 & $10^{-5}$ & 100 \\
+  131072 & 4 & 14 & $10^{-5}$ & 150\footnotemark[2] & 4 & 14 & 3 & $10^{-5}$ & 100 \\
  
 \end{tabular}
 \end{center}
-\caption{Loose parameters for the application to red blood cells in Stokes flow.}
+\caption{Loose parameters for the application to one red blood cell in Stokes flow.}
 \label{tab:rbc_loose_params}
 \end{table}%
 
+\footnotetext[2]{For the same reason of memory restriction, $\ncrit=150$ gives the best available performance running the largest case on our workstation.}
 
 The calculations with increasingly finer surface meshes take more time to complete not only because the number of unknowns is larger, but also because they may require a greater number of iterations to converge to a desired residual.
-Figure \ref{fig:single_cell_iterations} shows that the number of iterations needed as the surface mesh varies from size $N=128$ to $8,192$ increases from 18 to 39 for the non-relaxed solver. For further refined meshes, the number of iterations remains above 30. This is an indication that the surface mesh is sufficiently refined with $8,192$ panels for one red blood cell.
+Figure \ref{fig:single_cell_iterations} shows that the number of iterations needed as the surface mesh varies from size $N=128$ to $8,192$ increases from 18 to 39 for the non-relaxed solver on one red blood cell. For further refined meshes, the number of iterations is between 31 and 39. This is an indication that the surface mesh is sufficiently refined with $8,192$ panels for one red blood cell.
 
 \begin{figure}
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{EthrocyteSingleCellIterations.pdf}
-	\caption{Number of iterations needed for the system to converge for increasingly refined surface meshes on one red blood cell. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
+	\caption{Number of iterations needed for the system to converge for increasingly refined surface meshes on one red blood cell, using a non-relaxed \gmres solver with loose parameter settings and optimal $\ncrit$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:single_cell_iterations}
 \end{center}
 \end{figure}
@@ -682,14 +683,14 @@ For the next test, we used several red blood cells in a sparse spatial arrangeme
 \end{center}
 \end{figure}
 
-Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed to converge to a solver tolerance of $10^{-5}$ when using three different surface mesh sizes on each cell: $N=2048$, $8192$ and $32,768$. In all cases, we ran the non-relaxed solver with the loose parameters in Table \ref{tab:rbc_loose_params}. Figure \ref{fig:multiple_cell_iterations} shows that the number of iterations needed to converge increases sharply with the number of red blood cells in the system, while the number of panels per cell has a smaller effect in this range of mesh sizes. In all cases, the number of iterations is between 45 and 65, and thus we expect to see good speed-ups using the relaxation strategy.
+Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed to converge to a solver tolerance of $10^{-5}$ when using three different surface mesh sizes on each cell: $N=2048$, $8192$ and $32,768$. In all cases, we ran the non-relaxed solver with the loose parameters and optimal $\ncrit$. Figure \ref{fig:multiple_cell_iterations} shows that the number of iterations needed to converge increases sharply with the number of red blood cells in the system, while the number of panels per cell has a smaller effect in this range of mesh sizes. In all cases with multiple cells, the number of iterations is above 45, and thus we expect to see good speed-ups using the relaxation strategy.
 
 
 
 \begin{figure}
 \begin{center}
 	\includegraphics[natwidth=7in,natheight=3.5in,width=0.85\textwidth]{EthrocyteMultipleCellIterations.pdf}
-	\caption{Number of iterations needed to converge to a desired residual of $10^{-5}$ for systems with multiple red blood cells, discretized with different mesh sizes. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
+	\caption{Number of iterations needed to converge for systems with multiple red blood cells, discretized with different mesh sizes, using a non-relaxed \gmres solver with loose parameters and optimal $\ncrit$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:multiple_cell_iterations}
 \end{center}
 \end{figure}
