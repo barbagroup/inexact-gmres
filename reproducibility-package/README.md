@@ -1,6 +1,5 @@
-The reproducibility-package includes all the files to replicate the result and plot in our paper. There are four subfolders corresponding to four sets of test: `FMM_scaling`, `Laplace`, `Stokes_sphere` and `Stokes_rbc`. 
+The reproducibility-package includes all the files to replicate the result and plots in our paper. There are four subfolders corresponding to four sets of tests: `FMM_scaling`, `Laplace`, `Stokes_sphere` and `Stokes_rbc`. 
 
-The `result` directory contains the raw output files from each test. `Dockerfile` file is the recipe to build a Docker image.
 
 `Laplace`, `Stokes_sphere` and `Stokes_rbc` folders have a similar structure of contents:
 
@@ -14,6 +13,7 @@ The `result` directory contains the raw output files from each test. `Dockerfile
 
 `FMM_scaling` folder includes only 1 test, so we don't have those shell scripts.
 
+The `result` directory contains the raw output files from each test. `Dockerfile` file is the recipe to build a Docker image.
 
 ----------------------
 
@@ -27,17 +27,17 @@ use the `Dockerfile` located at current directory to generate a docker image nam
 
 `docker build -t fmm-bem ./`
 
-or forcing a clean build of the image
+or force a clean build of the image
 
 `docker build --no-cache -t fmm-bem ./`
 
-This step takes some time to download, send build context to Docker daemon, install all the dependencies to run our tests, pull our code from Github and eventually compile the code. 
+This step takes some time to download files, send build context to Docker daemon, install all the dependencies, pull our code from Github and eventually compile the code. 
 
 #### 2. run the image in a new container
 
 `docker run -v $(pwd):/ -it fmm-bem bash`
 
-`-v` means we mount the current directory of our computer `$(pwd)` to the root directory `/` of the launched container. Mounting the volume enables us to transfer files between them.
+`-v` means to mount the current directory of our computer `$(pwd)` to the root directory `/` of the launched container. Mounting the volume enables us to transfer files between them.
 
 `-i` means interactive, and `-t` means to allocate a pseudo-tty. They are often written together as `-it`. `fmm-bem` is the image to use, and `bash` is the shell to use.
 
@@ -52,7 +52,6 @@ Take Laplace test as an example:
 copy autorun shell scripts from our reproducibility-package to the current directory in the launched container.
 
 #### 4. execute the autorun scripts
-
 
 `sudo chmod +x ./autorun_Laplace.sh` 
 
