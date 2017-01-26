@@ -88,6 +88,14 @@ J.~Van~den Eshof, G.~Sleijpen, Inexact {Krylov} subspace methods for linear
 L.~Greengard, The rapid evaluation of potential fields in particle systems, The
   MIT Press, 1987.
 
+\bibitem{Yokota2013-dualtree}
+R.~Yokota, An {FMM} based on dual tree traversal for many-core architectures,
+  Journal of Algorithms \& Computational Technology 7~(3) (2013) 301--324,
+  preprint
+  \href{http://arxiv.org/abs/arXiv:1209.3516v3}{http://arxiv.org/abs/arXiv:1209.3516v3}.
+\newblock \href {http://dx.doi.org/10.1260/1748-3018.7.3.301}
+  {\path{doi:10.1260/1748-3018.7.3.301}}.
+
 \bibitem{WangLaytonBarba2016-figshare1}
 T.~Wang, S.~K. Layton, L.~A. Barba, Inexact {GMRES: FMM} scaling, figshare
   (March 2016).
