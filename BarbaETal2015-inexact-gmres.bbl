@@ -5,6 +5,14 @@
 \expandafter\ifx\csname href\endcsname\relax
   \def\href#1#2{#2} \def\path#1{#1}\fi
 
+\bibitem{Nishimura2002}
+N.~Nishimura, \href{http://link.aip.org/link/?AMR/55/299/1}{Fast multipole
+  accelerated boundary integral equation methods}, Appl.\ Mech.\ Rev. 55~(4)
+  (2002) 299--324.
+\newblock \href {http://dx.doi.org/10.1115/1.1482087}
+  {\path{doi:10.1115/1.1482087}}.
+\newline\urlprefix\url{http://link.aip.org/link/?AMR/55/299/1}
+
 \bibitem{Liu2006}
 Y.~Liu, N.~Nishimura, The fast multipole boundary element method for potential
   problems: a tutorial, Engineering Analysis with Boundary Elements 30~(5)
