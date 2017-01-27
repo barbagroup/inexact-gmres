@@ -73,6 +73,15 @@ L.~Greengard, V.~Rokhlin, A fast algorithm for particle simulations, J.
 \newblock \href {http://dx.doi.org/10.1016/0021-9991}
   {\path{doi:10.1016/0021-9991}}.
 
+\bibitem{ChengETal1999}
+H.~Cheng, L.~Greengard, V.~Rokhlin, A fast adaptive multipole algorithm in
+  three dimensions, J.\ Comput. Phys. 155 (1999) 468--498.
+
+\bibitem{white1996rotating}
+C.~A. White, M.~Head-Gordon, Rotating around the quartic angular momentum
+  barrier in fast multipole method calculations, The Journal of Chemical
+  Physics 105~(12) (1996) 5061--5067.
+
 \bibitem{bouras2000relaxation}
 A.~Bouras, V.~Frayss{\'e}, A relaxation strategy for inexact matrix-vector
   products for {Krylov} methods, CERFACS TR0PA000015, European Centre for

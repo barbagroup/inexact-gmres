@@ -321,7 +321,9 @@ At this point, a treecode algorithm evaluates the potential on target points, pe
 \end{center}
 \end{figure}
 
-The Cartesian-expansion \mtol\ operation scales as $\O{p^{6}}$, which quickly becomes expensive when requiring higher accuracy via higher $p$. Using spherical-harmonic expansions reduces this cost to  $\O{p^{4}}$, but the mathematical derivations and expressions become more cumbersome. For the sake of brevity, we omit all the details and write the final form for the spherical expansions of the Laplace potential---denoted here by $\Phi(\vect{x}_i)$ to differentiate with the spherical co-ordinate $\phi$---as follows
+The Cartesian-expansion \mtol\ operation scales as $\O{p^{6}}$, which quickly becomes expensive when requiring higher accuracy via higher $p$. 
+With spherical-harmonic expansions, \mtol scales as $\O{p^{4}}$ without rotation; or $\O{p^{3}}$ with rotation \cite{ChengETal1999}. The break-even point between the two types of \mtol operator occurs at high $p$, however \cite{white1996rotating}. In this work, we use the $\O{p^{4}}$ operator, given that we operate at low $p$ most of the time.
+For the sake of brevity, we omit all the details and write the final form for the spherical expansions of the Laplace potential---denoted here by $\Phi(\vect{x}_i)$ to differentiate with the spherical co-ordinate $\phi$---as follows
 
 \begin{eqnarray}
 	\Phi(\vect{x}_i) & = & \sum_{n=0}^{p}\sum_{m=-n}^{n}\frac{Y^{m}_n(\theta_i,\phi_i)}{r_i^{n+1}}\underbrace{\left \{ \sum_j^{N}q_j\rho^{n}_jY^{-m}_n(\alpha_i,\beta_i)\right \} }_{M^{m}_n} \, \text{and}\\
@@ -337,7 +339,7 @@ Accelerating a \bem\ solution with \fmm\ implies computing the matrix-vector pro
 Two natural questions to ask are how large does the value of $p$ need to be to ensure that the iterative solver will still converge and what's the impact on the accuracy of the converged solution due to the error on the computed mat-vec.
 We might expect to choose that value of $p$ that ensures convergence and desired accuracy, and apply it evenly for all iterations. 
 But it turns out that Krylov iterations have a surprising property: the \emph{first} iteration needs to be computed with high accuracy, but accuracy requirements can be \emph{relaxed} for later iterations. 
-Translation operators in the \fmm can scale as $\O{p^{6}}$ or $\O{p^{4}}$---using Cartesian or spherical expansions, respectively---, so this property of Krylov methods could offer the potential for further accelerating the \bem\ solution.
+With a $\O{p^{4}}$ scaling in the \mtol operator, this property of Krylov methods could offer the potential for further accelerating the \bem\ solution.
 Bouras and Frayss{\'e} \cite{bouras2000relaxation,bourasfraysse2005} studied the effect of inexact Krylov iterations on convergence and accuracy via numerical experiments.
 They found that if the system matrix is perturbed, so we are computing $(A+\Delta A_k)\vect{z}$ on each iteration, and the perturbation stays nearly equal in norm to $\eta \|A\|$, then the computed solution will have an error of the same order, $\eta$. This is the situation when simply computing the mat-vec within the limits of machine precision. But they also showed the more surprising result that the magnitude of the perturbations $\Delta A_k$ can be allowed to grow as the iterations progress.
 They define a relaxation strategy whereby, for a desired final tolerance $\eta$ in the solution of the system, the mat-vecs in each iteration are computed with a coefficient matrix perturbed with $\Delta A_k$, where if $r_k$ is the absolute residual at step $k$,
