@@ -357,13 +357,13 @@ In the fast multipole method, we have error bounds available for the approximati
 	\left | \phi(r, \theta, \phi) - \sum_{n=0}^{p}\sum_{m=-n}^{n}\frac{M^{m}_{n}}{r^{n+1}}\cdot Y^{m}_{n}(\theta, \phi) \right | \leq \frac{\sum_{i=1}^{N}q_{i}}{r-a}\left ( \frac{a}{r} \right )^{p+1},
 \end{equation}
 
-\noindent where $a$ is the  cluster radius and $r$ is the distance between the multipole center and the target. The above inequality is given in Ref. \cite[p.~55]{greengard1987} with label (3.38), and proved using the triangle inequality. This reference also gives similar bounds for the translation and evaluation operators. In the particular case that $r/a\geq 2$ (the distance between a multipole center and target is at least twice the cluster radius), the number of terms needed to obtain a given accuracy $\varepsilon$ is 
+\noindent where $a$ is the  cluster radius and $r$ is the distance between the multipole center and the target. The above inequality is given in Ref. \cite[p.~55]{greengard1987} with label (3.38), and proved using the triangle inequality. This reference also gives similar bounds for the translation and evaluation operators. We used $\theta_{\text{MAC}} = 0.5$ throughout this study, so the closest that a target can be to the center of expansion of sources acting on it is $2a$, i.e.\ $r/a \geq 2$. In Equation \eqref{eqn:multipole_error}, we replace $r/a$ with $1/2$ (the worst case), equate with \eqref{eqn:matrix-perturbation} and solve for $p$ by applying a logarithm:
 
 \begin{equation}\label{eqn:fmm_p}
 	p_k \sim \lceil -\log_{2}(\varepsilon_k) \rceil.
 \end{equation}
 
-\noindent In combination with Equation \eqref{eqn:matrix-perturbation}, we thus have an explicit  relation between the allowed perturbation on the mat-vec for the inexact Krylov iterations to converge, and the order of the multipole expansion in the \fmm.
+\noindent where our multipole acceptance criterion gives the base-$2$ logarithm. We thus have an explicit relation between the allowed perturbation on the mat-vec for the inexact Krylov iterations to converge, and the order of the multipole expansion in the \fmm at step $k$.
 Although the \fmm error bounds are known to be rather loose, we use this approach for a conservative relaxation of $p$, and we expect that with experience and more detailed studies, the relaxation strategy could be pushed to give better speed-ups in specific applications.
 
 
