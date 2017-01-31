@@ -370,7 +370,7 @@ Although the \fmm error bounds are known to be rather loose, we use this approac
 %$ RESULTS
 \section{Results and discussion}
 Our results include numerical experiments with \bem\ solutions for the Laplace and Stokes equations, including an application to Stokes flow around red blood cells. The \bem\ solver is accelerated with a fast multipole method using spherical expansions, implemented in a code designed to use boundary elements (panels) as the sources and targets, and written in multi-threaded \cpp. To facilitate reproducibility of our research, the code is made available via its version-control repository,\footnote{\href{https://github.com/barbagroup/fmm-bem-relaxed}{https://github.com/barbagroup/fmm-bem-relaxed}} under an MIT license. The paper manuscript is also available via its repository,\footnote{\href{https://github.com/barbagroup/inexact-gmres}{https://github.com/barbagroup/inexact-gmres}} which includes running scripts and plotting scripts to produce the included figures (see each figure caption for details).
-We ran all our tests on a lab workstation with an Intel Core i7-5930K hexa-core processor and 32GB RAM. Using a test with the Laplace kernel, we confirmed that our \fmm\ code scales as $\O{N}$ by timing several runs with increasing problem size; see Figure \ref{fig:fmm_scaling}. The performance of our code falls into the range of several major \fmm software tested by Yokota \cite{Yokota2013-dualtree}, showing that the \fmm code used in this work performs competitively. The detailed result can be found in the supplementary jupyter notebook.\footnote{\href{https://github.com/barbagroup/inexact-gmres/blob/master/supplementary-materials/inexact-GMRES-result.ipynb}{https://github.com/barbagroup/inexact-gmres/blob/master/supplementary-materials/inexact-GMRES-result.ipynb}.} We also found that the preconditioned cases take fewer iterations but more time to converge than the unpreconditioned ones, because the residuals after the first several iterations in the preconditioned cases are greater. For an inexact {\gmres} iteration, a bigger residual leads to a higher required $p$, which offsets the benefit of using fewer iterations. Therefore, we performed these tests without preconditioning.
+We ran all our tests on a lab workstation with an Intel Core i7-5930K hexa-core processor and 32GB RAM. Using a test with the Laplace kernel, we confirmed that our \fmm\ code scales as $\O{N}$ by timing several runs with increasing problem size; see Figure \ref{fig:fmm_scaling}. The performance of our code falls into the range of several major \fmm software tested by Yokota \cite{Yokota2013-dualtree}, showing that the \fmm code used in this work performs competitively. The detailed result can be found in the supplementary Jupyter Notebook.\footnote{See the \href{https://github.com/barbagroup/inexact-gmres/blob/master/supplementary-materials/inexact-GMRES-result.ipynb}{``supplementary-materials''} folder in the paper repository.} We also found that the preconditioned cases take fewer iterations but more time to converge than the unpreconditioned ones, because the residuals after the first several iterations in the preconditioned cases are greater. For an inexact {\gmres} iteration, a bigger residual leads to a higher required $p$, which offsets the benefit of using fewer iterations. Therefore, we performed these tests without preconditioning.
 The subsequent experiments investigate the use of a Krylov relaxation strategy by reducing the order of multipole expansions, $p$, as the iterations progress to convergence, determining the speed-up provided by such a strategy for different scenarios and problem sizes.
 
 \begin{figure}[h]
@@ -400,7 +400,7 @@ Then we carefully slackened these parameters $p$, $K$, $\eta$ one at a time for 
 \begin{figure}[t]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=1.0\textwidth]{LaplaceConvergence.pdf}
-	\caption{Convergence of 1st-kind (left plot) and 2nd-kind (right plot) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vector products, with $\theta_{\text{MAC}} = 0.5$. The vertical axis is the relative error of the potential evaluated at an exterior point with respect to the analytical solution, for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{Convergence of 1st-kind (left plot) and 2nd-kind (right plot) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vector products, with $\theta_{\text{MAC}} = 0.5$. The vertical axis is the relative error of the potential evaluated at an exterior point with respect to the analytical solution, for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. The tight parameters: $p=20$, $K=13$, $\eta=10^{-10}$; the loose parameters are listed in Table \ref{tab:laplace_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:laplaceconvergence}
 \end{center}
 \end{figure}
@@ -423,18 +423,18 @@ Then we carefully slackened these parameters $p$, $K$, $\eta$ one at a time for 
 \label{tab:laplace_loose_params}
 \end{table}%
 
-Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and  what value of $p$ is required in the \fmm-accelerated mat-vecs to continue convergence, according to Equation \eqref{eqn:fmm_p}. We discretized a sphere with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-6}$ with an initial value of $p$ set to 8 and 10. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 2 is sufficient by the eleventh iteration for $p_\text{{initial}}=8$ and by the eighth iteration for $p_{\text{initial}}=10$. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale from $\bigO(p^{4})$ for spherical harmonics to $\bigO(p^{6})$ for Cartesian expansions. A more accurate first iteration results in a faster drop of required-$p$ and fewer iterations. 
+Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and  what value of $p$ is required in the \fmm-accelerated mat-vecs to continue convergence, according to Equation \eqref{eqn:fmm_p}. We discretized a sphere with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-6}$ with an initial value of $p$ set to 8 and 10. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 2 is sufficient by the eleventh iteration for $p_\text{{initial}}=8$ and by the eighth iteration for $p_{\text{initial}}=10$. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale as $\bigO(p^{4})$ for spherical harmonics. A more accurate first iteration results in a faster drop of required-$p$ and fewer iterations. 
 But we note that only the far-field evaluation can be sped-up with the relaxation strategy, which means that the correct balance between near field and far field in the \fmm could change as we reset $p$ in the later iterations.
 
 \begin{figure}%[ht]
 	\centering
 	\includegraphics[natwidth=7in,natheight=2in,width=0.95\textwidth]{LaplaceResidualIterations.pdf}
-	\caption{In a test using a sphere discretized with $32,768$ triangles, with $K=4$, $p_\text{initial}=8$ (left plot), $p_\text{initial}=10$ (right plot) and optimal $\ncrit$s, the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{In a test solving a first-kind integral equation with relaxtion, using a sphere discretized with $32,768$ triangles, with $K=4$, $p_\text{initial}=8$ (left plot), $p_\text{initial}=10$ (right plot) and optimal $\ncrit = 100$, the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:residualp}
 \end{figure}
 
 To find out the potential speed-up, we compared the time to solution for different cases with and without the relaxation strategy. Using three surface discretizations, we solved the boundary-element problem with 1st- and 2nd-kind formulations, with a multi-threaded evaluator on 6 \cpu\ cores. In each case, we were careful to set the value of $\ncrit$ to minimize the time to solution of the particular test case. 
-The detailed timings, the number of iterations to converge and the drag force $f_x$ are given in Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation}.
+The detailed timings, the number of iterations to converge and the relative error of the potential evaluated at an exterior point are given in Tables \ref{tab:laplace_1st_relaxation} and \ref{tab:laplace_2nd_relaxation}.
 Figure \ref{fig:relaxation_timing} shows the speed-up in the time spent solving the linear system of equations to the specified tolerance. 
 As indicated in the caption, we used the loose parameters in Table \ref{tab:laplace_loose_params} in our experiments to measure modest speedup for each case.
 
@@ -442,7 +442,7 @@ As indicated in the caption, we used the loose parameters in Table \ref{tab:lapl
 \begin{figure}%[h]
 	\centering
 	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceSpeedupRelaxation.pdf}
-	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
+	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations, with loose parameter settings in Table \ref{tab:laplace_loose_params}. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:relaxation_timing}
 \end{figure}
 
@@ -496,15 +496,15 @@ Like in \S\ref{sec:inexactLaplace}, we start with a grid-convergence study to bu
 	F_d = \int_\Gamma t_x\;\di{\Gamma'} = \sum_{j=1}^{N} t_{x_j}\cdot A_j
 \end{equation}
 
-%% need to change why we choose p=16 in the third sentence "We first"
+
 For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag force of $F_d = 0.01885$. We solve the integral problem using a boundary element method with fast-multipole-accelerated mat-vecs in a \gmres solver.
-Like with the Laplace equation, we first used a set of stringent parameters: $p=20$, $K=13$ and $\eta=10^{-10}$, to guarantee that discretization error dominates error from other sources. The thicker line in Figure \ref{fig:stokes_convergence} shows that we observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations using tight parameters. Again for both cases with and without relaxation, we gradually slackened these tight parameters one at a time to find the loosest possible values without affecting accuracy, and they are listed in Table \ref{tab:stokes_loose_params}. Through our extensive tests, we also found that we need to enforce a minimum $p$ to maintain accuracy for the cases with relaxations in Stokes solver, which means the required $p$ at each step is determined by Equation \eqref{eqn:fmm_p} with a floor of $p_{min}$. The choices of $\ncrit$ are optimal (except for the largest case without relaxation) in Table \ref{tab:stokes_loose_params}. The finer lines in Figure \ref{fig:stokes_convergence} demonstrate the convergence result by using the loose parameters, which confirms our choice of parameters and the relaxation strategy on $p$.
+Like with the Laplace equation, we first used a set of stringent parameters: $p=20$, $K=13$ and $\eta=10^{-10}$, to guarantee that discretization error dominates error from other sources. The thicker line in Figure \ref{fig:stokes_convergence} shows that we observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations using tight parameters. Again for both cases with and without relaxation, we gradually slackened these tight parameters one at a time to find the loosest possible values without affecting accuracy, and they are listed in Table \ref{tab:stokes_loose_params}. Through our extensive tests, we also found that we need to enforce a minimum $p$ to maintain accuracy for the cases with relaxations in Stokes solver, which means the required $p$ at each step is determined by Equation \eqref{eqn:fmm_p} with a floor of $p_{min}$. The choices of $\ncrit$ are optimal in Table \ref{tab:stokes_loose_params}. The finer lines in Figure \ref{fig:stokes_convergence} demonstrate the convergence result by using the loose parameters, which confirms our choice of parameters and the relaxation strategy on $p$.
 
 
 \begin{figure}%[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesConvergence.pdf}
-	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation. The relative error is with respect to the analytical solution for drag on a sphere: $F_d = 6\pi\mu Ru_x$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
+	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation. The relative error is with respect to the analytical solution for drag on a sphere: $F_d = 6\pi\mu Ru_x$. The tight parameters: $p=20$, $K=13$, $\eta=10^{-10}$; the loose parameters are listed in Table \ref{tab:stokes_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_convergence}
 \end{center}
 \end{figure}
@@ -540,7 +540,7 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 \begin{figure}%[ht]
 \begin{center}
 	\includegraphics[natwidth=9in,natheight=4in,width=0.95\textwidth]{StokesSolveBreakdown.pdf}
-	\caption{Time breakdown between {\ptop} and {\mtol} when using a relaxation strategy for solving surface traction on the surface of a sphere with $32,768$ panels. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
+	\caption{Time breakdown between {\ptop} and {\mtol} when using a relaxation strategy for solving surface traction on the surface of a sphere with $32,768$ panels, with the loose set of parameters listed in Table \ref{tab:stokes_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_relaxation_breakdown}
 \end{center}
 \end{figure}
@@ -549,7 +549,7 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 \begin{figure}%[ht]
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSpeedupRelaxation.pdf}
-	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$. Time is measured by averaging the solving time of three identical runs. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
+	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$, with loose parameter settings in Table \ref{tab:stokes_loose_params}. Time is measured by averaging the solving time of three identical runs. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_speedup}
 \end{center}
 \end{figure}
@@ -608,13 +608,13 @@ If the value $f_1$ corresponds to that obtained using the coarsest mesh and $f_2
 	\bar{f} = \frac{f_1f_3-f_2^{2}}{f_1 -2f_2+f_3}
 \end{equation}
 
-Table \ref{tab:rbc_richardson_values} presents the computed values of the drag force obtained with three different meshes, of sizes $N=512$, $2048$ and $8192$, by using a tight set of parameters: $p=20$, $K=13$ and $\eta=10^{-10}$. We can also obtain the \emph{observed order of convergence}, $p$, as follows
+Table \ref{tab:rbc_richardson_values} presents the computed values of the drag force obtained with three different meshes, of sizes $N=512$, $2048$ and $8192$, by using a set of tight parameters: $p=20$, $K=13$ and $\eta=10^{-10}$. We can also obtain the \emph{observed order of convergence}, $p$, as follows
 %
 \begin{equation}
 	p = \frac{\ln{\left(\frac{f_2-f_1}{f_3-f_2}\right)}}{\ln{c}},
 \end{equation}
 
-\noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.52$, matching our expected rate of convergence of $\O{\sqrt{N}}$. 
+\noindent where $c$ is the refinement ratio between two consecutive meshes. With the values in Table \ref{tab:rbc_richardson_values}, the observed order of convergence comes out at $0.52$, matching our expected rate of convergence of $\O{1 / \sqrt{N}}$. 
 The thicker line in Figure \ref{fig:rbc_extrapolated_convergence} shows the error with respect to the extrapolated value, as a function of the mesh size. The plot includes the error obtained with five meshes, with the extrapolated value obtained using the first three coarser meshes. Like what we did before, we also wish to select a slack set of parameters for convergence test and benchmarking. Because the problem lacks an analytical solution and later we will test on multiple combinations of different number of cells and different number of panels per cell, it is cumbersome to search for the loose parameters case by case. Instead, based on our choice for the Stokes flow on a sphere (Table \ref{tab:stokes_loose_params}), we chose a safe and universal set of loose parameters---$p \left( p_{initial} \right) = 14$, $p_{min}=3$, $K=4$ and $\eta=10^{-5}$---for the application to red blood cells, then we found the optimal $\ncrit$ for each case with and without relaxation. These values are listed in Table \ref{tab:rbc_loose_params}. The convergence result associated with the loose settings is represented by the two thinner lines in Figure \ref{fig:rbc_extrapolated_convergence}, showing that drag force calculated by using loose parameters with relaxation matches the result by using tight parameters without relaxation, which convinces us to use the slacker set in the following studies. 
 
 \begin{table}[h]
@@ -638,7 +638,7 @@ The thicker line in Figure \ref{fig:rbc_extrapolated_convergence} shows the erro
 \begin{figure}
 \begin{center}
 	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{EthrocyteConvergence.pdf}
-	\caption{Observed convergence for Stokes flow around red blood cells, with respect to the extrapolated value of the drag coefficient, using Richardson extrapolation \cite{roache1998}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
+	\caption{Observed convergence for Stokes flow around a red blood cell, with respect to the extrapolated value of the drag coefficient, using Richardson extrapolation \cite{roache1998}. The tight parameters: $p=20$, $K=13$, $\eta=10^{-10}$; the loose parameters are listed in Table \ref{tab:rbc_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:rbc_extrapolated_convergence}
 \end{center}
 \end{figure}
@@ -700,7 +700,7 @@ Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed t
 \end{center}
 \end{figure}
 
-We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, and Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $3\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use an efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using six threads, like we do here), then the potential for a $4\times$ speed-up is real.
+We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, where we reported the calculated drag force $f_x$ due to lack of an analytical solution. Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $3\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use an efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using six threads, like we do here), then the potential for a $4\times$ speed-up is real.
 
 \begin{table}[h]
 \footnotesize
@@ -806,7 +806,7 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 
 \subsection{Reproducibility}
 
-Our inexact \gmres code is open-source and available on Github. Knowing the increasing importance of computational reproducibility, we provided the ``\textit{reproducibility package}" --- containing the running and post-processing scripts --- to generate the figures in this result section. To save readers from potential headaches of dependency mismatches, we also prepared a Dockerfile to setup up the software environment (a Docker container), under which the ``\textit{reproducibility package}" can be used to replicate our results.
+Our inexact \gmres code is open-source and available on Github. Knowing the increasing importance of computational reproducibility, we provide the ``\textit{reproducibility package}" --- containing the running and post-processing scripts --- to generate the figures in the result section. To save readers from potential headaches of dependency mismatches, we prepared a Dockerfile to setup up the software environment (a Docker container), under which the ``\textit{reproducibility package}" can be used to replicate our results. We also provide a Jupyter Notebook as supplementary material; it contains details of the parameter searches and timing benchmark with \fmm.
 
 
 \section{Conclusion} 
