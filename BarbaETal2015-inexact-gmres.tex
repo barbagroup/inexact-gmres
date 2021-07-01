@@ -248,7 +248,7 @@ The boundary integral formulations all demand that we compute integrals of the t
 
 \begin{figure}[t]
 	\begin{centering}
-\includegraphics[natwidth=5.15in,natheight=2.6in,width=0.45\textwidth]{IntegrationDomain.pdf}
+\includegraphics[width=0.45\textwidth]{IntegrationDomain.pdf}
 	\caption{Depending on the distance between a source panel and target point, we use different numerical, analytical or semi-analytical integration methods, balancing computational efficiency and accuracy near singularities. The threshold distance between far and near-singular regions is $2\sqrt{2 S_j}$, where $S_j$ is the surface area of the source panel.}
 	\label{fig:integration_domain}
 	\end{centering}
@@ -390,8 +390,8 @@ Then we carefully slackened these parameters $p$, $K$, $\eta$ one at a time for 
 
 \begin{figure}%[ht]
 \begin{center}
-	\subfloat[][128 panels]{\includegraphics[natwidth=4.73in,natheight=3.94in,width=0.3\textwidth]{sphere128.pdf}\label{fig:sphere128}}\qquad
-	\subfloat[][2048 panels]{\includegraphics[natwidth=4.73in,natheight=3.94in,width=0.3\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
+	\subfloat[][128 panels]{\includegraphics[width=0.3\textwidth]{sphere128.pdf}\label{fig:sphere128}}\qquad
+	\subfloat[][2048 panels]{\includegraphics[width=0.3\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
 	\caption{Triangular discretizations of a spherical surface.}
 	\label{fig:glob_spheres}
 \end{center}
@@ -399,7 +399,7 @@ Then we carefully slackened these parameters $p$, $K$, $\eta$ one at a time for 
 %
 \begin{figure}[t]
 \begin{center}
-	\includegraphics[natwidth=3in,natheight=2in,width=1.0\textwidth]{LaplaceConvergence.pdf}
+	\includegraphics[width=1.0\textwidth]{LaplaceConvergence.pdf}
 	\caption{Convergence of 1st-kind (left plot) and 2nd-kind (right plot) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vector products, with $\theta_{\text{MAC}} = 0.5$. The vertical axis is the relative error of the potential evaluated at an exterior point with respect to the analytical solution, for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. The tight parameters: $p=20$, $K=13$, $\eta=10^{-10}$; the loose parameters are listed in Table \ref{tab:laplace_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:laplaceconvergence}
 \end{center}
@@ -428,7 +428,7 @@ But we note that only the far-field evaluation can be sped-up with the relaxatio
 
 \begin{figure}%[ht]
 	\centering
-	\includegraphics[natwidth=7in,natheight=2in,width=0.95\textwidth]{LaplaceResidualIterations.pdf}
+	\includegraphics[width=0.95\textwidth]{LaplaceResidualIterations.pdf}
 	\caption{In a test solving a first-kind integral equation with relaxtion, using a sphere discretized with $32,768$ triangles, with $K=4$, $p_\text{initial}=8$ (left plot), $p_\text{initial}=10$ (right plot) and optimal $\ncrit = 100$, the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:residualp}
 \end{figure}
@@ -441,7 +441,7 @@ As indicated in the caption, we used the loose parameters in Table \ref{tab:lapl
 
 \begin{figure}%[h]
 	\centering
-	\includegraphics[natwidth=3in,natheight=2in,width=0.45\textwidth]{LaplaceSpeedupRelaxation.pdf}
+	\includegraphics[width=0.45\textwidth]{LaplaceSpeedupRelaxation.pdf}
 	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations, with loose parameter settings in Table \ref{tab:laplace_loose_params}. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:relaxation_timing}
 \end{figure}
@@ -503,7 +503,7 @@ Like with the Laplace equation, we first used a set of stringent parameters: $p=
 
 \begin{figure}%[ht]
 \begin{center}
-	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesConvergence.pdf}
+	\includegraphics[width=0.5\textwidth]{StokesConvergence.pdf}
 	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation. The relative error is with respect to the analytical solution for drag on a sphere: $F_d = 6\pi\mu Ru_x$. The tight parameters: $p=20$, $K=13$, $\eta=10^{-10}$; the loose parameters are listed in Table \ref{tab:stokes_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_convergence}
 \end{center}
@@ -539,7 +539,7 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 
 \begin{figure}%[ht]
 \begin{center}
-	\includegraphics[natwidth=9in,natheight=4in,width=0.95\textwidth]{StokesSolveBreakdown.pdf}
+	\includegraphics[width=0.95\textwidth]{StokesSolveBreakdown.pdf}
 	\caption{Time breakdown between {\ptop} and {\mtol} when using a relaxation strategy for solving surface traction on the surface of a sphere with $32,768$ panels, with the loose set of parameters listed in Table \ref{tab:stokes_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_relaxation_breakdown}
 \end{center}
@@ -548,7 +548,7 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 
 \begin{figure}%[ht]
 \begin{center}
-	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{StokesSpeedupRelaxation.pdf}
+	\includegraphics[width=0.5\textwidth]{StokesSpeedupRelaxation.pdf}
 	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$, with loose parameter settings in Table \ref{tab:stokes_loose_params}. Time is measured by averaging the solving time of three identical runs. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_speedup}
 \end{center}
@@ -594,8 +594,8 @@ Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from
 
 \begin{figure}%[ht]
 \begin{center}
-	\subfloat[512 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
-	\subfloat[2048 panels]{\includegraphics[natwidth=2.94in,natheight=1.94in,width=0.3\textwidth]{RBC2048.pdf}\label{fig:rbc2048}}
+	\subfloat[512 panels]{\includegraphics[width=0.3\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
+	\subfloat[2048 panels]{\includegraphics[width=0.3\textwidth]{RBC2048.pdf}\label{fig:rbc2048}}
 	\caption{Surface geometries of red blood cells obtained from transforming sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.}
 	\label{fig:glob_rbc}
 \end{center}
@@ -637,7 +637,7 @@ The thicker line in Figure \ref{fig:rbc_extrapolated_convergence} shows the erro
 
 \begin{figure}
 \begin{center}
-	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{EthrocyteConvergence.pdf}
+	\includegraphics[width=0.5\textwidth]{EthrocyteConvergence.pdf}
 	\caption{Observed convergence for Stokes flow around a red blood cell, with respect to the extrapolated value of the drag coefficient, using Richardson extrapolation \cite{roache1998}. The tight parameters: $p=20$, $K=13$, $\eta=10^{-10}$; the loose parameters are listed in Table \ref{tab:rbc_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:rbc_extrapolated_convergence}
 \end{center}
@@ -670,7 +670,7 @@ Figure \ref{fig:single_cell_iterations} shows that the number of iterations need
 
 \begin{figure}
 \begin{center}
-	\includegraphics[natwidth=3in,natheight=2in,width=0.5\textwidth]{EthrocyteSingleCellIterations.pdf}
+	\includegraphics[width=0.5\textwidth]{EthrocyteSingleCellIterations.pdf}
 	\caption{Number of iterations needed for the system to converge for increasingly refined surface meshes on one red blood cell, using a non-relaxed \gmres solver with loose parameter settings and optimal $\ncrit$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:single_cell_iterations}
 \end{center}
@@ -682,7 +682,7 @@ For the next test, we used several red blood cells in a sparse spatial arrangeme
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[natwidth=6in,natheight=2.88in,width=0.75\textwidth]{4Cells_arrow.pdf}
+\includegraphics[width=0.75\textwidth]{4Cells_arrow.pdf}
 	\caption{Surfaces for four red blood cells in a uniform Stokes flow.}
 	\label{fig:multiple_cells}
 \end{center}
@@ -694,7 +694,7 @@ Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed t
 
 \begin{figure}
 \begin{center}
-	\includegraphics[natwidth=7in,natheight=3.5in,width=0.85\textwidth]{EthrocyteMultipleCellIterations.pdf}
+	\includegraphics[width=0.85\textwidth]{EthrocyteMultipleCellIterations.pdf}
 	\caption{Number of iterations needed to converge for systems with multiple red blood cells, discretized with different mesh sizes, using a non-relaxed \gmres solver with loose parameters and optimal $\ncrit$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:multiple_cell_iterations}
 \end{center}
@@ -798,7 +798,7 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 
 \begin{figure}[ht]
 \begin{center}
-	\includegraphics[natwidth=4in,natheight=3in,width=0.55\textwidth]{EthrocyteMultipleCellSpeedup.pdf}
+	\includegraphics[width=0.55\textwidth]{EthrocyteMultipleCellSpeedup.pdf}
 	\caption{Speed-ups of the relaxation strategy with several red blood cells in uniform Stokes flow, using different mesh sizes on each cell. The abscissa value corresponds to the total number of panels (all cells). Test parameters shown in Table \ref{tab:cells_relaxation_settings}. Time is measured by averaging the solving time of three identical runs.} 
 	\label{fig:multiple_cell_speedup}
 \end{center}
