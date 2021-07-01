@@ -301,7 +301,7 @@ using the following expression
 	\phi_{i} = \sum_{j=0}^{N} m_{j}\cdot\K(\vect{x}_{i},\vect{y}_{j}) \; = \; \sum_{j=0}^{N}\K_{ij}m_{j},
 \end{equation}
 
-\noindent where $\K_{ij} = \K(\vect{x}_{i},\vect{y}_{j})$ is referred to as the \emph{kernel}, and the potential is a solution of an elliptic equation, e.g., the Poisson equation $\vect{F}_i = - \nabla^2 \phi_i$ for gravitation. The expression in \eqref{eqn:nbody} is analogous to that for one row of the \bem\ mat-vec in Equation \eqref{eqn:matvec-onerow}, taking all $N_p \cdot K$ Gauss points collectively.
+\noindent where $\K_{ij} = \K(\vect{x}_{i},\vect{y}_{j})$ is referred to as the \emph{kernel}, and the potential is a solution of an elliptic equation, e.g., the Poisson equation for gravitation. The expression in \eqref{eqn:nbody} is analogous to that for one row of the \bem\ mat-vec in Equation \eqref{eqn:matvec-onerow}, taking all $N_p \cdot K$ Gauss points collectively.
 The first step in the \fmm\ acceleration of \bem\ is to group the Gauss quadrature points (i.e., the ``sources'') into clusters, and represent their influence via multipole expansions at the cluster centers. If using Taylor expansions, for example, truncated to the first $p$ terms, the potential at a point is approximated by
 %
 \begin{equation}
