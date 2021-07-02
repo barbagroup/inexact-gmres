@@ -35,9 +35,9 @@ This step takes some time to download files, send build context to Docker daemon
 
 #### 2. run the image in a new container
 
-`docker run -v $(pwd):/ -it fmm-bem bash`
+`docker run -v $(pwd):/data -it fmm-bem bash`
 
-`-v` means to mount the current directory of our computer `$(pwd)` to the root directory `/` of the launched container. Mounting the volume enables us to transfer files between them.
+`-v` mounts the current directory of the host `$(pwd)` to `/data` of the container. Mounting the volume enables us to transfer files between them.
 
 `-i` means interactive, and `-t` means to allocate a pseudo-tty. They are often written together as `-it`. `fmm-bem` is the image to use, and `bash` is the shell to use.
 
