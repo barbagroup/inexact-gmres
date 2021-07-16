@@ -1,15 +1,4 @@
-%% Manuscript for submission to Elsevier
-%% \documentclass[preprint,review,12pt]{elsarticle} 
-%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn 
-%% for a journal layout: 
-%% \documentclass[final,1p,times]{elsarticle} 
-%% \documentclass[final,1p,times,twocolumn]{elsarticle} 
-%% \documentclass[final,3p,times]{elsarticle} 
-%%\documentclass[final,3p,times,twocolumn]{elsarticle} 
-%% \documentclass[final,5p,times]{elsarticle} 
-\documentclass[final,3p,times]{elsarticle}
-
-%\usepackage[text={6in,8in},centering]{geometry} % load first
+\documentclass[smallcondensed,final]{svjour3}
 
 \usepackage{algorithm}
 \usepackage{algorithmicx}
@@ -52,7 +41,7 @@
 \newcommand{\mtop}{\textsc{m}\texttwooldstyle\textsc{p}\xspace} % M2P
 \newcommand{\mtom}{\textsc{m}\texttwooldstyle\textsc{m}\xspace} % M2M
 \newcommand{\mtol}{\textsc{m}\texttwooldstyle\textsc{l}\xspace} % M2L
-\newcommand{\ltol}{\textsc{l}\texttwooldstyle\textsc{l}\xspace}  % L2L
+\newcommand{\ltol}{\textsc{l}\texttwooldstyle\textsc{l}\xspace} % L2L
 \newcommand{\ptop}{\textsc{p}\texttwooldstyle\textsc{p}\xspace} % P2P
 
 % MISC THINGS
@@ -90,75 +79,39 @@
 % dyadic product
 \newcommand{\dyad}[2]{#1 \otimes #2}
 
-
 \graphicspath{{figs/}} %  PATH to figure files-- change to ./ for submission
 
-
-%\journal{Computer Methods in Applied Mechanics and Engineering}
+\journalname{Advances in Computational Mathematics}
 
 \begin{document}
 
-\begin{frontmatter}
+\title{Inexact Krylov iterations and relaxation strategies with fast-multipole boundary element method \thanks{
+	This work was partially supported by the National Science Foundation under award ACI-1149784.}
+}
 
-%% Title, authors and addresses
+\author{%
+Tingyu Wang \and Simon K. Layton \and  Lorena A. Barba
+}
 
-%% use the tnoteref command within \title for footnotes;
-%% use the tnotetext command for the associated footnote;
-%% use the fnref command within \author or \address for footnotes;
-%% use the fntext command for the associated footnote;
-%% use the corref command within \author for corresponding author footnotes;
-%% use the cortext command for the associated footnote;
-%% use the ead command for the email address,
-%% and the form \ead[url] for the home page:
-%%
-%% \title{Title\tnoteref{label1}}
-%% \tnotetext[label1]{}
-%% \author{Name\corref{cor1}\fnref{label2}}
-%% \ead{email address}
-%% \ead[url]{home page}
-%% \fntext[label2]{}
-%% \cortext[cor1]{}
-%% \address{Address\fnref{label3}}
-%% \fntext[label3]{}
+\institute{ Lorena A. Barba \\
+			\email{labarba@gwu.edu} \\
+}
 
-\title{Inexact Krylov iterations and relaxation strategies with fast-multipole boundary element method\tnoteref{t1}}
-\tnotetext[t1]{This work was partially supported by the National Science Foundation under award ACI-1149784.}
+% Department of Mechanical and Aerospace Engineering, The George Washington University, Washington DC, 20052
+% Simon K. Layton Nvidia, Corp., Santa Clara, CA, 95051
+% Lorena A. Barba \\\email{labarba@gwu.edu}
 
+\date{Received: date / Accepted: date}
+% The correct dates will be entered by the editor
 
-\author[gwu]{Tingyu Wang}
-\ead{twang66@gwu.edu}
-
-\author[bu,nvidia]{Simon K. Layton\fnref{fn1}}
-\ead{slayton@nvidia.com}
-
-\author[gwu]{Lorena A. Barba}
-\ead{labarba@gwu.edu}
-
-\fntext[fn1]{Currently at Nvidia, Corp.}
-
-\address[gwu]{Department of Mechanical and Aerospace Engineering, The George Washington University, Washington DC, 20052}
-\address[bu]{Department of Mechanical Engineering, Boston University, Boston, MA, 02215}
-\address[nvidia]{Nvidia, Corp., Santa Clara, CA}
-
-
+\maketitle
 
 \begin{abstract}
 Boundary element methods produce dense linear systems that can be accelerated via multipole expansions. Solved with Krylov methods, this implies computing the matrix-vector products within each iteration with some error, at an accuracy controlled by the order of the expansion, $p$. We take advantage of a unique property of Krylov iterations that allow lower accuracy of the matrix-vector products as convergence proceeds, and propose a relaxation strategy based on progressively decreasing $p$. In extensive numerical tests of the relaxed Krylov iterations, we obtained speed-ups of between $1.5\times$ and $2.3\times$ for Laplace problems and between $2.7\times$ and $4.5\times$ for Stokes problems. We include an application to Stokes flow around red blood cells, computing with up to 64 cells and problem size up to 131k boundary elements and nearly 400k unknowns. The study was done with an in-house multi-threaded C++ code, on a hexa-core CPU. The code is available on its version-control repository, \href{https://github.com/barbagroup/fmm-bem-relaxed}{https://github.com/barbagroup/fmm-bem-relaxed}.
+
+\keywords{boundary integral equation \and boundary element method \and collocation method \and fast multipole method \and iterative solvers \and Krylov methods \and Stokes flow}
+\subclass{35Q35 \and 35Q99 \and 45B05 \and 76D07 \and 76Z99}
 \end{abstract}
-
-\begin{keyword}
-Laplace equation \sep Stokes equation \sep boundary integral equation \sep boundary element method \sep collocation method \sep fast multipole method \sep iterative solvers \sep Krylov methods \sep Stokes flow
-
-\end{keyword}
-
-\end{frontmatter}
-
-%\begin{AMS}35Q35, 35Q99, 45B05, 76D07, 76Z99\end{AMS}
-
-
-%\pagestyle{myheadings}
-%\thispagestyle{plain}
-%\markboth{S. K. Layton and L. A. Barba}{INEXACT KRYLOV ITERATIONS AND RELAXATION STRATEGIES}
 
 \section{Introduction}
 
@@ -246,9 +199,9 @@ The discretized form with constant surface panels becomes
 The boundary integral formulations all demand that we compute integrals of the type $\int_{\Gamma} \K_{ij}\;\di{\Gamma_j}$, where $\K_{ij}=\K(\vect{x}_j-\vect{x}_i)$ is the kernel, the point $\vect{x}_j$ is on the panel surface $\Gamma_j$ and the point $\vect{x}_i$ is a target or evaluation point. Because the kernel $\K$ is often singular, we need specific approaches depending on the distance $\vect{x}_j-\vect{x}_i$. Where the target point is far enough from the surface $\Gamma_j$, simple quadrature with a few Gauss points will suffice. As the target point \emph{nears} the source panel (with the definition of ``near'' to be determined), we need high-accuracy quadrature. Finally, in the case where the target point is on the source panel, the integral is (close to) singular and we must use analytical or semi-analytical methods. Figure \ref{fig:integration_domain} illustrates the three situations.
 
 
-\begin{figure}[t]
+\begin{figure}
 	\begin{centering}
-\includegraphics[width=0.45\textwidth]{IntegrationDomain.pdf}
+	\includegraphics[width=0.75\textwidth]{IntegrationDomain.pdf}
 	\caption{Depending on the distance between a source panel and target point, we use different numerical, analytical or semi-analytical integration methods, balancing computational efficiency and accuracy near singularities. The threshold distance between far and near-singular regions is $2\sqrt{2 S_j}$, where $S_j$ is the surface area of the source panel.}
 	\label{fig:integration_domain}
 	\end{centering}
@@ -315,7 +268,7 @@ At this point, a treecode algorithm evaluates the potential on target points, pe
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=0.5\textwidth]{redbloodcell-panel-fmm.pdf}
+	\includegraphics[width=0.75\textwidth]{redbloodcell-panel-fmm.pdf}
 	\caption{First step in viewing the influence of boundary elements as an $N$-body problem accelerated by the fast multipole method: Gauss quadrature points in a region of the surface triangulation are grouped together in a cluster, and their contribution to the potential at a remote target point (white circle) is considered via a series expansion at the cluster center.}
 	\label{fig:rbc_fmmbox}
 \end{center}
@@ -373,9 +326,9 @@ Our results include numerical experiments with \bem\ solutions for the Laplace a
 We ran all our tests on a lab workstation with an Intel Core i7-5930K hexa-core processor and 32GB RAM. Using a test with the Laplace kernel, we confirmed that our \fmm\ code scales as $\O{N}$ by timing several runs with increasing problem size; see Figure \ref{fig:fmm_scaling}. The performance of our code falls into the range of several major \fmm software tested by Yokota \cite{Yokota2013-dualtree}, showing that the \fmm code used in this work performs competitively. The detailed result can be found in the supplementary Jupyter Notebook.\footnote{See the \href{https://github.com/barbagroup/inexact-gmres/blob/master/supplementary-materials/inexact-GMRES-result.ipynb}{``supplementary-materials''} folder in the paper repository.} We also found that the preconditioned cases take fewer iterations but more time to converge than the unpreconditioned ones, because the residuals after the first several iterations in the preconditioned cases are greater. For an inexact {\gmres} iteration, a bigger residual leads to a higher required $p$, which offsets the benefit of using fewer iterations. Therefore, we performed these tests without preconditioning.
 The subsequent experiments investigate the use of a Krylov relaxation strategy by reducing the order of multipole expansions, $p$, as the iterations progress to convergence, determining the speed-up provided by such a strategy for different scenarios and problem sizes.
 
-\begin{figure}[h]
+\begin{figure}
 \begin{center}
-	\includegraphics[width=0.5 \textwidth]{FMMScaling.pdf}
+	\includegraphics[width=0.7\textwidth]{FMMScaling.pdf}
 	\caption{Scaling of the \fmm\ code with respect to problem size $N$, using a Laplace kernel with spherical expansions, with particles randomly distributed in a unit cube, $\theta_{\text{MAC}} = 0.5$, $p=5$ and optimal $\ncrit = 125$, obtaining 4 significant digits of accuracy for the force. The tests ran on a lab workstation with an Intel Core i7-5930K hexa-core processor, using six \cpu\ threads. The dotted line shows the expected $\O{N}$ scaling. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare1}.}
 	\label{fig:fmm_scaling}
 \end{center}
@@ -388,16 +341,16 @@ To start, we studied grid convergence comparing numerical results with the analy
 Then we carefully slackened these parameters $p$, $K$, $\eta$ one at a time for each case (with and without relaxation, both first-kind and second-kind formulations) until accuracy drops. Table \ref{tab:laplace_loose_params} summarizes the loosened parameters in the three larger cases,\footnote{We did not report the loose parameters for the three smaller cases because the solving time is too short (within 1 second) to demonstrate the speedup due to relaxation. Running smaller cases is just for a complete convergence study.} along with the optimal $\ncrit$ which minimizes the execution time for each case. It is intuitive that the two larger cases in Table \ref{tab:laplace_loose_params} require a higher $p=10$ than the smaller one $p=8$, since we have to use a more accurate \fmm-accelerated mat-vec to match a smaller discretization error. The thinner lines in Figure \ref{fig:laplaceconvergence} show the convergence result by using the loose parameters. This convergence analysis gives confidence in our \bem code, the singular/near-singular integral calculations, the far-field approximation using the \fmm, the choice of parameters and above all, justifies that our relaxation strategy on \gmres does not deteriorate accuracy. Since the loose parameters are ``accurate enough" and optimal, we used them in the following speedup test. 
 
 
-\begin{figure}%[ht]
+\begin{figure}
 \begin{center}
-	\subfloat[][128 panels]{\includegraphics[width=0.3\textwidth]{sphere128.pdf}\label{fig:sphere128}}\qquad
-	\subfloat[][2048 panels]{\includegraphics[width=0.3\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
+	\subfloat[][128 panels]{\includegraphics[width=0.4\textwidth]{sphere128.pdf}\label{fig:sphere128}}\qquad
+	\subfloat[][2048 panels]{\includegraphics[width=0.4\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
 	\caption{Triangular discretizations of a spherical surface.}
 	\label{fig:glob_spheres}
 \end{center}
 \end{figure}
 %
-\begin{figure}[t]
+\begin{figure}
 \begin{center}
 	\includegraphics[width=1.0\textwidth]{LaplaceConvergence.pdf}
 	\caption{Convergence of 1st-kind (left plot) and 2nd-kind (right plot) solvers for the Laplace equation on a sphere, using a \gmres with \fmm-accelerated matrix-vector products, with $\theta_{\text{MAC}} = 0.5$. The vertical axis is the relative error of the potential evaluated at an exterior point with respect to the analytical solution, for a constant potential or charge on the surface: $\phi = \partialdi{\phi}{\nhat} = 1$. The tight parameters: $p=20$, $K=13$, $\eta=10^{-10}$; the loose parameters are listed in Table \ref{tab:laplace_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
@@ -426,9 +379,9 @@ Then we carefully slackened these parameters $p$, $K$, $\eta$ one at a time for 
 Next, we looked at the following test to see how the residual changes as the \gmres iterations proceed and  what value of $p$ is required in the \fmm-accelerated mat-vecs to continue convergence, according to Equation \eqref{eqn:fmm_p}. We discretized a sphere with $32,768$ surface triangles and solved a first-kind integral equation using a solver tolerance of $10^{-6}$ with an initial value of $p$ set to 8 and 10. As the residual gets smaller, the value of $p$ needed to maintain convergence of the solver drops, and a low-$p$ of just 2 is sufficient by the eleventh iteration for $p_\text{{initial}}=8$ and by the eighth iteration for $p_{\text{initial}}=10$. This offers the potential for substantial speed-ups in the calculations, because the translation operators of the \fmm scale as $\bigO(p^{4})$ for spherical harmonics. A more accurate first iteration results in a faster drop of required-$p$ and fewer iterations. 
 But we note that only the far-field evaluation can be sped-up with the relaxation strategy, which means that the correct balance between near field and far field in the \fmm could change as we reset $p$ in the later iterations.
 
-\begin{figure}%[ht]
+\begin{figure}
 	\centering
-	\includegraphics[width=0.95\textwidth]{LaplaceResidualIterations.pdf}
+	\includegraphics[width=1.0\textwidth]{LaplaceResidualIterations.pdf}
 	\caption{In a test solving a first-kind integral equation with relaxtion, using a sphere discretized with $32,768$ triangles, with $K=4$, $p_\text{initial}=8$ (left plot), $p_\text{initial}=10$ (right plot) and optimal $\ncrit = 100$, the residual $\|r_{k}\|$  (solid line, left axis) decreases with successive \gmres iterations while the necessary $p$ (open circles, right axis) to achieve convergence drops quickly. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:residualp}
 \end{figure}
@@ -441,7 +394,7 @@ As indicated in the caption, we used the loose parameters in Table \ref{tab:lapl
 
 \begin{figure}%[h]
 	\centering
-	\includegraphics[width=0.45\textwidth]{LaplaceSpeedupRelaxation.pdf}
+	\includegraphics[width=0.7\textwidth]{LaplaceSpeedupRelaxation.pdf}
 	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations, with loose parameter settings in Table \ref{tab:laplace_loose_params}. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:relaxation_timing}
 \end{figure}
@@ -501,9 +454,9 @@ For all the tests, we set $R=1$, $u_x = 1$ and $\mu = 10^{-3}$, giving a drag fo
 Like with the Laplace equation, we first used a set of stringent parameters: $p=20$, $K=13$ and $\eta=10^{-10}$, to guarantee that discretization error dominates error from other sources. The thicker line in Figure \ref{fig:stokes_convergence} shows that we observe convergence at the expected rate of $\O{1 / \sqrt{N}}$, for first-kind integral equations using tight parameters. Again for both cases with and without relaxation, we gradually slackened these tight parameters one at a time to find the loosest possible values without affecting accuracy, and they are listed in Table \ref{tab:stokes_loose_params}. Through our extensive tests, we also found that we need to enforce a minimum $p$ to maintain accuracy for the cases with relaxations in Stokes solver, which means the required $p$ at each step is determined by Equation \eqref{eqn:fmm_p} with a floor of $p_{min}$. The choices of $\ncrit$ are optimal in Table \ref{tab:stokes_loose_params}. The finer lines in Figure \ref{fig:stokes_convergence} demonstrate the convergence result by using the loose parameters, which confirms our choice of parameters and the relaxation strategy on $p$.
 
 
-\begin{figure}%[ht]
+\begin{figure}
 \begin{center}
-	\includegraphics[width=0.5\textwidth]{StokesConvergence.pdf}
+	\includegraphics[width=0.75\textwidth]{StokesConvergence.pdf}
 	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation. The relative error is with respect to the analytical solution for drag on a sphere: $F_d = 6\pi\mu Ru_x$. The tight parameters: $p=20$, $K=13$, $\eta=10^{-10}$; the loose parameters are listed in Table \ref{tab:stokes_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_convergence}
 \end{center}
@@ -539,7 +492,7 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 
 \begin{figure}%[ht]
 \begin{center}
-	\includegraphics[width=0.95\textwidth]{StokesSolveBreakdown.pdf}
+	\includegraphics[width=1.0\textwidth]{StokesSolveBreakdown.pdf}
 	\caption{Time breakdown between {\ptop} and {\mtol} when using a relaxation strategy for solving surface traction on the surface of a sphere with $32,768$ panels, with the loose set of parameters listed in Table \ref{tab:stokes_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_relaxation_breakdown}
 \end{center}
@@ -548,7 +501,7 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 
 \begin{figure}%[ht]
 \begin{center}
-	\includegraphics[width=0.5\textwidth]{StokesSpeedupRelaxation.pdf}
+	\includegraphics[width=0.7\textwidth]{StokesSpeedupRelaxation.pdf}
 	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$, with loose parameter settings in Table \ref{tab:stokes_loose_params}. Time is measured by averaging the solving time of three identical runs. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_speedup}
 \end{center}
@@ -594,8 +547,8 @@ Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from
 
 \begin{figure}%[ht]
 \begin{center}
-	\subfloat[512 panels]{\includegraphics[width=0.3\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
-	\subfloat[2048 panels]{\includegraphics[width=0.3\textwidth]{RBC2048.pdf}\label{fig:rbc2048}}
+	\subfloat[512 panels]{\includegraphics[width=0.4\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
+	\subfloat[2048 panels]{\includegraphics[width=0.4\textwidth]{RBC2048.pdf}\label{fig:rbc2048}}
 	\caption{Surface geometries of red blood cells obtained from transforming sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.}
 	\label{fig:glob_rbc}
 \end{center}
@@ -637,7 +590,7 @@ The thicker line in Figure \ref{fig:rbc_extrapolated_convergence} shows the erro
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=0.5\textwidth]{EthrocyteConvergence.pdf}
+	\includegraphics[width=0.7\textwidth]{EthrocyteConvergence.pdf}
 	\caption{Observed convergence for Stokes flow around a red blood cell, with respect to the extrapolated value of the drag coefficient, using Richardson extrapolation \cite{roache1998}. The tight parameters: $p=20$, $K=13$, $\eta=10^{-10}$; the loose parameters are listed in Table \ref{tab:rbc_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:rbc_extrapolated_convergence}
 \end{center}
@@ -670,7 +623,7 @@ Figure \ref{fig:single_cell_iterations} shows that the number of iterations need
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=0.5\textwidth]{EthrocyteSingleCellIterations.pdf}
+	\includegraphics[width=0.7\textwidth]{EthrocyteSingleCellIterations.pdf}
 	\caption{Number of iterations needed for the system to converge for increasingly refined surface meshes on one red blood cell, using a non-relaxed \gmres solver with loose parameter settings and optimal $\ncrit$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:single_cell_iterations}
 \end{center}
@@ -682,7 +635,7 @@ For the next test, we used several red blood cells in a sparse spatial arrangeme
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=0.75\textwidth]{4Cells_arrow.pdf}
+\includegraphics[width=0.8\textwidth]{4Cells_arrow.pdf}
 	\caption{Surfaces for four red blood cells in a uniform Stokes flow.}
 	\label{fig:multiple_cells}
 \end{center}
@@ -694,7 +647,7 @@ Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed t
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=0.85\textwidth]{EthrocyteMultipleCellIterations.pdf}
+	\includegraphics[width=1.0\textwidth]{EthrocyteMultipleCellIterations.pdf}
 	\caption{Number of iterations needed to converge for systems with multiple red blood cells, discretized with different mesh sizes, using a non-relaxed \gmres solver with loose parameters and optimal $\ncrit$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:multiple_cell_iterations}
 \end{center}
@@ -798,7 +751,7 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 
 \begin{figure}[ht]
 \begin{center}
-	\includegraphics[width=0.55\textwidth]{EthrocyteMultipleCellSpeedup.pdf}
+	\includegraphics[width=0.8\textwidth]{EthrocyteMultipleCellSpeedup.pdf}
 	\caption{Speed-ups of the relaxation strategy with several red blood cells in uniform Stokes flow, using different mesh sizes on each cell. The abscissa value corresponds to the total number of panels (all cells). Test parameters shown in Table \ref{tab:cells_relaxation_settings}. Time is measured by averaging the solving time of three identical runs.} 
 	\label{fig:multiple_cell_speedup}
 \end{center}
@@ -842,19 +795,21 @@ Relaxing the truncation order $p$ in the multipole expansions as Krylov iteratio
 	\end{algorithmic}
 \end{algorithm}
 
-\clearpage
-%% Acnowledgements
-%%\textbf{Acknowledgements.}
-\section*{Acknowledgements}
- This work was supported by the National Science Foundation via NSF CAREER award OCI-1149784. LAB also acknowledges support from NVIDIA Corp.\ via the CUDA Fellows Program. 
-Dr. Cris Cecka (previously at Harvard University, currently at Nvidia Corp.) contributed to the development of the code, particularly writing the octree and base evaluator. He later continued developing his fast-multipole framework, which evolved into his FMMTL project; see \href{https://github.com/ccecka/fmmtl}{https://github.com/ccecka/fmmtl}.
-The authors also wish to acknowledge valuable interactions with Dr. Christopher Cooper (previously at Boston University, currently at Universidad T{\'e}cnica Federico Santa Mar{\'i}a) that helped with the implementation of the boundary element method.
+%\clearpage
 
+% Conflicts of interest/Competing interests (include appropriate disclosures)
+\subsection*{Conflict of interest}
+The authors declare that they have no conflict of interest.
 
-\section*{References}
+\begin{acknowledgements}
+	This work was supported by the National Science Foundation via NSF CAREER award OCI-1149784. LAB also acknowledges support from NVIDIA Corp.\ via the CUDA Fellows Program. 
+   Dr. Cris Cecka (previously at Harvard University, currently at Nvidia Corp.) contributed to the development of the code, particularly writing the octree and base evaluator. He later continued developing his fast-multipole framework, which evolved into his FMMTL project; see \href{https://github.com/ccecka/fmmtl}{https://github.com/ccecka/fmmtl}.
+   The authors also wish to acknowledge valuable interactions with Dr. Christopher Cooper (previously at Boston University, currently at Universidad T{\'e}cnica Federico Santa Mar{\'i}a) that helped with the implementation of the boundary element method.
+\end{acknowledgements}
+
 %% Bibliography
-\bibliographystyle{elsarticle-num}
+\bibliographystyle{spmpsci}
 \bibliography{bem,cfd,compbio,fastmethods,inexactmatvec,scicomp}
 
 \end{document}
-%% end of file `docultex.tex'
+%% end of file

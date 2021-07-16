@@ -1,164 +1,160 @@
 \begin{thebibliography}{10}
-\expandafter\ifx\csname url\endcsname\relax
-  \def\url#1{\texttt{#1}}\fi
-\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
-\expandafter\ifx\csname href\endcsname\relax
-  \def\href#1#2{#2} \def\path#1{#1}\fi
-
-\bibitem{Nishimura2002}
-N.~Nishimura, \href{http://link.aip.org/link/?AMR/55/299/1}{Fast multipole
-  accelerated boundary integral equation methods}, Appl.\ Mech.\ Rev. 55~(4)
-  (2002) 299--324.
-\newblock \href {http://dx.doi.org/10.1115/1.1482087}
-  {\path{doi:10.1115/1.1482087}}.
-\newline\urlprefix\url{http://link.aip.org/link/?AMR/55/299/1}
-
-\bibitem{Liu2006}
-Y.~Liu, N.~Nishimura, The fast multipole boundary element method for potential
-  problems: a tutorial, Engineering Analysis with Boundary Elements 30~(5)
-  (2006) 371--381.
-\newblock \href {http://dx.doi.org/10.1016/j.enganabound.2005.11.006}
-  {\path{doi:10.1016/j.enganabound.2005.11.006}}.
-
-\bibitem{YokotaETal2011a}
-R.~Yokota, J.~P. Bardhan, M.~G. Knepley, L.~A. Barba, T.~Hamada, Biomolecular
-  electrostatics using a fast multipole {BEM on up to 512 GPUs} and a billion
-  unknowns, Comput.\ Phys.\ Comm. 182~(6) (2011) 1271--1283.
-\newblock \href {http://dx.doi.org/10.1016/j.cpc.2011.02.013}
-  {\path{doi:10.1016/j.cpc.2011.02.013}}.
-
-\bibitem{YokotaBarba2011a}
-R.~Yokota, L.~A. Barba, A tuned and scalable fast multipole method as a
-  preeminent algorithm for exascale systems, Int.\ J.\ High-perf.\ Comput.\
-  Applic.Published online 24 Jan.\ 2012
-  \href{http://doi.org/fzgqgm}{doi:10.1177/1094342011429952} preprint on
-  \href{http://arxiv.org/abs/1106.2176}{http://arxiv.org/abs/1106.2176}.
-
-\bibitem{BrebbiaDominguez1992}
-C.~Brebbia, I.~Dominguez, Boundary Elements An Introductory Course, 2nd
-  Edition, WIT Press, 1992.
-
-\bibitem{HessSmith1967}
-J.~L. Hess, A.~Smith, Calculation of potential flow about arbitrary bodies,
-  Progress in Aerospace Sciences 8 (1967) 1--138.
-
-\bibitem{Fata2009}
-S.~N. Fata, Explicit expressions for {3D} boundary integrals in potential
-  theory, Int.\ J. Num.\ Meth.\ Engineering 78 (2009) 32--47.
-
-\bibitem{Fata2011}
-S.~N. Fata, Explicit expressions for three-dimensional boundary integrals in
-  linear elasticity, J.\ Comp.\ App.\ Mathematics 235 (2011) 4480--4495.
-
-\bibitem{SaadSchultz1986}
-Y.~Saad, M.~Schultz, {GMRES}: A generalized minimal residual algorithm for
-  solving nonsymmetric linear systems, SIAM J. Sci.\ Stat.\ Comput. 7 (1986)
-  856--869.
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI~\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI~\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
 
 \bibitem{Appel1985}
-A.~W. Appel, An efficient program for many-body simulation, SIAM J. Sci.\
-  Stat.\ Comput. 6~(1) (1985) 85--103.
-\newblock \href {http://dx.doi.org/10.1137/0906008}
-  {\path{doi:10.1137/0906008}}.
+Appel, A.W.: An efficient program for many-body simulation.
+\newblock SIAM J. Sci.\ Stat.\ Comput. \textbf{6}(1), 85--103 (1985).
+\newblock \doi{10.1137/0906008}
 
 \bibitem{BarnesHut1986}
-J.~Barnes, P.~Hut, A hierarchical {$O(N \log N)$} force-calculation algorithm,
-  Nature 324 (1986) 446--449.
-\newblock \href {http://dx.doi.org/10.1038/324446a0}
-  {\path{doi:10.1038/324446a0}}.
-
-\bibitem{GreengardRokhlin1987}
-L.~Greengard, V.~Rokhlin, A fast algorithm for particle simulations, J.
-  Comput.\ Phys. 73~(2) (1987) 325--348.
-\newblock \href {http://dx.doi.org/10.1016/0021-9991}
-  {\path{doi:10.1016/0021-9991}}.
-
-\bibitem{ChengETal1999}
-H.~Cheng, L.~Greengard, V.~Rokhlin, A fast adaptive multipole algorithm in
-  three dimensions, J.\ Comput. Phys. 155 (1999) 468--498.
-
-\bibitem{white1996rotating}
-C.~A. White, M.~Head-Gordon, Rotating around the quartic angular momentum
-  barrier in fast multipole method calculations, The Journal of Chemical
-  Physics 105~(12) (1996) 5061--5067.
+Barnes, J., Hut, P.: A hierarchical {$O(N \log N)$} force-calculation
+  algorithm.
+\newblock Nature \textbf{324}, 446--449 (1986).
+\newblock \doi{10.1038/324446a0}
 
 \bibitem{bouras2000relaxation}
-A.~Bouras, V.~Frayss{\'e}, A relaxation strategy for inexact matrix-vector
-  products for {Krylov} methods, CERFACS TR0PA000015, European Centre for
-  Research and Advanced Training in Scientific Computation.
+Bouras, A., Frayss{\'e}, V.: A relaxation strategy for inexact matrix-vector
+  products for {Krylov} methods.
+\newblock CERFACS TR0PA000015, European Centre for Research and Advanced
+  Training in Scientific Computation  (2000)
 
 \bibitem{bourasfraysse2005}
-A.~Bouras, V.~Frayss{\'e}, Inexact matrix-vector products in {Krylov} methods
-  for solving linear systems: A relaxation strategy, SIAM J. Matrix Analysis
-  Applications 26~(3) (2005) 660--678.
+Bouras, A., Frayss{\'e}, V.: Inexact matrix-vector products in {Krylov} methods
+  for solving linear systems: A relaxation strategy.
+\newblock SIAM J. Matrix Analysis Applications \textbf{26}(3), 660--678 (2005)
 
-\bibitem{simonciniszyld2003}
-V.~Simoncini, D.~Szyld, Theory of inexact {Krylov} subspace methods and
-  applications to scientific computing, SIAM J. Sci. Comput. 25~(2) (2003)
-  454--477.
+\bibitem{BrebbiaDominguez1992}
+Brebbia, C., Dominguez, I.: Boundary Elements An Introductory Course, 2nd edn.
+\newblock WIT Press (1992)
+
+\bibitem{ChengETal1999}
+Cheng, H., Greengard, L., Rokhlin, V.: A fast adaptive multipole algorithm in
+  three dimensions.
+\newblock J.\ Comput. Phys. \textbf{155}, 468--498 (1999)
 
 \bibitem{vandeneshofsleijpen2004}
-J.~Van~den Eshof, G.~Sleijpen, Inexact {Krylov} subspace methods for linear
-  systems, SIAM J. Matrix Analysis Applications 26~(1) (2004) 125--153.
-
-\bibitem{greengard1987}
-L.~Greengard, The rapid evaluation of potential fields in particle systems, The
-  MIT Press, 1987.
-
-\bibitem{Yokota2013-dualtree}
-R.~Yokota, An {FMM} based on dual tree traversal for many-core architectures,
-  Journal of Algorithms \& Computational Technology 7~(3) (2013) 301--324,
-  preprint
-  \href{http://arxiv.org/abs/arXiv:1209.3516v3}{http://arxiv.org/abs/arXiv:1209.3516v3}.
-\newblock \href {http://dx.doi.org/10.1260/1748-3018.7.3.301}
-  {\path{doi:10.1260/1748-3018.7.3.301}}.
-
-\bibitem{WangLaytonBarba2016-figshare1}
-T.~Wang, S.~K. Layton, L.~A. Barba, Inexact {GMRES: FMM} scaling, figshare
-  (March 2016).
-\newblock \href {http://dx.doi.org/10.6084/m9.figshare.3100816.v1}
-  {\path{doi:10.6084/m9.figshare.3100816.v1}}.
-
-\bibitem{WangLaytonBarba2016-figshare2}
-T.~Wang, S.~K. Layton, L.~A. Barba, Inexact {GMRES: Laplace} equation, figshare
-  (March 2016).
-\newblock \href {http://dx.doi.org/10.6084/m9.figshare.3100882.v2}
-  {\path{doi:10.6084/m9.figshare.3100882.v2}}.
-
-\bibitem{WangLaytonBarba2016-figshare3}
-T.~Wang, S.~K. Layton, L.~A. Barba, Inexact {GMRES: Stokes} equation, figshare
-  (March 2016).
-\newblock \href {http://dx.doi.org/10.6084/m9.figshare.3100885.v3}
-  {\path{doi:10.6084/m9.figshare.3100885.v3}}.
-
-\bibitem{FedosovETal2011}
-D.~A. Fedosov, B.~Caswell, S.~Suresh, G.~E. Karniadakis,
-  \href{http://www.pnas.org/content/108/1/35.abstract}{Quantifying the
-  biophysical characteristics of {Plasmodium}-falciparum-parasitized red blood
-  cells in microcirculation}, Proc. Natl. Acad. Sci. 108~(1) (2011) 35--39.
-\newblock \href
-  {http://arxiv.org/abs/http://www.pnas.org/content/108/1/35.full.pdf}
-  {\path{arXiv:http://www.pnas.org/content/108/1/35.full.pdf}}, \href
-  {http://dx.doi.org/10.1073/pnas.1009492108}
-  {\path{doi:10.1073/pnas.1009492108}}.
-\newline\urlprefix\url{http://www.pnas.org/content/108/1/35.abstract}
-
-\bibitem{Freund2014}
-J.~B. Freund, Numerical simulation of flowing blood cells, Ann.\ Rev.\ Fluid
-  Mech. 46 (2014) 67--95.
+Van~den Eshof, J., Sleijpen, G.: Inexact {Krylov} subspace methods for linear
+  systems.
+\newblock SIAM J. Matrix Analysis Applications \textbf{26}(1), 125--153 (2004)
 
 \bibitem{EvansFung1972}
-E.~Evans, Y.-C. Fung, Improved measurements of the erythrocyte geometry,
-  Microvascular research 4~(4) (1972) 335--347.
+Evans, E., Fung, Y.C.: Improved measurements of the erythrocyte geometry.
+\newblock Microvascular research \textbf{4}(4), 335--347 (1972)
+
+\bibitem{Fata2009}
+Fata, S.N.: Explicit expressions for {3D} boundary integrals in potential
+  theory.
+\newblock Int.\ J. Num.\ Meth.\ Engineering \textbf{78}, 32--47 (2009)
+
+\bibitem{Fata2011}
+Fata, S.N.: Explicit expressions for three-dimensional boundary integrals in
+  linear elasticity.
+\newblock J.\ Comp.\ App.\ Mathematics \textbf{235}, 4480--4495 (2011)
+
+\bibitem{FedosovETal2011}
+Fedosov, D.A., Caswell, B., Suresh, S., Karniadakis, G.E.: Quantifying the
+  biophysical characteristics of {Plasmodium}-falciparum-parasitized red blood
+  cells in microcirculation.
+\newblock Proc. Natl. Acad. Sci. \textbf{108}(1), 35--39 (2011).
+\newblock \doi{10.1073/pnas.1009492108}.
+\newblock \urlprefix\url{http://www.pnas.org/content/108/1/35.abstract}
+
+\bibitem{Freund2014}
+Freund, J.B.: Numerical simulation of flowing blood cells.
+\newblock Ann.\ Rev.\ Fluid Mech. \textbf{46}, 67--95 (2014)
+
+\bibitem{greengard1987}
+Greengard, L.: The rapid evaluation of potential fields in particle systems.
+\newblock The MIT Press (1987)
+
+\bibitem{GreengardRokhlin1987}
+Greengard, L., Rokhlin, V.: A fast algorithm for particle simulations.
+\newblock J. Comput.\ Phys. \textbf{73}(2), 325--348 (1987).
+\newblock \doi{10.1016/0021-9991}
+
+\bibitem{HessSmith1967}
+Hess, J.L., Smith, A.: Calculation of potential flow about arbitrary bodies.
+\newblock Progress in Aerospace Sciences \textbf{8}, 1--138 (1967)
+
+\bibitem{Liu2006}
+Liu, Y., Nishimura, N.: The fast multipole boundary element method for
+  potential problems: a tutorial.
+\newblock Engineering Analysis with Boundary Elements \textbf{30}(5), 371--381
+  (2006).
+\newblock \doi{10.1016/j.enganabound.2005.11.006}
+
+\bibitem{Nishimura2002}
+Nishimura, N.: Fast multipole accelerated boundary integral equation methods.
+\newblock Appl.\ Mech.\ Rev. \textbf{55}(4), 299--324 (2002).
+\newblock \doi{10.1115/1.1482087}.
+\newblock \urlprefix\url{http://link.aip.org/link/?AMR/55/299/1}
 
 \bibitem{roache1998}
-P.~J. Roache, Verification and validation in computational science and
-  engineering, Hermosa Albuquerque, 1998.
+Roache, P.J.: Verification and validation in computational science and
+  engineering.
+\newblock Hermosa Albuquerque (1998)
+
+\bibitem{SaadSchultz1986}
+Saad, Y., Schultz, M.: {GMRES}: A generalized minimal residual algorithm for
+  solving nonsymmetric linear systems.
+\newblock SIAM J. Sci.\ Stat.\ Comput. \textbf{7}, 856--869 (1986)
+
+\bibitem{simonciniszyld2003}
+Simoncini, V., Szyld, D.: Theory of inexact {Krylov} subspace methods and
+  applications to scientific computing.
+\newblock SIAM J. Sci. Comput. \textbf{25}(2), 454--477 (2003)
+
+\bibitem{WangLaytonBarba2016-figshare1}
+Wang, T., Layton, S.K., Barba, L.A.: Inexact {GMRES: FMM} scaling.
+\newblock figshare (2016).
+\newblock \doi{10.6084/m9.figshare.3100816.v1}
+
+\bibitem{WangLaytonBarba2016-figshare2}
+Wang, T., Layton, S.K., Barba, L.A.: Inexact {GMRES: Laplace} equation.
+\newblock figshare (2016).
+\newblock \doi{10.6084/m9.figshare.3100882.v2}
 
 \bibitem{WangLaytonBarba2016-figshare4}
-T.~Wang, S.~K. Layton, L.~A. Barba, Inexact {GMRES: Red} blood cells, figshare
-  (March 2016).
-\newblock \href {http://dx.doi.org/10.6084/m9.figshare.3100891.v1}
-  {\path{doi:10.6084/m9.figshare.3100891.v1}}.
+Wang, T., Layton, S.K., Barba, L.A.: Inexact {GMRES: Red} blood cells.
+\newblock figshare (2016).
+\newblock \doi{10.6084/m9.figshare.3100891.v1}
+
+\bibitem{WangLaytonBarba2016-figshare3}
+Wang, T., Layton, S.K., Barba, L.A.: Inexact {GMRES: Stokes} equation.
+\newblock figshare (2016).
+\newblock \doi{10.6084/m9.figshare.3100885.v3}
+
+\bibitem{white1996rotating}
+White, C.A., Head-Gordon, M.: Rotating around the quartic angular momentum
+  barrier in fast multipole method calculations.
+\newblock The Journal of Chemical Physics \textbf{105}(12), 5061--5067 (1996)
+
+\bibitem{Yokota2013-dualtree}
+Yokota, R.: An {FMM} based on dual tree traversal for many-core architectures.
+\newblock Journal of Algorithms \& Computational Technology \textbf{7}(3),
+  301--324 (2013).
+\newblock \doi{10.1260/1748-3018.7.3.301}.
+\newblock Preprint
+  \href{http://arxiv.org/abs/arXiv:1209.3516v3}{http://arxiv.org/abs/arXiv:1209.3516v3}
+
+\bibitem{YokotaBarba2011a}
+Yokota, R., Barba, L.A.: A tuned and scalable fast multipole method as a
+  preeminent algorithm for exascale systems.
+\newblock Int.\ J.\ High-perf.\ Comput.\ Applic.  (2012).
+\newblock Published online 24 Jan.\ 2012
+  \href{http://doi.org/fzgqgm}{doi:10.1177/1094342011429952} preprint on
+  \href{http://arxiv.org/abs/1106.2176}{http://arxiv.org/abs/1106.2176}
+
+\bibitem{YokotaETal2011a}
+Yokota, R., Bardhan, J.P., Knepley, M.G., Barba, L.A., Hamada, T.: Biomolecular
+  electrostatics using a fast multipole {BEM on up to 512 GPUs} and a billion
+  unknowns.
+\newblock Comput.\ Phys.\ Comm. \textbf{182}(6), 1271--1283 (2011).
+\newblock \doi{10.1016/j.cpc.2011.02.013}
 
 \end{thebibliography}
