@@ -93,13 +93,14 @@
 Tingyu Wang \and Simon K. Layton \and  Lorena A. Barba
 }
 
-\institute{ Lorena A. Barba \\
-			\email{labarba@gwu.edu} \\
+\institute{
+	Tingyu Wang \at Department of Mechanical and Aerospace Engineering, The George Washington University, Washington DC
+	\and
+	Simon K. Layton \at Nvidia, Corp., Santa Clara, CA
+	\and
+	Lorena A. Barba \at Department of Mechanical and Aerospace Engineering, The George Washington University, Washington DC \\
+	\email{labarba@gwu.edu} \\
 }
-
-% Department of Mechanical and Aerospace Engineering, The George Washington University, Washington DC, 20052
-% Simon K. Layton Nvidia, Corp., Santa Clara, CA, 95051
-% Lorena A. Barba \\\email{labarba@gwu.edu}
 
 \date{Received: date / Accepted: date}
 % The correct dates will be entered by the editor
@@ -201,7 +202,7 @@ The boundary integral formulations all demand that we compute integrals of the t
 
 \begin{figure}
 	\begin{centering}
-	\includegraphics[width=0.75\textwidth]{IntegrationDomain.pdf}
+	\includegraphics[width=0.7\textwidth]{IntegrationDomain.pdf}
 	\caption{Depending on the distance between a source panel and target point, we use different numerical, analytical or semi-analytical integration methods, balancing computational efficiency and accuracy near singularities. The threshold distance between far and near-singular regions is $2\sqrt{2 S_j}$, where $S_j$ is the surface area of the source panel.}
 	\label{fig:integration_domain}
 	\end{centering}
@@ -268,7 +269,7 @@ At this point, a treecode algorithm evaluates the potential on target points, pe
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=0.75\textwidth]{redbloodcell-panel-fmm.pdf}
+	\includegraphics[width=0.7\textwidth]{redbloodcell-panel-fmm.pdf}
 	\caption{First step in viewing the influence of boundary elements as an $N$-body problem accelerated by the fast multipole method: Gauss quadrature points in a region of the surface triangulation are grouped together in a cluster, and their contribution to the potential at a remote target point (white circle) is considered via a series expansion at the cluster center.}
 	\label{fig:rbc_fmmbox}
 \end{center}
@@ -343,8 +344,8 @@ Then we carefully slackened these parameters $p$, $K$, $\eta$ one at a time for 
 
 \begin{figure}
 \begin{center}
-	\subfloat[][128 panels]{\includegraphics[width=0.4\textwidth]{sphere128.pdf}\label{fig:sphere128}}\qquad
-	\subfloat[][2048 panels]{\includegraphics[width=0.4\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
+	\subfloat[][128 panels]{\includegraphics[width=0.45\textwidth]{sphere128.pdf}\label{fig:sphere128}}%\qquad
+	\subfloat[][2048 panels]{\includegraphics[width=0.45\textwidth]{sphere2048.pdf}\label{fig:sphere2048}}
 	\caption{Triangular discretizations of a spherical surface.}
 	\label{fig:glob_spheres}
 \end{center}
@@ -359,19 +360,17 @@ Then we carefully slackened these parameters $p$, $K$, $\eta$ one at a time for 
 \end{figure}
 
 \begin{table}[h]
-\footnotesize
-\begin{center}
-\begin{tabular}{c|ccccc|ccccc}
-  & \multicolumn{5}{c|}{Non-Relaxed} & \multicolumn{5}{c}{Relaxed}\\
-  N & $K$ & $p$ & $\eta$ & $N_{\text{CRIT}_\text{1st}}$ & $N_{\text{CRIT}_\text{2nd}}$ & $K$ & $p_{init}$ & $\eta$ & $N_{\text{CRIT}_\text{1st}}$ & $N_{\text{CRIT}_\text{2nd}}$\\
- \hline
-   & & & & & & & & & &\\
-  8192 & 4 & 8 & $10^{-6}$ & 300 & 300 & 4 & 8 & $10^{-6}$ & 100 & 300\\
-  32768  & 4 & 10 & $10^{-6}$ & 400 & 400 & 4 & 10 & $10^{-6}$ & 100 & 300\\
-  131072  & 4 & 10 & $10^{-6}$ & 500 & 500 & 4 & 10 & $10^{-6}$ & 200 & 300\\
- 
-\end{tabular}
-\end{center}
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{c|ccccc|ccccc}
+		& \multicolumn{5}{c|}{Non-Relaxed} & \multicolumn{5}{c}{Relaxed}\\
+	N & $K$ & $p$ & $\eta$ & $N_{\text{CRIT}_\text{1st}}$ & $N_{\text{CRIT}_\text{2nd}}$ & $K$ & $p_{init}$ & $\eta$ & $N_{\text{CRIT}_\text{1st}}$ & $N_{\text{CRIT}_\text{2nd}}$\\
+	\hline
+	& & & & & & & & & &\\
+		8192 & 4 & 8 & $10^{-6}$ & 300 & 300 & 4 & 8 & $10^{-6}$ & 100 & 300\\
+	32768  & 4 & 10 & $10^{-6}$ & 400 & 400 & 4 & 10 & $10^{-6}$ & 100 & 300\\
+		131072  & 4 & 10 & $10^{-6}$ & 500 & 500 & 4 & 10 & $10^{-6}$ & 200 & 300\\
+	\end{tabular}
+	}
 \caption{Loose parameters on a Laplace solver, the subscript on $\ncrit$ indicates 1st-kind or 2nd-kind integral formulation.}
 \label{tab:laplace_loose_params}
 \end{table}%
@@ -392,7 +391,7 @@ Figure \ref{fig:relaxation_timing} shows the speed-up in the time spent solving 
 As indicated in the caption, we used the loose parameters in Table \ref{tab:laplace_loose_params} in our experiments to measure modest speedup for each case.
 
 
-\begin{figure}%[h]
+\begin{figure}
 	\centering
 	\includegraphics[width=0.7\textwidth]{LaplaceSpeedupRelaxation.pdf}
 	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations, with loose parameter settings in Table \ref{tab:laplace_loose_params}. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
@@ -401,37 +400,41 @@ As indicated in the caption, we used the loose parameters in Table \ref{tab:lapl
 
 
 \begin{table}[h]
-\footnotesize
-\begin{center}
-\begin{tabular}{c|cccc|cccc|c}
-  & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
-  N & $\ncrit$ & $\tsolve$ & Error & \# iters & $\ncrit$ & $\tsolve$ & Error & \# iters & Speed-up\\
- \hline
-   & & & & & & & & &\\
-  8192 & 300 & 3.14 & $6.17\times10^{-4}$ & 11 & 100 & 2.07 & $6.13\times10^{-4}$ & 12 & 1.52\\
-  32768 & 400 & 19.84 & $1.69\times10^{-4}$ & 11 & 100 & 11.48 & $1.70\times10^{-4}$ & 13 & 1.73\\
-  131072 & 500 & 97.37 & $4.94\times10^{-5}$ & 13 & 200 & 43.06 & $5.06\times10^{-5}$ & 14 & 2.26\\
- 
-\end{tabular}
-\end{center}
+%\footnotesize
+%\begin{center}
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{c|cccc|cccc|c}
+	& \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+	N & $\ncrit$ & $\tsolve$ & Error & \# iters & $\ncrit$ & $\tsolve$ & Error & \# iters & Speed-up\\
+	\hline
+	& & & & & & & & &\\
+	8192 & 300 & 3.14 & $6.17\times10^{-4}$ & 11 & 100 & 2.07 & $6.13\times10^{-4}$ & 12 & 1.52\\
+	32768 & 400 & 19.84 & $1.69\times10^{-4}$ & 11 & 100 & 11.48 & $1.70\times10^{-4}$ & 13 & 1.73\\
+	131072 & 500 & 97.37 & $4.94\times10^{-5}$ & 13 & 200 & 43.06 & $5.06\times10^{-5}$ & 14 & 2.26\\
+
+	\end{tabular}
+	}
+%\end{center}
 \caption{Speed-ups for the relaxation strategy on a Laplace 1st-kind integral solver.}
 \label{tab:laplace_1st_relaxation}
 \end{table}%
 
 \begin{table}[h]
-\footnotesize
-\begin{center}
-\begin{tabular}{c|cccc|cccc|c}
-  & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
-  N & $\ncrit$ & $\tsolve$ & Error & \# iters & $\ncrit$ & $\tsolve$ & Error & \# iters & Speed-up\\
- \hline
-   & & & & & & & & &\\
-  8192 & 300 & 1.19 & $9.74\times10^{-4}$ & 2 & 300 & 1.00 & $9.74\times10^{-4}$ & 2 & 1.19\\
-  32768 & 400 & 7.10 & $2.29\times10^{-4}$ & 2 & 300 & 5.49 & $2.29\times10^{-4}$ & 2 & 1.29\\
-  131072 & 500 & 27.49 & $5.01\times10^{-5}$ & 2 & 300 & 22.49 & $4.97\times10^{-5}$ & 2 & 1.22\\
- 
-\end{tabular}
-\end{center}
+%\footnotesize
+%\begin{center}
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{c|cccc|cccc|c}
+	& \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+	N & $\ncrit$ & $\tsolve$ & Error & \# iters & $\ncrit$ & $\tsolve$ & Error & \# iters & Speed-up\\
+	\hline
+	& & & & & & & & &\\
+	8192 & 300 & 1.19 & $9.74\times10^{-4}$ & 2 & 300 & 1.00 & $9.74\times10^{-4}$ & 2 & 1.19\\
+	32768 & 400 & 7.10 & $2.29\times10^{-4}$ & 2 & 300 & 5.49 & $2.29\times10^{-4}$ & 2 & 1.29\\
+	131072 & 500 & 27.49 & $5.01\times10^{-5}$ & 2 & 300 & 22.49 & $4.97\times10^{-5}$ & 2 & 1.22\\
+	
+	\end{tabular}
+	}
+%\end{center}
 \caption{Speed-ups for the relaxation strategy on a Laplace 2nd-kind integral solver.}
 \label{tab:laplace_2nd_relaxation}
 \end{table}%
@@ -456,7 +459,7 @@ Like with the Laplace equation, we first used a set of stringent parameters: $p=
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=0.75\textwidth]{StokesConvergence.pdf}
+	\includegraphics[width=0.7\textwidth]{StokesConvergence.pdf}
 	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation. The relative error is with respect to the analytical solution for drag on a sphere: $F_d = 6\pi\mu Ru_x$. The tight parameters: $p=20$, $K=13$, $\eta=10^{-10}$; the loose parameters are listed in Table \ref{tab:stokes_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_convergence}
 \end{center}
@@ -492,7 +495,7 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 
 \begin{figure}%[ht]
 \begin{center}
-	\includegraphics[width=1.0\textwidth]{StokesSolveBreakdown.pdf}
+	\includegraphics[width=1\textwidth]{StokesSolveBreakdown.pdf}
 	\caption{Time breakdown between {\ptop} and {\mtol} when using a relaxation strategy for solving surface traction on the surface of a sphere with $32,768$ panels, with the loose set of parameters listed in Table \ref{tab:stokes_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_relaxation_breakdown}
 \end{center}
@@ -509,19 +512,21 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 
 
 \begin{table}[h]
-\footnotesize
-\begin{center}
-\begin{tabular}{c|cccc|cccc|c}
-  & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
-  N & $\ncrit$ & $\tsolve$ & Error & \# iters & $\ncrit$ & $\tsolve$ & Error & \# iters & Speed-up\\
- \hline
-   & & & & & & & & &\\
-  8192 & 300 & 82.57 & $2.28\times10^{-2}$ & 27 & 100 & 30.56 & $2.32\times10^{-2}$ & 29 & 2.70\\
-  32768 & 400 & 370.18 & $1.11\times10^{-2}$ & 27 & 100 & 111.93 & $1.11\times10^{-2}$ & 30 & 3.31\\
-  131072 & 150 & 3058.93 & $5.78\times10^{-3}$ & 24 & 200 & 682.14 & $6.55\times10^{-3}$ & 34 & 4.48\\
- 
-\end{tabular}
-\end{center}
+%\footnotesize
+%\begin{center}
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{c|cccc|cccc|c}
+	& \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+	N & $\ncrit$ & $\tsolve$ & Error & \# iters & $\ncrit$ & $\tsolve$ & Error & \# iters & Speed-up\\
+	\hline
+	& & & & & & & & &\\
+	8192 & 300 & 82.57 & $2.28\times10^{-2}$ & 27 & 100 & 30.56 & $2.32\times10^{-2}$ & 29 & 2.70\\
+	32768 & 400 & 370.18 & $1.11\times10^{-2}$ & 27 & 100 & 111.93 & $1.11\times10^{-2}$ & 30 & 3.31\\
+	131072 & 150 & 3058.93 & $5.78\times10^{-3}$ & 24 & 200 & 682.14 & $6.55\times10^{-3}$ & 34 & 4.48\\
+	
+	\end{tabular}
+	}
+%\end{center}
 \caption{Speed-ups for the relaxation strategy on a Stokes solver.}
 \label{tab:stokes_speedup}
 \end{table}%
@@ -547,7 +552,7 @@ Figure \ref{fig:glob_rbc} shows two examples of transformed shapes obtained from
 
 \begin{figure}%[ht]
 \begin{center}
-	\subfloat[512 panels]{\includegraphics[width=0.4\textwidth]{RBC512.pdf}\label{fig:rbc512}}\qquad
+	\subfloat[512 panels]{\includegraphics[width=0.4\textwidth]{RBC512.pdf}\label{fig:rbc512}} \qquad
 	\subfloat[2048 panels]{\includegraphics[width=0.4\textwidth]{RBC2048.pdf}\label{fig:rbc2048}}
 	\caption{Surface geometries of red blood cells obtained from transforming sphere triangulations using Equation \eqref{eqn:rbc_parameterization}.}
 	\label{fig:glob_rbc}
@@ -635,7 +640,7 @@ For the next test, we used several red blood cells in a sparse spatial arrangeme
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=0.8\textwidth]{4Cells_arrow.pdf}
+\includegraphics[width=0.7\textwidth]{4Cells_arrow.pdf}
 	\caption{Surfaces for four red blood cells in a uniform Stokes flow.}
 	\label{fig:multiple_cells}
 \end{center}
@@ -677,73 +682,81 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 
 
 \begin{table}[htp]
-\footnotesize
-\begin{center}
-\begin{tabular}{c|c|cccc|cccc|c}
-  & & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
-  N & \# unknowns & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & Speed-up\\
- \hline
-   & & & & & & & & & &\\
-  2048 & 6144 & 400 & 33.64 & -0.07033 & 35 & 130 & 11.21 & -0.07010 & 37 & 3.00\\
-  8192 & 24576 & 400 & 183.73 & -0.07678 & 39 & 140 & 64.92 & -0.07780 & 41 & 2.83\\
-  32768 & 98304 & 400 & 809.90 & -0.07989 & 35 & 120 & 253.90 & -0.07977 & 39 & 3.19\\
-  131072 & 393216 & 150 & 4407.47 & -0.08141 & 31 & 100 & 980.65 & -0.08149 & 35 & 4.49\\
-\end{tabular}
-\end{center}
+%\footnotesize
+%\begin{center}
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{c|c|cccc|cccc|c}
+	& & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+	N & \# unknowns & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & Speed-up\\
+	\hline
+	& & & & & & & & & &\\
+	2048 & 6144 & 400 & 33.64 & -0.07033 & 35 & 130 & 11.21 & -0.07010 & 37 & 3.00\\
+	8192 & 24576 & 400 & 183.73 & -0.07678 & 39 & 140 & 64.92 & -0.07780 & 41 & 2.83\\
+	32768 & 98304 & 400 & 809.90 & -0.07989 & 35 & 120 & 253.90 & -0.07977 & 39 & 3.19\\
+	131072 & 393216 & 150 & 4407.47 & -0.08141 & 31 & 100 & 980.65 & -0.08149 & 35 & 4.49\\
+	\end{tabular}
+	}
+%\end{center}
 \caption{Timings and speed-up of the relaxation strategy on a single red blood cell in uniform Stokes flow, with the test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
 \label{tab:single_cell_relaxation_results}
 \end{table}%
 
 
 \begin{table}[htp]
-\footnotesize
-\begin{center}
-\begin{tabular}{c|c|c|cccc|cccc|c}
-  & & & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
-  N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & Speed-up\\
- \hline
-   & & & & & & & & & &\\
-  2048 & 6144 & 1 & 400 & 33.64 & -0.07033 & 35 & 130 & 11.21 & -0.07010 & 37 & 3.00\\
-  8192 & 24576 & 4 & 400 & 204.43 & -0.19825 & 51 & 140 & 87.34 & -0.19765 & 52 & 2.34\\
-  32768 & 98304 & 16 & 400 & 1128.50 & -0.67816 & 67 & 100 & 466.12 & -0.67270 & 70 & 2.42\\
-  131072 & 393216 & 64 & 150 & 6186.23 & -2.41785 & 76 & 120 & 1953.23 & -2.41026 & 79 & 3.17\\
-\end{tabular}
-\end{center}
+%\footnotesize
+%\begin{center}
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{c|c|c|cccc|cccc|c}
+	& & & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+	N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & Speed-up\\
+	\hline
+	& & & & & & & & & &\\
+	2048 & 6144 & 1 & 400 & 33.64 & -0.07033 & 35 & 130 & 11.21 & -0.07010 & 37 & 3.00\\
+	8192 & 24576 & 4 & 400 & 204.43 & -0.19825 & 51 & 140 & 87.34 & -0.19765 & 52 & 2.34\\
+	32768 & 98304 & 16 & 400 & 1128.50 & -0.67816 & 67 & 100 & 466.12 & -0.67270 & 70 & 2.42\\
+	131072 & 393216 & 64 & 150 & 6186.23 & -2.41785 & 76 & 120 & 1953.23 & -2.41026 & 79 & 3.17\\
+	\end{tabular}
+	}
+%\end{center}
 \caption{Timings and speed-up of the relaxation strategy with several red blood cells in uniform Stokes flow, each cell discretized with 2048 panels and test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
 \label{tab:multiple_cell_relaxation_results_2048}
 \end{table}
 
 
 \begin{table}[htp]
-\footnotesize
-\begin{center}
-\begin{tabular}{c|c|c|cccc|cccc|c}
-  & & & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
-  N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & Speed-up\\
- \hline
-   & & & & & & & & & &\\
-  8192 & 24576 & 1 & 400 & 183.73 & -0.07678 & 39 & 140 & 64.92 & -0.07780 & 41 & 2.83\\
-  32768 & 98304 & 4 & 400 & 1300.30 & -0.21589 & 54 & 120 & 423.83 & -0.21703 & 55 & 3.07\\
-  131072 & 393216 & 16 & 150 & 8837.73 & -0.73883 & 67 & 100 & 2097.87 & -0.73841 & 68 & 4.21\\
-\end{tabular}
-\end{center}
+%\footnotesize
+%\begin{center}
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{c|c|c|cccc|cccc|c}
+	& & & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+	N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & Speed-up\\
+	\hline
+	& & & & & & & & & &\\
+	8192 & 24576 & 1 & 400 & 183.73 & -0.07678 & 39 & 140 & 64.92 & -0.07780 & 41 & 2.83\\
+	32768 & 98304 & 4 & 400 & 1300.30 & -0.21589 & 54 & 120 & 423.83 & -0.21703 & 55 & 3.07\\
+	131072 & 393216 & 16 & 150 & 8837.73 & -0.73883 & 67 & 100 & 2097.87 & -0.73841 & 68 & 4.21\\
+	\end{tabular}
+	}
+%\end{center}
 \caption{Timings and speed-up of the relaxation strategy with several red blood cells in uniform Stokes flow, each cell discretized with $8,192$ panels and test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
 \label{tab:multiple_cell_relaxation_results_8192}
 \end{table}
 
 
 \begin{table}[htp]
-\footnotesize
-\begin{center}
-\begin{tabular}{c|c|c|cccc|cccc|c}
-  & & & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
-  N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & Speed-up\\
- \hline
-   & & & & & & & & & &\\
-  32768 & 98304 & 1 & 400 & 809.90 & -0.07989 & 35 & 120 & 253.90 & -0.07977 & 39 & 3.19\\
-  131072 & 393216 & 4 & 150 & 6171.47 & -0.22452 & 49 & 120 & 1599.33 & -0.22450 & 51 & 3.86\\
-\end{tabular}
-\end{center}
+%\footnotesize
+%\begin{center}
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{c|c|c|cccc|cccc|c}
+	& & & \multicolumn{4}{c|}{Non-Relaxed} & \multicolumn{4}{c|}{Relaxed} &  \\
+	N & \# unknowns & $N_c$ & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & $\ncrit$ & $\tsolve$ & $f_x$ & \# iters & Speed-up\\
+	\hline
+	& & & & & & & & & &\\
+	32768 & 98304 & 1 & 400 & 809.90 & -0.07989 & 35 & 120 & 253.90 & -0.07977 & 39 & 3.19\\
+	131072 & 393216 & 4 & 150 & 6171.47 & -0.22452 & 49 & 120 & 1599.33 & -0.22450 & 51 & 3.86\\
+	\end{tabular}
+	}
+%\end{center}
 \caption{Timings and speed-up of the relaxation strategy with several red blood cells in uniform Stokes flow, each cell discretized with $32,768$ panels and test parameters shown in Table \ref{tab:cells_relaxation_settings}.}
 \label{tab:multiple_cell_relaxation_results_32768}
 \end{table}
@@ -751,7 +764,7 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 
 \begin{figure}[ht]
 \begin{center}
-	\includegraphics[width=0.8\textwidth]{EthrocyteMultipleCellSpeedup.pdf}
+	\includegraphics[width=0.7\textwidth]{EthrocyteMultipleCellSpeedup.pdf}
 	\caption{Speed-ups of the relaxation strategy with several red blood cells in uniform Stokes flow, using different mesh sizes on each cell. The abscissa value corresponds to the total number of panels (all cells). Test parameters shown in Table \ref{tab:cells_relaxation_settings}. Time is measured by averaging the solving time of three identical runs.} 
 	\label{fig:multiple_cell_speedup}
 \end{center}
