@@ -185,7 +185,8 @@ The Stokes equation for a flow at very low Reynolds number, $\mu\nabla^{2}\vect{
 
 \begin{equation}
 	\label{eqn:stresslet}
-	T_{ijk}(\vect{x},\vect{y})  = - 6\frac{(x_i-y_i)(x_j-y_j)(x_k-y_k)}{r^{5}} \end{equation}
+	T_{ijk}(\vect{x},\vect{y})  = - 6\frac{(x_i-y_i)(x_j-y_j)(x_k-y_k)}{r^{5}}.
+\end{equation}
 
 Indices $i, j, k$ denote here the Cartesian-tensor components and $\delta_{ij}$ is the Kronecker delta. Discretizing the boundary with $N$ surface panels results in sums that we now number with the index $J$.
 The discretized form with constant surface panels becomes
@@ -327,6 +328,7 @@ Although the \fmm error bounds are known to be rather loose, we use this approac
 Our results include numerical experiments with \bem\ solutions for the Laplace and Stokes equations, including an application to Stokes flow around red blood cells. The \bem\ solver is accelerated with a fast multipole method using spherical expansions, implemented in a code designed to use boundary elements (panels) as the sources and targets, and written in multi-threaded \cpp. To facilitate reproducibility of our research, the code is made available via its version-control repository,\footnote{\href{https://github.com/barbagroup/fmm-bem-relaxed}{https://github.com/barbagroup/fmm-bem-relaxed}} under an MIT license. The paper manuscript is also available via its repository,\footnote{\href{https://github.com/barbagroup/inexact-gmres}{https://github.com/barbagroup/inexact-gmres}} which includes running scripts and plotting scripts to produce the included figures (see each figure caption for details).
 We ran all our tests on a lab workstation with an Intel Core i7-5930K hexa-core processor and 32GB RAM. Using a test with the Laplace kernel, we confirmed that our \fmm\ code scales as $\O{N}$ by timing several runs with increasing problem size; see Figure \ref{fig:fmm_scaling}. The performance of our code falls into the range of several major \fmm software tested by Yokota \cite{Yokota2013-dualtree}, showing that the \fmm code used in this work performs competitively. The detailed result can be found in the supplementary Jupyter Notebook.\footnote{See the \href{https://github.com/barbagroup/inexact-gmres/blob/master/supplementary-materials/inexact-GMRES-result.ipynb}{``supplementary-materials''} folder in the paper repository.} We also found that the preconditioned cases take fewer iterations but more time to converge than the unpreconditioned ones, because the residuals after the first several iterations in the preconditioned cases are greater. For an inexact {\gmres} iteration, a bigger residual leads to a higher required $p$, which offsets the benefit of using fewer iterations. Therefore, we performed these tests without preconditioning.
 The subsequent experiments investigate the use of a Krylov relaxation strategy by reducing the order of multipole expansions, $p$, as the iterations progress to convergence, determining the speed-up provided by such a strategy for different scenarios and problem sizes.
+In each case, we chose the optimal $\ncrit$ (establishing the balance between near and far field in \fmm) to obtain the shortest solution time.
 
 \begin{figure}
 \begin{center}
@@ -450,7 +452,7 @@ Like in \S\ref{sec:inexactLaplace}, we start with a grid-convergence study to bu
 
 \begin{equation}
 	\label{eqn:stokes_traction_drag}
-	F_d = \int_\Gamma t_x\;\di{\Gamma'} = \sum_{j=1}^{N} t_{x_j}\cdot A_j
+	F_d = \int_\Gamma t_x\;\di{\Gamma'} = \sum_{j=1}^{N} t_{x_j}\cdot A_j.
 \end{equation}
 
 
@@ -659,7 +661,7 @@ Using 2, 4 and 8 red blood cells, we looked at the number of iterations needed t
 \end{center}
 \end{figure}
 
-We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ (establishing the balance between near and far field) to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, where we reported the calculated drag force $f_x$ due to lack of an analytical solution. Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $3\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use an efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using six threads, like we do here), then the potential for a $4\times$ speed-up is real.
+We completed several tests of the relaxation strategy, using between 1 and 64 red blood cells, and various mesh sizes on each cell. The common parameter settings for these tests are listed in Table \ref{tab:cells_relaxation_settings} and, in each case, we chose the value of $\ncrit$ to obtain the smallest time to solution for that run. The detailed results are listed in Tables \ref{tab:single_cell_relaxation_results}, \ref{tab:multiple_cell_relaxation_results_2048}, \ref{tab:multiple_cell_relaxation_results_8192} and \ref{tab:multiple_cell_relaxation_results_32768}, where we reported the calculated drag force $f_x$ due to lack of an analytical solution. Figure \ref{fig:multiple_cell_speedup} shows a summary of the observed speed-ups, mostly hovering close to $3\times$. The largest problems, with a total of $131,072$ panels (all cells combined), are atypical because in these cases we are unable to use an efficient sparse-matrix representation of the near field, due to the large memory requirement. But this can also be seen as an advantage of the relaxation strategy, which leads to using smaller near fields and thus extends the range of problem sizes where we can use the efficient sparse-matrix representation. Indeed, if one needed to solve a problem of size $N=131,072$ (on one \cpu\ using six threads, like we do here), then the potential for a $4\times$ speed-up is real.
 
 \begin{table}[h]
 \footnotesize
@@ -773,7 +775,7 @@ We completed several tests of the relaxation strategy, using between 1 and 64 re
 
 \subsection{Reproducibility}
 
-Our inexact \gmres code is open-source and available on GitHub. Knowing the increasing importance of computational reproducibility, we provide the ``\textit{reproducibility package}"---containing the running and post-processing scripts---to generate the figures in the Results section. To save readers from potential headaches of dependency mismatches, we prepared a Dockerfile to set up up the software environment (a Docker container), under which the reproducibility package can be used to reproduce our results. We also provide a Jupyter Notebook as supplementary material; it contains details of the parameter searches and timing benchmark with \fmm.
+Our inexact \gmres code is open-source and available on GitHub. Knowing the increasing importance of computational reproducibility, we provide the ``\textit{reproducibility package}"---containing the running and post-processing scripts---to generate the figures in the Results section. To save readers from potential headaches of dependency mismatches, we prepared a Dockerfile to set up the software environment (a Docker container), under which the reproducibility package can be used to reproduce our results. We also provide a Jupyter Notebook as supplementary material; it contains details of the parameter searches and timing benchmark with \fmm.
 
 
 \section{Conclusion} 
