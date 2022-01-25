@@ -332,7 +332,7 @@ In each case, we chose the optimal $\ncrit$ (establishing the balance between ne
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=0.7\textwidth]{FMMScaling.pdf}
+	\includegraphics[width=0.5\textwidth]{FMMScaling.pdf}
 	\caption{Scaling of the \fmm\ code with respect to problem size $N$, using a Laplace kernel with spherical expansions, with particles randomly distributed in a unit cube, $\theta_{\text{MAC}} = 0.5$, $p=5$ and optimal $\ncrit = 125$, obtaining 4 significant digits of accuracy for the force. The tests ran on a lab workstation with an Intel Core i7-5930K hexa-core processor, using six \cpu\ threads. The dotted line shows the expected $\O{N}$ scaling. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare1}.}
 	\label{fig:fmm_scaling}
 \end{center}
@@ -396,7 +396,7 @@ As indicated in the caption, we used the loose parameters in Table \ref{tab:lapl
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\textwidth]{LaplaceSpeedupRelaxation.pdf}
+	\includegraphics[width=0.5\textwidth]{LaplaceSpeedupRelaxation.pdf}
 	\caption{Speed-up using a relaxation strategy for three different triangulations of a sphere ($N$ is the number of surface panels), using 1st-kind and 2nd-kind integral formulations, with loose parameter settings in Table \ref{tab:laplace_loose_params}. Time is measured by averaging the solving time of three identical runs. (Multi-threaded evaluator running on 6 \cpu\ cores.) Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare2}.}
 	\label{fig:relaxation_timing}
 \end{figure}
@@ -462,7 +462,7 @@ Like with the Laplace equation, we first used a set of stringent parameters: $p=
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=0.7\textwidth]{StokesConvergence.pdf}
+	\includegraphics[width=0.5\textwidth]{StokesConvergence.pdf}
 	\caption{Convergence of the boundary-integral solution for Stokes flow around a sphere, using a  first-kind equation. The relative error is with respect to the analytical solution for drag on a sphere: $F_d = 6\pi\mu Ru_x$. The tight parameters: $p=20$, $K=13$, $\eta=10^{-10}$; the loose parameters are listed in Table \ref{tab:stokes_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_convergence}
 \end{center}
@@ -507,7 +507,7 @@ The number of iterations needed to converge is larger in the case of the Stokes 
 
 \begin{figure}%[ht]
 \begin{center}
-	\includegraphics[width=0.7\textwidth]{StokesSpeedupRelaxation.pdf}
+	\includegraphics[width=0.5\textwidth]{StokesSpeedupRelaxation.pdf}
 	\caption{Speed-up for solving first-kind Stokes equation on the surface of a sphere, varying $N$, with loose parameter settings in Table \ref{tab:stokes_loose_params}. Time is measured by averaging the solving time of three identical runs. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare3}.}
 	\label{fig:stokes_speedup}
 \end{center}
@@ -598,7 +598,7 @@ The thicker line in Figure \ref{fig:rbc_extrapolated_convergence} shows the erro
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=0.7\textwidth]{EthrocyteConvergence.pdf}
+	\includegraphics[width=0.5\textwidth]{EthrocyteConvergence.pdf}
 	\caption{Observed convergence for Stokes flow around a red blood cell, with respect to the extrapolated value of the drag coefficient, using Richardson extrapolation \cite{roache1998}. The tight parameters: $p=20$, $K=13$, $\eta=10^{-10}$; the loose parameters are listed in Table \ref{tab:rbc_loose_params}. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:rbc_extrapolated_convergence}
 \end{center}
@@ -631,7 +631,7 @@ Figure \ref{fig:single_cell_iterations} shows that the number of iterations need
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=0.7\textwidth]{EthrocyteSingleCellIterations.pdf}
+	\includegraphics[width=0.5\textwidth]{EthrocyteSingleCellIterations.pdf}
 	\caption{Number of iterations needed for the system to converge for increasingly refined surface meshes on one red blood cell, using a non-relaxed \gmres solver with loose parameter settings and optimal $\ncrit$. Plotting script and figure available under CC-BY \cite{WangLaytonBarba2016-figshare4}.}
 	\label{fig:single_cell_iterations}
 \end{center}
