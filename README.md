@@ -18,7 +18,7 @@ Preprint:
 
 Version of record:
 _Advances in Computational Mathematics_, Topical Collection: Advances in Computational Integral Equations (ACIE), 2022
-DOI: 10.1007/s10444-022-09932-8
+DOI: [10.1007/s10444-022-09932-8](https://doi.org/10.1007/s10444-022-09932-8)
 
 **Abstract**
 
